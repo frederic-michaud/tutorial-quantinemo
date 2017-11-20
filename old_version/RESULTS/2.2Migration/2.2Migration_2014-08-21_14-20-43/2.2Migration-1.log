@@ -1,0 +1,34 @@
+# quantiNemo    v[Aug 14 2014; 21:06:39]
+#
+# simulation started on 21-08-2014 14:20:43
+
+# log as input
+
+
+_settings_file 2.2Migration.ini
+filename 2.2Migration-1
+generations 1000
+replicates 1
+seed 25120
+
+patch_capacity 1000
+patch_number 10
+
+
+ntrl_all 10
+ntrl_allelic_file "inifreq.txt"
+ntrl_loci 2
+
+
+stat {n.adlt.nbAll n.adlt.fst n.adlt.fst_l}
+
+
+
+
+dispersal_rate 0.1
+
+
+
+# simulation ended on 21-08-2014 14:21:14
+#
+# duration of the simulation was 00:00:30

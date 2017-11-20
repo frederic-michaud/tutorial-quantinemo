@@ -1,0 +1,34 @@
+# quantiNemo    v[Apr 21 2014; 16:30:59]
+#
+# simulation started on 19-05-2014 17:56:01
+
+# log as input
+
+
+generations 200
+seed {1400514961 936}
+
+patch_capacity 500
+patch_ini_size {4 rep(0,5)}
+patch_number 6
+
+
+growth_rate 0.5
+mating_nb_offspring_model 4
+mating_system 3
+
+stat {adlt.nbInd emigrants fem.meanFec adlt.nbInd_p}
+
+
+
+
+dispersal_border_model 2
+dispersal_model 2
+dispersal_rate 0.005
+
+regulation_model_adults 1
+
+
+# simulation ended on 19-05-2014 17:56:02
+#
+# duration of the simulation was 00:00:01

@@ -1,0 +1,9 @@
+Legend of the used statistics
+*****************************
+
+Statistic             Legend
+--------------------------------------------------------------
+n.adlt.nbAll        : Mean number of alleles/patch/locus (adult, ntrl)
+n.adlt.ho           : Ho (Nei & Chesser, 1983)(adult, ntrl)
+n.adlt.hs           : Hs (Nei & Chesser, 1983)(adult, ntrl)
+alive.rpl           : Nb alive replicates

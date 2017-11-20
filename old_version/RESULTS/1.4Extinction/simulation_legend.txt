@@ -1,0 +1,15 @@
+Legend of the used statistics
+*****************************
+
+Statistic             Legend
+--------------------------------------------------------------
+adlt.nbPops         : Number of inhabited patches by adult
+adlt.nbInd          : Total number of adult
+emigrants           : Mean number of emigrants/patch
+adlt.nbInd_p1       : Number of indviduals adult of population 1
+adlt.nbInd_p2       : Number of indviduals adult of population 2
+adlt.nbInd_p3       : Number of indviduals adult of population 3
+adlt.nbInd_p4       : Number of indviduals adult of population 4
+adlt.nbInd_p5       : Number of indviduals adult of population 5
+adlt.nbInd_p6       : Number of indviduals adult of population 6
+alive.rpl           : Nb alive replicates

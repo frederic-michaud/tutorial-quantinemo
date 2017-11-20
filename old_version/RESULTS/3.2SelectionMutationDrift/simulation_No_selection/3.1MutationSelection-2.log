@@ -1,0 +1,38 @@
+# quantiNemo    v[Jun  4 2014; 16:09:52]
+#
+# simulation started on 24-06-2014 11:47:58
+
+# log as input
+
+
+_settings_file 3.1MutationSelection.ini
+filename 3.1MutationSelection-2
+generations 5000
+replicates 10
+seed 4561
+
+patch_capacity 10000
+patch_stab_sel_intensity 10
+patch_stab_sel_optima 0
+
+
+quanti_all 255
+quanti_allelic_var 4
+quanti_ini_allele_model 0
+quanti_loci 1
+quanti_mutation_rate 1e-4
+quanti_selection_model 0
+
+
+stat {q.adlt.nbAll q.adlt.hs q.meanG_p q.varG_p}
+stat_log_time (1 1, 2 100)
+
+
+
+
+
+
+
+# simulation ended on 24-06-2014 12:14:03
+#
+# duration of the simulation was 00:26:05

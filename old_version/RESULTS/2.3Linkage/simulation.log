@@ -1,0 +1,34 @@
+# quantiNemo    v[Apr 21 2014; 16:30:59]
+#
+# simulation started on 12-06-2014 09:12:57
+
+# log as input
+
+
+generations 102
+seed 3063
+
+patch_capacity (1 10000, 100 10, 101 10000)
+
+
+ntrl_all 2
+ntrl_genome {{0.5 0.8 1.1}{0.2}{0.2}{0.2}}
+ntrl_genot_logtime (1 1, 2 100, 101 102)
+ntrl_ini_allele_model 0
+ntrl_loci 6
+ntrl_locus_index {1 4 2 5 3 6}
+ntrl_mutation_rate 1e-5
+ntrl_save_genotype 1
+
+
+stat {adlt.nbInd n.adlt.nbFixLoc}
+
+
+
+
+
+
+
+# simulation ended on 12-06-2014 09:13:01
+#
+# duration of the simulation was 00:00:04

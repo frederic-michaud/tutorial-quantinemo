@@ -1,0 +1,36 @@
+# quantiNemo    v[Aug 14 2014; 21:06:39]
+#
+# simulation started on 21-08-2014 10:28:53
+
+# log as input
+
+
+_settings_file 1.4Extinction.ini
+generations 1000
+replicates 20
+seed 42
+
+patch_capacity 500
+patch_ini_size {4 rep(0,5)}
+patch_number 6
+
+
+growth_rate 0.5
+mating_nb_offspring_model 6
+mating_system 3
+
+stat {adlt.nbPops adlt.nbInd emigrants adlt.nbInd_p}
+
+
+
+
+dispersal_rate {{0.9946 0.0050 0.0001 0.0001 0.0001 0.0001}{0.0001 0.9946 0.0050 0.0001 0.0001 0.0001}{0.0001 0.0001 0.9946 0.0050 0.0001 0.0001}{0.0001 0.0001 0.0001 0.9946 0.0050 0.0001}{0.0001 0.0001 0.0001 0.0001 0.9946 0.0050}{0.0001 0.0001 0.0001 0.0001 0.0001 0.9995}}
+
+regulation_model_adults 1
+
+extinction_rate 0.01
+
+
+# simulation ended on 21-08-2014 10:30:05
+#
+# duration of the simulation was 00:01:11

@@ -1,0 +1,14 @@
+# The dominance file for fur colour in mice
+
+[FILE_INFO]{
+	col_locus 1
+	col_allele1 2
+	col_allele2 3
+	col_dominance 4
+}
+#locus 1: B/b = 1/2
+#locus 2: C/c = 1/2
+
+#locus	al1	al2	dominance
+1		1	2	1
+2		1	2	1

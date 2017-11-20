@@ -1,0 +1,36 @@
+# quantiNemo    v[Aug 14 2014; 21:06:39]
+#
+# simulation started on 19-08-2014 15:44:17
+
+# log as input
+
+
+_settings_file 3.3MendelianMiceA.ini
+generations 2
+seed {1408455857 1279}
+
+patch_capacity 16000
+
+
+quanti_all 2
+quanti_allelic_file "fur_alleles.txt"
+quanti_dominance_file "fur_dominance.txt"
+quanti_dominance_model 0
+quanti_epistatic_file "fur_epistasis.txt"
+quanti_ini_genotypes "fur_ini_geno.txt"
+quanti_loci 2
+quanti_save_phenotype 1
+quanti_selection_model 0
+
+mating_nb_offspring_model 0
+mating_system 3
+
+
+
+
+
+
+
+# simulation ended on 19-08-2014 15:44:18
+#
+# duration of the simulation was 00:00:00

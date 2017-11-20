@@ -1,0 +1,15 @@
+# The allelic file for fur colour in mice
+
+[FILE_INFO]{
+	col_locus 1
+	col_allele 2
+	col_allelic_value 3
+}
+#locus 1: B/b = 1/2
+#locus 2: C/c = 1/2
+
+#locus	allele	value	
+1		1		0.5		
+1		2		0.25	
+2		1		0		
+2		2		-0.5	

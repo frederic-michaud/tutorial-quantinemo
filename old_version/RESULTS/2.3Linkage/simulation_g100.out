@@ -1,0 +1,25 @@
+**************************************************************************************************************************************************
+*   The following results were generated the 6/12/2014 at 9:14:16 AM with Fstat for windows, V2.9.4  (June. 2003) from file simulation_g100.dat. *
+**************************************************************************************************************************************************
+      		  pop1	 All_W	All_UW
+*******************************************************
+	P-value for genotypic disequilibrium
+	based on        300 permutations.
+	Adjusted P-value for 5% nominal level is :   0.0033333333
+
+		   All
+ntrl-1 X ntrl-1		 0.34667
+ntrl-1 X ntrl-1		 0.00333
+ntrl-1 X ntrl-1		 0.97000
+ntrl-1 X ntrl-1		 0.06667
+ntrl-1 X ntrl-1		 0.60000
+ntrl-1 X ntrl-1		 0.75333
+ntrl-1 X ntrl-1		 0.99667
+ntrl-1 X ntrl-1		 0.59667
+ntrl-1 X ntrl-1		 0.30000
+ntrl-1 X ntrl-1		 0.51667
+ntrl-1 X ntrl-1		 0.00333
+ntrl-1 X ntrl-1		 0.78333
+ntrl-1 X ntrl-1		 0.50333
+ntrl-1 X ntrl-1		 0.64667
+ntrl-1 X ntrl-1		 0.19333
