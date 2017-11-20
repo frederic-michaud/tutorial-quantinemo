@@ -1,0 +1,8 @@
+Legend of the used statistics
+*****************************
+
+Statistic             Legend
+--------------------------------------------------------------
+alive.rpl           : Nb alive replicates
+adlt.nbInd          : Total number of adult
+fem.meanFec         : Mean fecundity of females

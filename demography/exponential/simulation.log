@@ -1,0 +1,36 @@
+#############################################
+#           q u a n t i N E M O 2           #
+#   version 0.9.0 [Nov 17 2017; 15:39:05]   #
+#                                           #
+#              Simulation log               #
+# simulation started on 20-11-2017 10:06:14 #
+#              (log as input)               #
+#############################################
+
+
+## simulation
+_settings_file Demo1.ini
+folder demography/exponential
+seed {1511168774 3779}
+
+## metapop
+generations 20
+patch_capacity 1000
+patch_ini_size 4
+
+## breed
+mating_nb_offspring_model 3
+mean_fecundity 1.5
+
+## save_stats
+stat {adlt.nbInd}
+
+## regulation_adults
+regulation_model_adults 1
+
+
+#############################################
+#  simulation ended on 20-11-2017 10:06:14  #
+#                                           #
+#  duration of the simulation was 00:00:00  #
+#############################################

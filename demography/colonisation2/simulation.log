@@ -1,0 +1,45 @@
+#############################################
+#           q u a n t i N E M O 2           #
+#   version 0.9.0 [Nov 20 2017; 11:27:43]   #
+#                                           #
+#              Simulation log               #
+# simulation started on 20-11-2017 12:47:00 #
+#              (log as input)               #
+#############################################
+
+
+## simulation
+_settings_file colonisation2.ini
+folder demography/colonisation2
+replicates 20
+seed {1511178420 4792}
+
+## metapop
+generations 1000
+patch_capacity 500
+patch_ini_size {4 rep(0,5)}
+patch_number 6
+
+## breed
+growth_rate 0.5
+mating_nb_offspring_model 8
+mating_system 3
+
+## save_stats
+stat {adlt.nbPops adlt.nbInd emigrants adlt.nbInd_p}
+
+## dispersal
+dispersal_rate {{0.9946 0.0050 0.0001 0.0001 0.0001 0.0001}{0.0001 0.9946 0.0050 0.0001 0.0001 0.0001}{0.0001 0.0001 0.9946 0.0050 0.0001 0.0001}{0.0001 0.0001 0.0001 0.9946 0.0050 0.0001}{0.0001 0.0001 0.0001 0.0001 0.9946 0.0050}{0.0001 0.0001 0.0001 0.0001 0.0001 0.9995}}
+
+## regulation_adults
+regulation_model_adults 1
+
+## extinction
+extinction_rate 0.01
+
+
+#############################################
+#  simulation ended on 20-11-2017 12:47:25  #
+#                                           #
+#  duration of the simulation was 00:00:25  #
+#############################################
