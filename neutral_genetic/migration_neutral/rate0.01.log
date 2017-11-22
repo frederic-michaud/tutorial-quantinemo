@@ -1,0 +1,38 @@
+#############################################
+#           q u a n t i N E M O 2           #
+#   version 0.9.0 [Nov 20 2017; 11:27:43]   #
+#                                           #
+#              Simulation log               #
+# simulation started on 21-11-2017 13:54:53 #
+#              (log as input)               #
+#############################################
+
+
+## simulation
+_settings_file neutral_migration.ini
+filename rate0.01
+folder neutral_genetic/migration_neutral
+seed {1511268893 4141}
+
+## metapop
+generations 1000
+patch_capacity 1000
+patch_number 10
+
+## ntrl
+ntrl_all 10
+ntrl_allelic_file "inifreq.txt"
+ntrl_loci 2
+
+## save_stats
+stat {n.adlt.nbAll n.adlt.fst n.adlt.fst_l}
+
+## dispersal
+dispersal_rate 0.01
+
+
+#############################################
+#  simulation ended on 21-11-2017 13:55:09  #
+#                                           #
+#  duration of the simulation was 00:00:16  #
+#############################################

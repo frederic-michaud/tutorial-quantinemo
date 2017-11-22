@@ -1,0 +1,37 @@
+#############################################
+#           q u a n t i N E M O 2           #
+#   version 0.9.0 [Nov 20 2017; 11:27:43]   #
+#                                           #
+#              Simulation log               #
+# simulation started on 21-11-2017 09:09:46 #
+#              (log as input)               #
+#############################################
+
+
+## simulation
+_settings_file mutationKAM.ini
+folder neutral_genetic/mutationKAM
+seed {1511251786 5401}
+
+## metapop
+generations 4000
+patch_capacity 10000
+
+## ntrl
+ntrl_all 11
+ntrl_genot_logtime 1000
+ntrl_ini_allele_model 1
+ntrl_loci 1
+ntrl_mutation_model 0
+ntrl_mutation_rate 1e-3
+ntrl_save_genotype 1
+
+## save_stats
+stat {n.adlt.nbAll n.adlt.ho n.adlt.hs}
+
+
+#############################################
+#  simulation ended on 21-11-2017 09:10:43  #
+#                                           #
+#  duration of the simulation was 00:00:57  #
+#############################################
