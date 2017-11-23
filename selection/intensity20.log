@@ -1,0 +1,41 @@
+#############################################
+#           q u a n t i N E M O 2           #
+#   version 0.9.0 [Nov 23 2017; 09:47:42]   #
+#                                           #
+#              Simulation log               #
+# simulation started on 23-11-2017 10:52:38 #
+#              (log as input)               #
+#############################################
+
+
+## simulation
+_settings_file selection1.ini
+filename intensity20
+folder selection
+seed {1511430758 6776}
+
+## metapop
+generations 10
+patch_capacity 10000
+selection_pressure_definition 1
+
+## quanti
+quanti_all 255
+quanti_allelic_var 4
+quanti_ini_allele_model 0
+quanti_loci 1
+quanti_save_geno_value 1
+quanti_save_genotype 1
+quanti_selection_model 1
+quanti_stab_sel_intensity 20
+quanti_stab_sel_optima 0
+
+## save_stats
+stat {q.adlt.nbAll q.adlt.ho q.meanG_p}
+
+
+#############################################
+#  simulation ended on 23-11-2017 10:52:38  #
+#                                           #
+#  duration of the simulation was 00:00:00  #
+#############################################

@@ -1,0 +1,21 @@
+# The epistatis file for fur colour in mice
+
+[FILE_INFO]{
+	col_genotype 1
+	col_epistatic_value 2
+	col_fitness_factor 3
+}
+#locus 1: B/b = 1/2
+#locus 2: C/c = 1/2
+
+# genotype	epi-value	fitness
+{11 11}		0			1
+{12 11}		0			1
+{22 11}		0			0
+{11 12}		0			1
+{12 12}		0			1
+{22 12}		0			0
+{11 22}		0			1
+{12 22}		0			1
+{22 22}		0.5			1
+

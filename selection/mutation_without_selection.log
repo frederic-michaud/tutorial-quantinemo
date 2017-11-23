@@ -1,0 +1,36 @@
+#############################################
+#           q u a n t i N E M O 2           #
+#   version 0.9.0 [Nov 23 2017; 09:47:42]   #
+#                                           #
+#              Simulation log               #
+# simulation started on 23-11-2017 11:32:40 #
+#              (log as input)               #
+#############################################
+
+
+## simulation
+_settings_file selection2.ini
+filename mutation_without_selection
+folder selection
+replicates 10
+seed {1511433160 6378}
+
+## metapop
+generations 5000
+patch_capacity 10000
+selection_pressure_definition 1
+
+## quanti
+quanti_all 255
+quanti_allelic_var 4
+quanti_ini_allele_model 0
+quanti_loci 1
+quanti_mutation_rate 1e-4
+quanti_selection_model 0
+quanti_stab_sel_intensity 10
+quanti_stab_sel_optima 0
+
+## save_stats
+stat {q.adlt.nbAll q.adlt.hs q.meanG_p q.varG_p}
+stat_log_time (1 1, 2 100)
+

@@ -1,0 +1,11 @@
+Legend of the used statistics
+*****************************
+
+Statistic             Legend
+--------------------------------------------------------------
+alive.rpl           : Nb alive replicates
+adlt.nbInd          : Total number of adult
+q.adlt.a.freq_l1_a1 : Local allele frequency of locus 1, and allele 1 (adult, quanti)
+q.adlt.a.freq_l1_a2 : Local allele frequency of locus 1, and allele 2 (adult, quanti)
+q.adlt.a.freq_l2_a1 : Local allele frequency of locus 2, and allele 1 (adult, quanti)
+q.adlt.a.freq_l2_a2 : Local allele frequency of locus 2, and allele 2 (adult, quanti)

@@ -1,0 +1,10 @@
+Legend of the used statistics
+*****************************
+
+Statistic             Legend
+--------------------------------------------------------------
+alive.rpl           : Nb alive replicates
+q.adlt.nbAll        : Mean number of alleles/patch/locus (adult, quanti)
+q.adlt.hs           : Hs (Nei & Chesser, 1983)(adult, quanti)
+q.meanG             : Genetic mean
+q.varG              : Genetic variance

@@ -1,0 +1,41 @@
+#############################################
+#           q u a n t i N E M O 2           #
+#   version 0.9.0 [Nov 20 2017; 11:27:43]   #
+#                                           #
+#              Simulation log               #
+# simulation started on 23-11-2017 09:26:54 #
+#              (log as input)               #
+#############################################
+
+
+## simulation
+_settings_file fur1.ini
+filename fur1
+folder fur
+seed {1511425614 5023}
+
+## metapop
+generations 2
+patch_capacity 16000
+
+## quanti
+quanti_all 2
+quanti_allelic_file "fur_alleles.txt"
+quanti_dominance_file "fur_dominance.txt"
+quanti_dominance_model 0
+quanti_epistatic_file "fur_epistasis.txt"
+quanti_ini_genotypes "fur_ini_geno.txt"
+quanti_loci 2
+quanti_save_phenotype 1
+quanti_selection_model 0
+
+## breed
+mating_nb_offspring_model 0
+mating_system 3
+
+
+#############################################
+#  simulation ended on 23-11-2017 09:26:54  #
+#                                           #
+#  duration of the simulation was 00:00:00  #
+#############################################
