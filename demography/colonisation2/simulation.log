@@ -1,9 +1,9 @@
 #############################################
 #           q u a n t i N E M O 2           #
-#   version 0.9.0 [Nov 20 2017; 11:27:43]   #
+#   version 2.0.0 [Jan 12 2018; 11:06:39]   #
 #                                           #
 #              Simulation log               #
-# simulation started on 20-11-2017 12:47:00 #
+# simulation started on 16-01-2018 11:54:51 #
 #              (log as input)               #
 #############################################
 
@@ -12,7 +12,7 @@
 _settings_file colonisation2.ini
 folder demography/colonisation2
 replicates 20
-seed {1511178420 4792}
+seed {42}
 
 ## metapop
 generations 1000
@@ -39,7 +39,7 @@ extinction_rate 0.01
 
 
 #############################################
-#  simulation ended on 20-11-2017 12:47:25  #
+#  simulation ended on 16-01-2018 11:55:02  #
 #                                           #
-#  duration of the simulation was 00:00:25  #
+#  duration of the simulation was 00:00:11  #
 #############################################
