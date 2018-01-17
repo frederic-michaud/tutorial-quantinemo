@@ -1,0 +1,15 @@
+---
+title: "Demography"
+output: 
+  html_document:
+    includes:     
+      in_header: "header.html"
+---
+
+
+
+</div><!--closing h1_wrapper-->
+
+```{r child = '../demography.Rmd'}
+```
+</div>  <!--closing main_content-->

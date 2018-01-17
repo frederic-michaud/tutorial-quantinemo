@@ -1,0 +1,15 @@
+---
+title: "Selection"
+output: 
+  html_document:
+    includes:     
+      in_header: "header.html"
+---
+
+
+
+</div><!--closing h1_wrapper-->
+
+```{r child = '../selection.Rmd'}
+```
+</div>  <!--closing main_content-->

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Demography</title>
+
+<link href="demography_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="demography_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<link rel="stylesheet" href="files/style.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<div id="header">
+  <p class="name"> Department of Ecology &amp; Evolution</p>
+  <p> University of Lausanne | Switzerland</p>
+</div>
+<div id="menu">
+  <h3>Information</h3>
+  <ul>
+    <li><a href = "index.html#about">About</a></li>
+    <li><a href = "index.html#developer">Developer</a></li>
+    <li><a href = "index.html#citing">Citing</a></li>
+    <li><a href = "index.html#download">Download</a></li>
+    <li><a href = "index.html#help">Help</a></li>
+    <li><a href = "index.html#source">Source</a></li>
+  </ul>
+  <h3>Tutorials</h3>
+  <ul>
+    <li><a href = "getting_started.html">Introduction</a>
+    <ul>
+      <li><a href="getting_started.html#basic-usage-on-a-windows-machine">Windows</a></li>
+      <li><a href="getting_started.html#basic-usage-on-a-mac">Mac OS</a></li>
+      <li><a href="getting_started.html#basic-usage-in-linux">Linux</a></li>
+    </ul>    
+    </li>
+    <li><a href = "demography.html">Demography</a>
+    <ul>
+      <li><a href="demography.html#a-first-simulation-of-a-growing-population">Growing pop. I</a></li>
+      <li><a href="demography.html#a-second-growth-model">Growing pop. II</a></li>
+      <li><a href="demography.html#colonisation">Colonisation</a></li>
+      <li><a href="demography.html#colonization-extinction-equilibrium">Extinction</a></li>
+    </ul>
+  </li>
+    <li><a href = "neutral_marker.html">Neutral marker</a>
+    <ul>
+      <li><a href="neutral_marker.html#mutation-models">Mutation models</a></li>
+      <li><a href="neutral_marker.html#an-example-of-breakdown-of-differentiation-through-migration.">Migration</a></li>
+      <li><a href="neutral_marker.html#two-forms-of-linkage-disequilibrium-creating-a-genetic-map">Genetic map</a></li>
+    </ul>
+  </li>
+  <li><a href = "selection.html">Selection</a>
+      <ul>
+      <li><a href="selection.html#the-basic-selection-process">Basic selection</a></li>
+      <li><a href="selection.html#the-selection-mutation-drift-equilibrium">selection-mutation-drift equilibrium</a></li>
+      <li><a href="selection.html#mendelian-mice">Mendelian mice</a></li>
+    </ul>
+  </li>
+  </ul>
+</div>
+
+<div id="main_content">   <!--closed in generate:tuto.Rmd-->
+<div id='h1_wrapper'> <!--closed in generate:tuto.Rmd-->
+
+
+<h1 class="title toc-ignore">Demography</h1>
+
+
+
+</div>
+<!--closing h1_wrapper-->
+<div id="demographics" class="section level2">
+<h2>1 Demographics</h2>
+<p>This first tutorial/vignette will show the basic population dynamics as they happen in quantiNEMO (qN).</p>
+<div id="a-first-simulation-of-a-growing-population" class="section level3">
+<h3>1.1 A first simulation of a growing population</h3>
+<p>Let’s start with a basic setup file. Open notepad (or your personal favourite plain text editor) and type the text below into it (copying it directly can often give silly errors):</p>
+<blockquote>
+<p># A simple illustration of demography in quantiNEMO generations 20<br />
+patch_capacity 1000<br />
+patch_ini_size 4<br />
+mating_nb_offspring_model 3 # 3 = fecundity<br />
+mean_fecundity 1.5<br />
+regulation_model_adults 1 # 1 = yes; 0 = no (default)<br />
+stat {adlt.nbInd}<br />
+folder demography/exponential</p>
+</blockquote>
+<p>What does this text mean? The first line, starting with ‘#’ is a comment. You can write anything you like behind a #, it will be ignored by qN, but can be very handy for yourself to understand your file. All other elements in this file are the names of parameters of the model with behind them their values.</p>
+<p>These parameters function like switches. If our qN simulation is like a machine, the parameters are the buttons with which you tell it what to do. However, unlike many machines, you cannot change the settings while it is running; you have to ‘push’ the right buttons before you start the machine. We do this using a setup file. In it you can switch certain parameters on or off (by changing the value to 1 or 0 resp.), or you can provide the parameter with the value you want it to be (like setting the right temperature on your oven). However, for all parameters except two, qN has a default value (you can find the defaults in the manual). This means that there is a lot we do not need to tell qN for it to work properly, it will set the appropriate ’default- parameters automatically. The setup file above will tell qN all it needs to know for our first simulation.</p>
+<p><code>generations</code> specifies how long we want our simulation to run. Time in these simulations is always expressed in number of generations (instead of days/years) so that running a simulation on turtles will take as long as a simulation on bacteria.</p>
+<p><code>patch_capacity</code> specifies the carrying capacity of our site (i.e. the maximal number of individuals this site can support a.k.a. ‘K’ in many mathematical formulas). These two parameters are the only two that need to be specified for qN to work. However, we will make our simulation a bit more interesting and change a few of the other parameters as well.</p>
+<p>Instead of starting our simulation with a population at its maximum size (the carrying capacity), we will tell qN using `patch_ini_size how many individuals our population consists of at the start of our simulation (4 in this case).</p>
+<p><code>mating_nb_offspring_model</code> allows us to choose how we would like the population to grow. Several options exist in qN (see Section 3. 1 ‘Breeding’ in the manual <tobechecked>), but here we choose option 2, which means that for each generation qN lets each female have on average x offspring, where x is defined by the parameter <code>mean_fecundity</code>.</p>
+<p>Generations are non-overlapping in qN, this fecundity therefore specifies the lifetime reproductive success of each female in the population. Since by default each individual is hermaphrodite (and therefore also female), a fecundity of 1.5 will mean our population multiplies by 1.5 each generation, and therefore grows exponentially. If we do not want our population to grow beyond the carrying capacity of the site, we have to tell qN to ‘trim’ any excess individuals from the population over the carrying capacity, which we do by setting <code>regulation_model_adults</code> to 1. Lastly, behind stat we define the output we would like qN to save from this simulation; in this case we are only asking it to save the number of adults in each generation.</p>
+<p>Finally, the parameter <code>folder</code> tells qN in which repository the result of the simulation will be saved. If you don’t specify it, quantiNemo will automatically create a folder with the name of the input script and the date and time of the simulation.</p>
+<p>Now we will save this file as ‘Demo1.ini’, put it in the same folder as the quantiNemo executable and run the executable. The programme will ask you:<br />
+Please enter the settings file name (or ‘exit’ to terminate quantiNEMO):</p>
+<p>Type Demo1.ini (or the name you gave your setup-file, including any extensions) and press enter. The simulation will run now and should take less than a second. N.B. Make sure your file is not saved as ‘Demo1.ini.txt’; some text editors will automatically add the ‘.txt’ extension if not told otherwise.</p>
+<p>N.B. If qN does not ask you to enter the settings file name, but immediately starts the simulation, it is because you still have a file in your qN folder named ‘quantiNemo.ini’, which qN automatically runs. To prevent this from happening, rename this file.</p>
+<p>At the end of the simulation a new folder should have appeared in the folder containing qN called “exponential” . In this folder you will find five files. Open simulation_stats.txt and ignore the other files for the moment. The top of the file will look like this:</p>
+<table>
+<thead>
+<tr class="header">
+<th>replicate</th>
+<th>generation</th>
+<th>adlt.nbInd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>2</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>3</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>4</td>
+<td>14</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>5</td>
+<td>21</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>6</td>
+<td>32</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>7</td>
+<td>48</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>8</td>
+<td>72</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>9</td>
+<td>108</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>10</td>
+<td>162</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>11</td>
+<td>243</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>12</td>
+<td>365</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>13</td>
+<td>548</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>14</td>
+<td>822</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>15</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>Since we only performed one replicate, all entries in the replicate column say 1. If we would have done more replicates the other replicates would have appeared below the last entry line of this replicate. The second column is the generation number, which goes from 1, the first, to 50, our last generation. By default, qN will save the requested statistics each generation. Finally, the last column tells us the number of adult individuals present at that generation of our simulation. As we specified, the first generation has only four individuals. These four individuals had a fecundity of 1.5, meaning that (<span class="math inline">\(4*1.5= 6\)</span>) offspring are being produced. Because in qN generations are non-overlapping, generation 2 consists of these six individuals only (and not 4 old + 6 new = 10 individuals). We see that over generations the number of individuals increases rapidly, roughly following the exponential curve <span class="math inline">\(4 * 1.5^x\)</span>. However, since we cannot have half an individual, qN rounds up the number of individuals.</p>
+<p>From generation 15 onwards we see that the population stops growing exponentially and stays at 1000 individuals. This is exactly the carrying capacity we specified in our setup file. However, if we had not told qN to regulate the population size, qN would have ignored this and the population would have continued growing to approximately 1.7 billion individuals (!) making this simulation extremely memory-demanding.</p>
+<p><strong>Question</strong>: What parameter did we use to prevent our population to grow to 1.7 billion individuals?</p>
+<p><strong>Question</strong>: Would there be another way of obtaining the same results as above in qN without using this parameter? (Have a look in the manual at the <code>mating_nb_offspring_model</code> options.)</p>
+</div>
+<div id="a-second-growth-model" class="section level3">
+<h3>1.2 A second growth model</h3>
+<p>Instead of specifying a fixed fecundity for females, we could have also made the number of offspring negatively dependent on the current population density, making it grow logistically. In the Demo1.ini file, change <code>mating_nb_offspring_model</code> to 4, logistic regulation. Instead of the mean fecundity, we now need to specify growth_rate (we’ll set this as well to 1.5). Because logistically growing populations will grow asymptotically towards carrying capacity, we can set regulation_model_adults to 0, or leave it out of our setup file altogether, since qN has by default no population size trimming.</p>
+<p>Lastly, we can ask qN to also save the average fecundity of females as a statistic. Under a regime of density dependency, fecundity will change over time; it might be interesting to follow this. To do this, add fem.meanFec between the {} behind adlt.nbInd (separate the terms with a space, not comma). In fact, qN can create and save hundreds of different statistics for you. The list of available keywords for each statistic can be found in the ‘Summary statistics’ section. The statistics used in Tutorial 1 all come from the Summary statistics about Metapopulation.</p>
+<p>Your new file should look like this:</p>
+<blockquote>
+<p># A simple illustration of logistic growth in quantiNEMO<br />
+generations 20<br />
+patch_capacity 1000<br />
+patch_ini_size 4<br />
+mating_nb_offspring_model 6 # 6 = logistic regulation<br />
+growth_rate 1.5<br />
+stat {adlt.nbInd fem.meanFec} folder demography/logistic</p>
+</blockquote>
+<p>Resave this file as Demo2.ini and run it in qN. Again a new ’Demo2_<date>_<time>‘folder appears. The simulation_stats.txt file within contains a fourth column which specifies the female fecundity. Each statistic you add in the {} behind stat will appear as a column in the simulation_stat.txt file (do not use commas to separate these terms!). Unlike our previous simulation, where we fixed the female fecundity, here the fecundity is dependent on the population size. So in the beginning, when the population is small, we see very high fecundity. In the end fecundity drops to 2, just enough to keep the population at level. (Each hermaphrodite ’female’ gives birth to 1 offspring, but each of them also fathers a second offspring with one of the other hermaphrodite ‘females’, therefore total fecundity of each ‘female’ equals two!).</p>
+<p>Using software like R we can visualize the growth curves from section 1.1 and 1.2. (The needed r-script is included, but you can also use Excel for this particular exercise.)</p>
+<p>Here we clearly see the difference in behaviour between mating_nb_offspring_model at what time carrying capacity is reached: when growth is determined by female fecundity (as in section 1.1), growth is exponential until it is ruthlessly cut-off once it reaches 1000 individuals. When growth is determined by logistic regulation (this section), the population shows density dependent growth: fast when few individuals are around, but gently slowing down as it approaches carrying capacity.</p>
+<pre class="r"><code>    # Load simulation_stats.txt file from the fecundity simulation
+    demo1&lt;-read.table(&quot;demography/exponential/simulation_stats.txt&quot;,
+                      header=T
+                      )
+    # Load simulation_stats.txt file from the logistic growth simulation
+    demo2&lt;-read.table(&quot;demography/logistic/simulation_stats.txt&quot;,
+                      header=T)
+    # plotting the data
+    plot(demo1$generation,demo1$adlt.nbInd, 
+         xlim=c(0,20), xlab=&quot;generations&quot;,
+         ylab=&quot;nb. of individuals&quot;, type=&#39;l&#39;,
+         lty=2, lwd=2)
+    lines(demo2$generation,demo2$adlt.nbInd,
+          pch=2, lty=3, lwd=2)
+    legend(&quot;topleft&quot;, c(&quot;Fecundity&quot;, &quot;Logistic growth&quot;),
+           lty=c(2,3), lwd=2, cex=0.8,
+           title=&quot;mating_nb_offspring_model&quot;)</code></pre>
+<p><img src="demography_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><strong>Question:</strong> Above we plotted the number of individuals over time. How would the fecundity over time look for the two different scenarios? Produce this plot.</p>
+</div>
+<div id="colonisation" class="section level3">
+<h3>1.3 Colonisation</h3>
+<p>Of course most populations are not isolated. When a site is getting full, individuals will start migrating to other populations which are not yet at carrying capacity. Or they might colonize new sites. Here we will simulate such a scenario. As an example, we will take the linear colonization of the Hawaii Island chain by humans.</p>
+<p>As a basis for our new simulation, we will use the Demo2.ini file. We will have to add a new parameter stating that we want more than one patch (i.e. island). By default <code>patch_number</code> is set to 1, so we did not need to mention it specifically in our setup file up until now. However, now that we want to have 6 patches, we need to tell qN to use this parameter.</p>
+<p>Next we define how these patches are spatially connected to each other using <code>dispersal_model</code>. Several options exist, but we will use option 2, the 1D-Stepping Stone model which places the patches on a line and allows our migrants only to move one island forward or one island back. (Confusingly we will not use one of the Island models.) The last question concerning topography is what we will do with the borders of our map. What happens to migrants that hop to the west of our most western island? By default, qN assumes the world is circular, meaning that migrant will end up on the most eastern patch. Though that is true for Earth as a whole, it is (actually) less so on Hawaii. If we instead set <code>dispersal_border_model</code> to 2, the borders ‘absorb’ our adventurous migrants, never to be seen again.</p>
+<p>For our current scenario, we will decide that all Hawaiian Islands are equal i.e. the carrying capacity of each patch is equal (in reality these islands differ considerably in size): let’s consider 500 individuals per island the maximum. Since qN will automatically take the value behind a parameter and apply it everywhere unless instructed otherwise, we only need to write ‘500’ after <code>patch_capacity</code> once.</p>
+<p>By contrast, <code>patch_ini_size</code> should be different for the different patches. If we would leave it like this, all of our uninhabited patches would start with 4 individuals already present! Luckily, we can tell qN that we want different values for our different patches by putting our required values in {} separated by spaces (no commas!). This is called a ‘vector’:<code>patch_ini_size {4 0 0 0 0 0}</code>. Here we tell qN that the initial population size of our first patch is 4, and that our patches 2 ’ 6 all have an initial size of 0.</p>
+<p>Instead of repeating the ‘0’ five times, we can use a shorthand, rep: <code>patch_ini_size {4 rep(0, 5) }</code> The above line means exactly the same to qN as the previous line with all the zeros. We just told it to repeat the ‘0’ five times and thus could potentially save us some typing. (See the manual section <tobechecked> 2.4 ‘Macros’ for more examples.)</p>
+<p>For migration to occur, we need to give a migration rate. We will set dispersal_rate to 0.005, meaning that on average 0.5% of a patch’s population will emigrate. (N.B. If you provide dispersal_rate with a value larger than 1, qN will interpret it as the absolute number of migrants!) Now we are almost finished. But since we said we were modelling the colonization by humans, we will change our hermaphrodites into dioecious creatures by setting <code>mating_system</code> to 3, and reduce their growth_rate to 0.5</p>
+<p>Lastly, we add some new output statistics to our setup file: <code>adlt.nbInd_p</code> and <code>emigrants</code>. Your final setup file should look something like this:</p>
+<blockquote>
+<p># A scenario for a sequential colonization event<br />
+generations 200<br />
+patch_number 6<br />
+dispersal_model 2 # 2 = 1D Stepping-Stone model<br />
+dispersal_border_model 2 # 2 = Absorbing border model<br />
+patch_capacity 500<br />
+patch_ini_size {4 rep(0,5)} # = {4 0 0 0 0 0}</p>
+<p>mating_system 3 # 3 = dioecious random mating<br />
+mating_nb_offspring_model 6 # 6 = logistic growth<br />
+growth_rate 0.5<br />
+dispersal_rate 0.005<br />
+regulation_model_adults 1 # 1 = yes<br />
+folder demography/colonisation2<br />
+stat {adlt.nbInd emigrants fem.meanFec adlt.nbInd_p}</p>
+</blockquote>
+<p>Run the file (we named it colonisation.ini). Compared to the simulation_stats.txt file of the previous section, we see seven new columns. One new column shows the average number of emigrants per patch. The other six of new columns show the population sizes of each of our patches. Again, we plot our data using R (you can use the included script).</p>
+<pre class="r"><code>    # Loadin statistics
+    colony&lt;-read.table(&quot;demography/colonisation1/simulation_stats.txt&quot;,
+                       header=T)
+
+    # plotting the population sizes
+    par(mar=c(5,4,1,4)+0.3)
+    plot(colony$generation, colony$adlt.nbInd_p1,
+         pch=&#39;1&#39;, cex=0.7, col=&quot;grey40&quot;,
+         xlab=&quot;time in generations&quot;, 
+         ylab=&quot;nb. of individuals&quot;)
+    for(i in 2:6) points(colony$generation, colony[,5+i],
+                         pch=as.character(i), cex=0.7, 
+                         col=&quot;grey40&quot;)
+    # plotting the number of migrants and the mean fecundity
+    par(new = TRUE)
+    plot(colony$generation, colony$emigrants, type = &quot;l&quot;,
+         lwd=1, ylim=c(0,10), axes = FALSE, bty = &quot;n&quot;,
+         xlab = &quot;&quot;, ylab = &quot;&quot;)
+    axis(side=4)
+    lines(colony$generation, colony$fem.meanFec, 
+          lty=2, lwd=1)
+    mtext(&quot;nb. of offspring or migrants&quot;,
+          side=4, line=3)
+    # make a legend here!
+    legend(&quot;topright&quot;, c(&quot;nb. of migrants/patch&quot;,
+                         &quot;nb. of offspring/female&quot;,
+                         &quot;nb individuals in patch 1&quot;),
+           bg=&quot;white&quot;, cex=0.8, lty=c(1,2,NA), pch=c(NA,NA,&quot;1&quot;))</code></pre>
+<p><img src="demography_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>A single patch grows in size following the same curve as in section 1.2, which was expected. But before patch 1 has reached carrying capacity (the ’1’s in the plot), patch 2 has been colonized and the population there starts growing (the ’2’s). This is because the population on patch 1 already starts producing emigrants after a few generations as can be seen by the continuous line. The number of emigrants per inhabited patch levels around 2.5, exactly the value we would expect based on our parameter settings. This makes the colonization quite a regular process, even with only half a percent of emigrants each generation the whole archipelago will be fully populated after around 120 generations.</p>
+<p>However, your simulation might not look exactly the same as shown in the graph above. The exact time point at which each island is being colonized is not fixed, but dependent on random events. Migration rate determines the probability that an individual will leave its current patch. Since it is a probability, the actual number of migrants is subject to chance. Moreover, for a successful colonisation to take place, we need both a male and a female coloniser to reach the same island at the same time! Therefore, when running the simulation multiple times, the timing of events would not be same between replicates. The next section will look more into these stochastic processes of quantiNemo.</p>
+</div>
+<div id="colonization-extinction-equilibrium" class="section level3">
+<h3>1.4 Colonization-Extinction equilibrium</h3>
+<p>In our previous example populations could grow without problems or risks. However, often disaster can strike, wiping out a complete populations. If no lasting damage was done to the habitat, nearby populations could afterwards recolonize the empty patch. But migration needs to be frequent enough for the metapopulation to persist. In this section we will look at the interplay between extinction and recolonization by migration. Understanding what level of disturbance a species can still tolerate without going extinct is very important for successful conservation strategies.</p>
+<p>We will stay in the same scenario as before, studying the colonization of the Hawaiian Islands. However, to add a level of complexity, we will not study actively migrating humans, but instead think about a passive disperser, such as a small insect. It is dependent on the prevailing winds and ocean currents (going east-west around Hawaii) for its migration.</p>
+<p>For our current scenario we would therefore need a sort of asymmetrical stepping-stone dispersal model, allowing migration in mainly one direction (west). qN does not provide such a ready-made scenario. However, it does allow us to define a different dispersal rate from each patch to each other patch. Instead of a single dispersal rate value, we will provide qN with a matrix of values, containing the specific dispersal rate from each patch to each patch. Have a look at the setup file below.</p>
+<blockquote>
+<p># Finding a colonization-extinction equilibrium<br />
+generations 1000<br />
+patch_number 6<br />
+dispersal_rate {{0.9946 0.0050 0.0001 0.0001 0.0001 0.0001}<br />
+{0.0001 0.9946 0.0050 0.0001 0.0001 0.0001}<br />
+{0.0001 0.0001 0.9946 0.0050 0.0001 0.0001}<br />
+{0.0001 0.0001 0.0001 0.9946 0.0050 0.0001}<br />
+{0.0001 0.0001 0.0001 0.0001 0.9946 0.0050}<br />
+{0.0001 0.0001 0.0001 0.0001 0.0001 0.9995}}</p>
+<p>patch_capacity 500<br />
+patch_ini_size {4 rep(0,5)}<br />
+mating_system 3 # 3 = dioecious random mating<br />
+mating_nb_offspring_model 6 # 6 = logistic growth<br />
+growth_rate 0.5<br />
+regulation_model_adults 1 # 1= yes, 0 = no regulation<br />
+extinction_rate 0.01<br />
+stat {adlt.nbPops adlt.nbInd emigrants adlt.nbInd_p}<br />
+replicates 20<br />
+seed 42<br />
+folder demography/colonisation2</p>
+</blockquote>
+<p>The matrix can almost be considered a vector of vectors (indicated by the {}). Each row contains the dispersal rates of a single patch to all the patches in the model. The first value of the matrix therefore specifies the probability of individuals of patch 1 that will ‘disperse’ to patch 1 (i.e. stay where they are). The second value indicates the probability of individuals of patch 1 that will disperse to patch 2. The third value from the top row is the dispersal rate from patch 1 to patch 3 etc. etc.</p>
+<p>Two things should be noted though. First the diagonal of the matrix is the probability that an individual will stay in its patch. Secondly, because total probability should be unity, each row should sum up to one.</p>
+<p><strong>Question</strong>: why is this not true for each column?</p>
+<p>From our current dispersal rate matrix we can read that the large majority of individuals will stay in their current patch (the high values in the diagonal). The value right behind the diagonal (0.005) is the probability to disperse to the next patch and corresponds with our dispersal rate value from the previous example. However, this value is only behind the diagonal, not in front of it. This makes dispersal asymmetric in our current scenario: the probability to migrate to the next patch (the island to the west) is much higher than to the previous patch (the island to the east), symbolising the prevailing ocean currents. However, we see that dispersal to any of the other patches is not null. A tiny probability exists for an insect to end up on any of the other islands, e.g. by animal transportation.</p>
+<p>The remainder of the setup file is based on the colonisation.ini file with some slight modifications. By now you should be able to see and understand most adjustments yourself. The big addition compared to the last section is the introduction of extinction_rate. This gives the probability per patch per generation of going extinct i.e. all individuals will be removed from that patch symbolising an epidemic outbreak or volcano eruption.</p>
+<p>The other big difference is the addition of replicates. As with real world experiments, it is always a good idea to repeat an experiment multiple times to see if a particular outcome is robust. This is especially true for any simulation with a lot of stochasticity. The previous simulation already had stochasticity introduced in the form of dispersal probability. The current model, however, will be much more sensitive through the probability of extinction of a complete subpopulation. This could change the outcome of the simulation so heavily, that it is advisable to perform multiple replicates.</p>
+<p><strong>Question</strong>: Generally in science, when comparing findings, one wants to know if these are ‘significant’ by using some statistical test or other. When using computer simulations, statistical tests are hardly ever used. Why do you think that is so?</p>
+<p>The last parameter seed is also linked to the stochasticity of the simulation. Ironically enough, a computer has a hard time producing random numbers. It always needs some input to transmutate into something ‘random’. Normally a program will use the current data-time to transmogrify, but you can also provide it with a ‘seed’ from which it will start producing random numbers. Once it has its first random number produced, it can use that to produce consecutive random numbers. Seed allows us to reuse exactly the same stochasticity. This is practical when you would like to reproduce a specific outcome you once found, or when different people need to have exactly the same stochastic outcome. Hence by defining the seed at 42 we will now make sure that you will get the same outcome as shown in this tutorial.</p>
+<p><strong>Question</strong>: Why are your model outcomes exactly the same when you run a setup file twice with the same seed, but not when you run two replicates within one setup file using seed?</p>
+<p>Save this file and run it. On the screen you will now see that qN runs the simulation, one replicate after the other. It also shows you at what generation the current replicate is at and if the population went extinct before the end of the simulation. We see that in replicate 1 the entire population went extinct at generation 805, but that replicate 2 made it to the end of the simulation. What happened there? We can open the simulation_stats.txt file to look into the details of the simulations. The first 1000 lines of this file are the data of the first replicate, the lines 1001-2000 are the data of the second replicate etc., as indicated by the number in the column ‘replicate’. We can scroll through this data file of course, but it is easier to visualise what is going on using R.</p>
+<pre class="r"><code>    # Load the stat
+    extinct&lt;-read.table(&quot;demography/colonisation2/simulation_stats.txt&quot;,
+                        header=T)
+    # extract the data of replicate 1 and 2
+    rep1&lt;-extinct[extinct$replicate==1,]
+    rep2&lt;-extinct[extinct$replicate==2,]
+    
+        # define a function to plot the data 
+        plot.extinction&lt;-function(mat, tit=&quot;&quot;){
+            par(mar=c(5,4,3,4)+0.1)
+            colors &lt;- rainbow(6,s = 0.8) 
+            colors &lt;- c(&quot;orange&quot;,&quot;blue&quot;,&quot;deepskyblue&quot;,&quot;limegreen&quot;,&quot;red&quot;,&quot;purple&quot;)
+            plot(mat$generation,mat$adlt.nbInd_p1,main=tit,
+                 type=&quot;l&quot;,lty=1, col=colors[1],
+                 xlab=&quot;time in generations&quot;, ylab=&quot;nb. of individuals&quot;)
+            par(col=colors[i])
+            for(i in 2:6) lines(mat$generation, mat[,5+i],
+                                col=colors[i])
+                par(col=&quot;black&quot;)
+            mtext(&quot;total nb. of emigrants&quot;,side=4, line=3)
+        }
+    
+    # plot the data of replicate 1 and 2
+    par(mfrow=c(2,1),cex=0.72,col=&quot;black&quot;)
+    plot.extinction(rep1, tit=&quot;First replicate&quot;)
+    colors &lt;- c(&quot;orange&quot;,&quot;blue&quot;,&quot;deepskyblue&quot;,&quot;limegreen&quot;,&quot;red&quot;,&quot;purple&quot;)
+    legend(&quot;right&quot;, paste(&quot;patch&quot;,1:6), lty = 1, col=colors)
+    plot.extinction(rep2, tit=&quot;Second replicate&quot;)</code></pre>
+<p><img src="demography_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>These figures show the population size of each patch over time. We can see that in the first replicate, the population go extinct after about 350 generations, while for replicate 2, the simulation goes until the end. The question now is why the first replicate went extinct when the second one made it until generation 1000.Remember that migrating one patch further is easier than migration one patch back. It is therefore the previous patch that has the main responsibility for recolonisation. But patch 1 does not have a previous patch, so the chance of patch 1 being recolonized is very low. Once the population on patch 1 is extinct, a domino effect might start. Patch 2 goes extinct at generation 355 (almost simultaneously with patch 5, which recovers quickly) and cannot be recolonized easily, since patch 1 was already extinct.</p>
+<p>Moreover, as the number of populations reduces (and with it the total number of individuals), the total number of emigrants drops, reducing the chance of colonisation even further. In the first replicate we can very clearly see that the patches go extinct in order, ending with patch 6. During the second replicate, patch 1 goes extinct 4 times (around ~generation 250, 320 and 500 and 820), but three time had the luck that many migrants were around to recolonise it.</p>
+<p>Here we analysed the order of events in two specific cases, but perhaps we can find some patterns across the data. We could use R to extract more data from our sheet, but luckily qN already has the average values of each statistic across all our simulations. Open the file simulation_mean.txt and you will see the same columns as in the simulation_stats.txt file, but now they contain the average values across simulations (hence the column ‘replicate’ is missing). So we see for example that at generation 6 the total population size in our simulation was on average 27.89 individuals across replicates. Moreover, we have a column extra: alive.rpl shows how many of our 20 replicates are still ‘alive’, meaning still have individuals in them. This is important information, because all the values are averages across alive replicates only. See for example the graph below.</p>
+<pre class="r"><code>    # select the simulation_mean.txt file
+    mean.ext&lt;-read.table(&quot;demography/colonisation2/simulation_mean.txt&quot;,
+                         h=T)
+    # plotting the number of inhabited patches 
+  # and alive replicates across time 
+    par(mar=c(5,4,1,4)+0.1, mfrow=c(1,1))
+    plot(mean.ext$generation, mean.ext$alive.rpl,
+         ylim=c(0,20), type=&quot;l&quot;,lty=1, lwd=2,
+         col=&quot;grey&quot;, xlab=&quot;time in generations&quot;,
+         ylab=&quot;&quot;, axes=FALSE)
+    axis(4)
+    mtext(&quot;alive replicates&quot;, side=4, line=3)
+    par(new=TRUE)
+    plot(mean.ext$generation, mean.ext$adlt.nbPops, 
+         type=&quot;l&quot;, lty=1, lwd=1, xlab=&quot;&quot;,
+         ylab=&quot;inhabited patches&quot;)</code></pre>
+<p><img src="demography_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Even as the number of alive replicates drops, because all patches in those replicates went extinct, the average number of inhabited patches remains stable around 4.5. This is the effect of averages being calculated across alive replicates only, in this case twelve replicates at generation 1000. The average number of inhabited patches across all simulation would have been ( 12<em>4.5 + 8</em>0 ) / 20 = 2.7 inhabited patches. What we can learn from this graph however, is that simulations that survived were not on the brink of extinction, but quite healthy with at least 4 patches inhabited.</p>
+<p>Instead of number of patches, we could also look at how the total population size varies over time. Moreover, it would be good to see how the population size varies across replicates. qN automatically also calculates the variance around each mean, found in the simulation_var.txt file. Using the data from both the simulation_mean.txt and simulation_var.txt file we can plot the population trend among the simulation replicates plus/minus one standard deviation (do not forget to take the square root of the simulation_var.txt values):</p>
+<pre class="r"><code>    # select the simulation_var.txt file
+    var.ext&lt;-read.table(&quot;demography/colonisation2/simulation_var.txt&quot;, 
+                        h=T)
+    # plotting 
+    plot(mean.ext$generation, mean.ext$adlt.nbInd,
+         ylim=c(0,3000),type=&quot;l&quot;,lty=1, lwd=2,
+         xlab=&quot;time in generations&quot;, ylab=&quot;population size&quot;)
+    lines(mean.ext$generation, 
+          I(mean.ext$adlt.nbInd+sqrt(var.ext$adlt.nbInd)))
+    lines(mean.ext$generation,
+          I(mean.ext$adlt.nbInd-sqrt(var.ext$adlt.nbInd)))</code></pre>
+<p><img src="demography_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>What we can conclude from this is that extinction seems to be a dichotomous process in our simulations. Either the population is healthy with many individuals across several patches, or the population is completely extinct. But across replicates we do not see any obvious pattern of steady decline to extinction. The power of such a simulation model is that we could now start studying the influence certain parameters have on the behaviour of such populations? How does the carrying capacity influence extinction risk? How strong is the effect of fecundity? Are hermaphrodites less sensitive to extinction than dioecious species? By varying certain parameters and rerunning the simulation in many replicates, we can create predictions of population demographic behaviour, something which would be very difficult to do in vivo.</p>
+<p><strong>Question</strong>: Rerun the extinction.ini setup file with a different value for seed and reproduce the graphs above. Do they look very different from the ones above? Which ones have changed less with the changing of the seed and which ones more? Why? What if you would run your setup file twice with different seeds, but with a 1000 replicates. Which graphs do you expect to be very similar and which ones still very different between the two runs?</p>
+</div>
+<!--closing main_content-->
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+---
+title: "neutral markers"
+output: 
+  html_document:
+    includes:     
+      in_header: "header.html"
+---
+
+
+
+</div><!--closing h1_wrapper-->
+
+```{r child = '../neutral_genetic.Rmd'}
+```
+</div>  <!--closing main_content-->
