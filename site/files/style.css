@@ -75,16 +75,17 @@ h3
 {
   background-color:#424242;
   border-radius:3px;
+  padding-top: 25px;
 }
 
 h1
 {
   background-image:url("title.png");
   background-position:right;
-  background-size:320px;
+  background-size:420px;
   margin-right:50px;
   background-repeat:no-repeat;
-  padding-top:65px;
+  padding-top:40px;
   padding-bottom:5px;
   font-size:40px;
   color:#ccc;

@@ -1,0 +1,41 @@
+---
+title: "Comparing different mutation model"
+output:
+  html_document: default
+---
+
+
+
+```{r}
+devtools::load_all("../../RQuantiNemo")
+```
+####General parameters
+```{r}
+parameters = list("patch_capacity" = 200,
+                  "generations" = 1000,
+                  "quanti_loci" = 1,
+                  "quanti_all" = 3,
+                  "replicates" = 25,
+                  "quanti_selection_model" = 1,
+                  "quanti_stab_sel_optima" = 0.75,
+                  "quanti_stab_sel_intensity" = 20,
+                  "stat" = "{q.adlt.a.freq}"
+                  )
+my_sim = new("simulation", parameters = parameters, sim.dir = "plot/")
+
+```
+
+```{r}
+sucess <- run(my_sim, verbose = F)
+```
+
+
+```{r}
+stat = loadStatRep(my_sim)
+par(col="#c0c0c0")
+plot(stat$q.adlt.a.freq_a3[stat$replicate ==1],ylim = c(0,1),xlim = c(0,1000),t="l", xlab = "", ylab="",axes = F,lwd=2,asp = 150)
+for (i in 1:25){
+  lines(stat$q.adlt.a.freq_a3[stat$replicate ==i],lwd=2)
+}
+#This picture was then exported as pdf, and the background was removed by Photoshop. Moreoever, the input in not seeded so it cannot be reproduced exactly. Sorry for poor workflow :(
+```
