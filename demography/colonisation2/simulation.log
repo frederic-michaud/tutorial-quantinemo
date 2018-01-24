@@ -1,9 +1,10 @@
 #############################################
-#           q u a n t i N E M O 2           #
-#   version 2.0.0 [Jan 12 2018; 11:06:39]   #
+#                quantiNemo 2               #
+#   version 2.0.0 [Jan 24 2018; 12:08:46]   #
+#       Commit N° : b1787ad-dirty           #
 #                                           #
 #              Simulation log               #
-# simulation started on 16-01-2018 11:54:51 #
+# simulation started on 24-01-2018 17:33:47 #
 #              (log as input)               #
 #############################################
 
@@ -39,7 +40,7 @@ extinction_rate 0.01
 
 
 #############################################
-#  simulation ended on 16-01-2018 11:55:02  #
+#  simulation ended on 24-01-2018 17:33:58  #
 #                                           #
 #  duration of the simulation was 00:00:11  #
 #############################################

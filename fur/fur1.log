@@ -1,9 +1,10 @@
 #############################################
-#           q u a n t i N E M O 2           #
-#   version 0.9.0 [Nov 20 2017; 11:27:43]   #
+#                quantiNemo 2               #
+#   version 2.0.0 [Jan 24 2018; 12:08:46]   #
+#       Commit N° : b1787ad-dirty           #
 #                                           #
 #              Simulation log               #
-# simulation started on 23-11-2017 09:26:54 #
+# simulation started on 24-01-2018 17:36:57 #
 #              (log as input)               #
 #############################################
 
@@ -12,7 +13,7 @@
 _settings_file fur1.ini
 filename fur1
 folder fur
-seed {1511425614 5023}
+seed {1516811817 1778}
 
 ## metapop
 generations 2
@@ -35,7 +36,7 @@ mating_system 3
 
 
 #############################################
-#  simulation ended on 23-11-2017 09:26:54  #
+#  simulation ended on 24-01-2018 17:36:57  #
 #                                           #
 #  duration of the simulation was 00:00:00  #
 #############################################

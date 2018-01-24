@@ -76,10 +76,10 @@ However, we will start our analysis through a big lens by looking at the general
 ```{r}
 	# a) high selection intensity (low omega)
 	omegaA<-1
-	stat_A<-read.table(myfileA<-"selection/intensity1_stats.txt",h=T)
+	stat_A<-read.table(myfileA<-"selection/i1/selection1_stats.txt",h=T)
 	# b) low selection intenstiy (high omega)
 	omegaB<-20
-	stat_B<-read.table(myfileB<-"selection/intensity20_stats.txt",h=T)
+	stat_B<-read.table(myfileB<-"selection/i20/selection1_stats.txt",h=T)
 	
 	# Plotting number of alleles and heterozygosity over time
 	par(mfrow=c(2,3))
@@ -236,10 +236,10 @@ This simulation will take quite a while, since we have to perform 10 simulations
 	# Read the files into R
 	
 	# Select the xxx_mean.txt file from the simulation with selection (the corresponding variance file will be automatically read as well)
-	sel.mean<-read.table( spath<-"selection/mutation_with_selection_mean.txt",h=T); sel.var<-read.table(paste(substr(spath,1,nchar(spath)-9),"_var.txt",sep=""),h=T)
+	sel.mean<-read.table( spath<-"selection/mutation_with_selection/selection2_mean.txt",h=T); sel.var<-read.table(paste(substr(spath,1,nchar(spath)-9),"_var.txt",sep=""),h=T)
 	
 	# Select the xxx_mean.txt file from the simulation withOUT selection (the corresponding variance file will be automatically read as well)
-	drft.mean<-read.table( dpath<-"selection/mutation_without_selection_mean.txt",h=T); drft.var<-read.table(paste(substr(dpath,1,nchar(dpath)-9),"_var.txt",sep=""),h=T)
+	drft.mean<-read.table( dpath<-"selection/mutation_without_selection/selection2_mean.txt",h=T); drft.var<-read.table(paste(substr(dpath,1,nchar(dpath)-9),"_var.txt",sep=""),h=T)
 	
 	### Allelic variance
 	

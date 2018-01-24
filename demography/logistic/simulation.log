@@ -1,9 +1,10 @@
 #############################################
-#           q u a n t i N E M O 2           #
-#   version 0.9.0 [Nov 17 2017; 15:39:05]   #
+#                quantiNemo 2               #
+#   version 2.0.0 [Jan 24 2018; 12:08:46]   #
+#       Commit N° : b1787ad-dirty           #
 #                                           #
 #              Simulation log               #
-# simulation started on 20-11-2017 10:06:12 #
+# simulation started on 24-01-2018 17:33:37 #
 #              (log as input)               #
 #############################################
 
@@ -11,7 +12,7 @@
 ## simulation
 _settings_file Demo2.ini
 folder demography/logistic
-seed {1511168772 3742}
+seed {1516811617 1845}
 
 ## metapop
 generations 20
@@ -27,7 +28,7 @@ stat {adlt.nbInd fem.meanFec}
 
 
 #############################################
-#  simulation ended on 20-11-2017 10:06:12  #
+#  simulation ended on 24-01-2018 17:33:37  #
 #                                           #
 #  duration of the simulation was 00:00:00  #
 #############################################

@@ -1,0 +1,44 @@
+#############################################
+#                quantiNemo 2               #
+#   version 2.0.0 [Jan 24 2018; 12:08:46]   #
+#       Commit N° : b1787ad-dirty           #
+#                                           #
+#              Simulation log               #
+# simulation started on 24-01-2018 17:40:34 #
+#              (log as input)               #
+#############################################
+
+
+## simulation
+_settings_file selection2.ini
+all_combinations 0
+filename selection2
+folder selection/mutation_with_selection
+replicates 10
+seed {1516812034 298399111}
+
+## metapop
+generations 5000
+patch_capacity 10000
+selection_pressure_definition 1
+
+## quanti
+quanti_all 255
+quanti_allelic_var 4
+quanti_ini_allele_model 0
+quanti_loci 1
+quanti_mutation_rate 1e-4
+quanti_selection_model 1
+quanti_stab_sel_intensity 10
+quanti_stab_sel_optima 0
+
+## save_stats
+stat {q.adlt.nbAll q.adlt.hs q.meanG_p q.varG_p}
+stat_log_time (1 1, 2 100)
+
+
+#############################################
+#  simulation ended on 24-01-2018 17:45:40  #
+#                                           #
+#  duration of the simulation was 00:05:06  #
+#############################################

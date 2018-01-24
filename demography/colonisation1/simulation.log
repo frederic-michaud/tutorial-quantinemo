@@ -1,9 +1,10 @@
 #############################################
-#           q u a n t i N E M O 2           #
-#   version 0.9.0 [Nov 20 2017; 11:27:43]   #
+#                quantiNemo 2               #
+#   version 2.0.0 [Jan 24 2018; 12:08:46]   #
+#       Commit N° : b1787ad-dirty           #
 #                                           #
 #              Simulation log               #
-# simulation started on 20-11-2017 12:55:46 #
+# simulation started on 24-01-2018 17:33:43 #
 #              (log as input)               #
 #############################################
 
@@ -11,7 +12,7 @@
 ## simulation
 _settings_file colonisation1.ini
 folder demography/colonisation1
-seed {1511178946 5033}
+seed {1516811623 1871}
 
 ## metapop
 generations 200
@@ -37,7 +38,7 @@ regulation_model_adults 1
 
 
 #############################################
-#  simulation ended on 20-11-2017 12:55:46  #
+#  simulation ended on 24-01-2018 17:33:44  #
 #                                           #
-#  duration of the simulation was 00:00:00  #
+#  duration of the simulation was 00:00:01  #
 #############################################

@@ -240,6 +240,15 @@ Great, our simulation now has its populations defined and a genetic architecture
 
 These are so called sequential parameters (see section <tobechecked> 2.8.2 in the manual). Unlike vectors, these values are not surrounded by the {}. Like this, qN realizes that these values are not to be used during the same simulation for different patches, but instead should be used to create a so called 'batch' of different simulations, each with a different value for dispersal_rate.   
 
+Since we want them to be saved in different and easly to recognise folder, we will add another sequential parameter containing the name of the folder in which we can save the result. We will also tell quantiNemo to associate the sequential parameter one by one, and not to run every possible scenario (see section <tobechecked> of the manual). Notice also that for readability reason, the first argument was extended over 5 lines (thanks to the \\ sign, c.f <tobechecked>), but this should really be understood as a single argument. 
+
+> folder neutral_genetic/migration_neutral_0.1 \\   
+>        neutral_genetic/migration_neutral_0.05 \\   
+>     	neutral_genetic/migration_neutral_0.01 \\   
+>     	neutral_genetic/migration_neutral_0.005 \\   
+>     	neutral_genetic/migration_neutral_0.001   
+> all_combinations 0 
+
 For our experiment, choosing the right output we want from our model is just as important as the model itself. First of all, since we have such a peculiar distribution of alleles, it would be good to track the number of alleles per locus. But if we really want to follow how dispersal influences the population differentiation, we should also track the FST of our populations. However, we expect quite different behaviour from the FST of the first locus and that of the second locus. Conveniently, qN allows you to separate this (and many other) statistics by locus, by site, or by each locus-site combination. We do not expect our sites to differ strongly from each other, so we will only separate it by locus, averaged over all sites. Our output section will therefore look as follows:   
 
 > stat {n.adlt.nbAllele n.adlt.Fst n.adlt.Fst_l}
@@ -248,15 +257,15 @@ The architecture of our simulation is now complete. Run it for 1000 generations.
 
 ```{r}
 	# specify the correct file for each simulation
-	df.m.1<-read.table("neutral_genetic/migration_neutral/rate0.1_mean.txt",
+	df.m.1<-read.table("neutral_genetic/migration_neutral_0.1/neutral_migration_mean.txt",
 	                   header=TRUE)	# ...dispersal_rate 0.1 (index 1)
-	df.m.05<-read.table("neutral_genetic/migration_neutral/rate0.05_mean.txt",
+	df.m.05<-read.table("neutral_genetic/migration_neutral_0.05/neutral_migration_mean.txt",
 	                    header=TRUE)	# ...dispersal_rate 0.05 (index 2)
-	df.m.01<-read.table("neutral_genetic/migration_neutral/rate0.01_mean.txt",
+	df.m.01<-read.table("neutral_genetic/migration_neutral_0.01/neutral_migration_mean.txt",
 	                    header=TRUE)	# ...dispersal_rate 0.01 (index 3)
-	df.m.005<-read.table("neutral_genetic/migration_neutral/rate0.005_mean.txt",
+	df.m.005<-read.table("neutral_genetic/migration_neutral_0.005/neutral_migration_mean.txt",
 	                     header=TRUE)	# ...dispersal_rate 0.005 (index 4)
-	df.m.001<-read.table("neutral_genetic/migration_neutral/rate0.001_mean.txt",
+	df.m.001<-read.table("neutral_genetic/migration_neutral_0.001/neutral_migration_mean.txt",
 	                     header=TRUE)	# ...dispersal_rate 0.001 (index 5)
 	
 	# Combine these tables in a single list

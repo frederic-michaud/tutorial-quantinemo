@@ -1,0 +1,40 @@
+#############################################
+#                quantiNemo 2               #
+#   version 2.0.0 [Jan 24 2018; 12:08:46]   #
+#       Commit N° : b1787ad-dirty           #
+#                                           #
+#              Simulation log               #
+# simulation started on 24-01-2018 17:35:06 #
+#              (log as input)               #
+#############################################
+
+
+## simulation
+_settings_file neutral_migration.ini
+all_combinations 0
+filename neutral_migration
+folder neutral_genetic/migration_neutral_0.005
+seed {1516811706 14470147}
+
+## metapop
+generations 1000
+patch_capacity 1000
+patch_number 10
+
+## ntrl
+ntrl_all 10
+ntrl_allelic_file "inifreq.txt"
+ntrl_loci 2
+
+## save_stats
+stat {n.adlt.nbAll n.adlt.fst n.adlt.fst_l}
+
+## dispersal
+dispersal_rate 0.005
+
+
+#############################################
+#  simulation ended on 24-01-2018 17:35:11  #
+#                                           #
+#  duration of the simulation was 00:00:05  #
+#############################################
