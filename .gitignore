@@ -1,0 +1,11 @@
+*.DS_Store
+.RData
+.Rhistory
+.gitignore.swp
+quantiNemo.log
+quantiNemo2
+quantiNemo2.log
+site/.RData
+site/.Rhistory
+test-linkage.Rmd
+test-linkage.nb.html
