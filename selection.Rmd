@@ -70,7 +70,7 @@ Because process of selection is expected to go much faster than the process of m
 > generations 10
 > patch_capacity 10000
 
-Combine all the code in a single file and run the simulation. Because we entered two values for the selection intensity, we created a batch file with two simulations: one where the patch_stab_sel_intensity 5 and on where patch_stab_sel_intensity 20. qN should produce files for each of those settings. Besides the log, legend, mean, stat and var-files, and the .dat-files of each generation containing the genotypes, you will now also find .gen-files in the output folder. These files are very similar to the .dat-files, except that they contain the genotypic trait value for each individual instead of their genotype.
+Combine all the code in a single file and run the simulation (we called it `selection1.ini`). Because we entered two values for the selection intensity, we created a batch file with two simulations: one where the patch_stab_sel_intensity 5 and on where patch_stab_sel_intensity 20. qN should produce files for each of those settings. Besides the log, legend, mean, stat and var-files, and the .dat-files of each generation containing the genotypes, you will now also find .gen-files in the output folder. These files are very similar to the .dat-files, except that they contain the genotypic trait value for each individual instead of their genotype.
 However, we will start our analysis through a big lens by looking at the general statistics. Read the xxx_stats.txt file for each simulation and plot the number of alleles, the heterozygosity and the mean genotypic value over time. 
 
 ```{r}
@@ -228,17 +228,17 @@ With selection, mutation and drift, we have a lot of chance processes working at
 > generations 5000   
 > replicates 10   
 
-This will be our complete setup file. Safe your file with these commands and run it.   
+This will be our complete setup file. Safe your file (we called it `selection2.ini`) with these commands and run it.   
 
 This simulation will take quite a while, since we have to perform 10 simulations for each of our two scenarios (selection, no selection). In the meantime, we can think about how to visualise our results. We are interested in overall trends, so we should plot the result averages from the xxx_mean.txt file. However, we can only know if this is regular behaviour of the simulation once we see the spread of all simulations around it. We should therefore also use the variances of the simulation results from the xxx_var.txt file. However, rather than directly plotting the variance data, it would make more sense to instead take the square root of those values, transforming them in the more intuitive standard deviations (stdev) and plotting these around the mean across simulations (so for each setup file, we would plot three lines per statistic: the mean across replicates, the mean + 1 stdev. , the mean - 1 stdev.).  Below we have done just that:
 
 ```{r fig.height = 4, fig.width = 12, fig.align = "center"}
 	# Read the files into R
 	
-	# Select the xxx_mean.txt file from the simulation with selection (the corresponding variance file will be automatically read as well)
+	# Select the file from the simulation with selection
 	sel.mean<-read.table( spath<-"selection/mutation_with_selection/selection2_mean.txt",h=T); sel.var<-read.table(paste(substr(spath,1,nchar(spath)-9),"_var.txt",sep=""),h=T)
 	
-	# Select the xxx_mean.txt file from the simulation withOUT selection (the corresponding variance file will be automatically read as well)
+	# Select the file from the simulation without selection 
 	drft.mean<-read.table( dpath<-"selection/mutation_without_selection/selection2_mean.txt",h=T); drft.var<-read.table(paste(substr(dpath,1,nchar(dpath)-9),"_var.txt",sep=""),h=T)
 	
 	### Allelic variance
@@ -357,7 +357,7 @@ How do we write this down in our allelic file? Let's define B/b as locus 1 with 
 > 2     1     0 		# locus 2 allele 1 = C   
 > 2     2     -0.5		# locus 2 allele 2 = c   
 
-Of course in the current system, our genes should not be additive: Genotype 'Bb' does not result in a brown-blackish mouse with phenotypic value 0.75, but in a full black one. How do we implement this dominance in qN? Have a look at the dominance section of the manual. As with the allelic effects, qN could assign random dominance effects, but just as before, we want to assign the dominance effects ourselves.  To do this we need to create another file.    
+Of course in the current system, our genes should not be additive: Genotype 'Bb' does not result in a brown-blackish mouse with phenotypic value 0.75, but in a full black one. How do we implement this dominance in qN? Have a look at the dominance section of the manual. As with the allelic effects, qN could assign random dominance effects, but just as before, we want to assign the dominance effects ourselves.  To do this we need to create another file. This file will be called `fur_dominance.txt`
 
 > quanti_dominance_file "fur_dominance.txt"
 
@@ -373,7 +373,7 @@ This file will look very similar to our allelic effects file. The top part consi
 1		1	2	1   
 2		1	2	1  
 
-Now we need to add only one more layer of genetic interactions: the interactions between loci i.e. epistasis. Reading section 8.1.3 'Epistatic effects' <tobechecked> you will notice that the implementation in qN is very similar to that of dominance. So we will have to create another text file named fur_epistasis.txt   
+Now we need to add only one more layer of genetic interactions: the interactions between loci i.e. epistasis. Reading section 8.1.3 'Epistatic effects' <tobechecked> you will notice that the implementation in qN is very similar to that of dominance. So we will have to create another text file named `fur_epistasis.txt`
 
 > quanti_epistatic_file "fur_epistasis.txt"
 
@@ -382,7 +382,7 @@ and enter at the top the FILE_INFO section. We will only need to specify two bit
 **Question**: Looking at the allelic and dominance effects, which genotype does not yet give the 'correct' phenotypic output? What should be the epistatic value for this genotype? Enter this value behind the corresponding genotype and add a '0' behind all others.
 
 Our genetic architecture is now complete. You may test whether it functions properly by doing a few test runs creating a lot of genetically variable individuals and comparing the genotype output with the phenotypic trait value output. Do all allele combinations produce the desired fur colour? [N.B. When writing a script it is perfectly normal -or even recommended- to test your code continuously as you write, to make sure you are on the right track! No one ever writes a functioning script in one go as we have been doing in these tutorials.] 
-Now we need to define our starting pair of heterozygous mice. Our 'standard' initialisation parameters patch_ini_size and quanti_ini_allele_model are not sufficient for this task; they cannot specify the exact genotype nor the sex of our starting individuals. Instead, we can give qN another input file in which we specify each individual. This file we will name "fur_ini_geno.txt"   
+Now we need to define our starting pair of heterozygous mice. Our 'standard' initialisation parameters patch_ini_size and quanti_ini_allele_model are not sufficient for this task; they cannot specify the exact genotype nor the sex of our starting individuals. Instead, we can give qN another input file in which we specify each individual. This file we will name `fur_ini_geno.txt`   
 
 > quanti_ini_genotypes "fur_ini_geno.txt"
 
@@ -402,7 +402,7 @@ Lastly, for our cross to work, we need the two mice to breed, so assign the prop
 
 Normally, mice would have about 10 pups. However, the goal of the current exercise is to reproduce the ratio of phenotypes as found in the image above. For that we would need at least 16 offspring. However, since there will always be some random noise it is better to repeat that exercise 1000 times (i.e. make them have 16000 offspring).    
 
-Now we have a setup file, four extra files defining our genetic architecture and a two mice ready to go. Make sure you ask the correct output before running the script. 
+Now we have a setup file (we saved it as `fur1.ini`), four extra files defining our genetic architecture and a two mice ready to go. Make sure you ask the correct output before running the script. 
  
 ```{r}
 	# Read the phenotypic file of generation 2 into R
@@ -421,7 +421,7 @@ How would you implement the selection against the 'middle' phenotype? Multiple o
 How many generations? How many replications?
 What type of reproduction would you implement?
 Which statistics allow you to follow the process the best?
-Below you can see our results:
+Below you can see our results(the related input file is called `fur2.ini` :
  
 We plotted the frequency of each allele averaged across the hundred simulation plus-minus 1 standard deviation (the dotted lines in the same colour). You can see that the brown allele b (brown line drops very quickly, though in many simulations never really disappears.   
 **Question**: Why does it take so long to remove the brown allele from the population, despite the strong selection against it?   

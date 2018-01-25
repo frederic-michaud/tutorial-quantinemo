@@ -37,11 +37,11 @@ Generations are non-overlapping in qN, this fecundity therefore specifies the li
 
 Finally, the parameter `folder` tells qN in which repository the result of the simulation will be saved. If you don't specify it, quantiNemo will automatically create a folder with the name of the input script and the date and time of the simulation. 
 
-Now we will save this file as 'Demo1.ini', put it in the same folder as the quantiNemo executable and run the executable. The programme will ask you:  
+Now we will save this file as `Demo1.ini`, put it in the same folder as the quantiNemo executable and run the executable. The programme will ask you:  
 Please enter the settings file name (or 'exit' to terminate quantiNEMO):    
 
 Type Demo1.ini (or the name you gave your setup-file, including any extensions) and press enter. The simulation will run now and should take less than a second. 
-N.B. Make sure your file is not saved as 'Demo1.ini.txt'; some text editors will automatically add the '.txt' extension if not told otherwise.   
+N.B. Make sure your file is not saved as `Demo1.ini.txt`; some text editors will automatically add the '.txt' extension if not told otherwise.   
 
 N.B. If qN does not ask you to enter the settings file name, but immediately starts the simulation, it is because you still have a file in your qN folder named 'quantiNemo.ini', which qN automatically runs. To prevent this from happening, rename this file.   
 
@@ -90,7 +90,7 @@ Your new file should look like this:
 > stat {adlt.nbInd fem.meanFec} 
 > folder demography/logistic
 
-Resave this file as Demo2.ini and run it in qN.  Again a new 'Demo2_<date>_<time>' folder appears. The simulation_stats.txt file within contains a fourth column which specifies the female fecundity. Each statistic you add in the {} behind stat will appear as a column in the simulation_stat.txt file (do not use commas to separate these terms!). Unlike our previous simulation, where we fixed the female fecundity, here the fecundity is dependent on the population size. So in the beginning, when the population is small, we see very high fecundity. In the end fecundity drops to 2, just enough to keep the population at level. (Each hermaphrodite 'female' gives birth to  1  offspring, but each of them also fathers a second offspring with one of the other hermaphrodite 'females', therefore total fecundity of each 'female' equals two!).   
+Resave this file as `Demo2.ini` and run it in qN.  Again a new 'Demo2_<date>_<time>' folder appears. The simulation_stats.txt file within contains a fourth column which specifies the female fecundity. Each statistic you add in the {} behind stat will appear as a column in the simulation_stat.txt file (do not use commas to separate these terms!). Unlike our previous simulation, where we fixed the female fecundity, here the fecundity is dependent on the population size. So in the beginning, when the population is small, we see very high fecundity. In the end fecundity drops to 2, just enough to keep the population at level. (Each hermaphrodite 'female' gives birth to  1  offspring, but each of them also fathers a second offspring with one of the other hermaphrodite 'females', therefore total fecundity of each 'female' equals two!).   
 
 Using software like R we can visualize the growth curves from section 1.1 and 1.2. (The needed r-script is included, but you can also use Excel for this particular exercise.) 
  
@@ -153,7 +153,7 @@ Lastly, we add some new output statistics to our setup file: `adlt.nbInd_p` and 
 > stat {adlt.nbInd emigrants fem.meanFec adlt.nbInd_p}   
 
 
-Run the file (we named it colonisation.ini). Compared to the simulation_stats.txt file of the previous section, we see seven new columns. One new column shows the average number of emigrants per patch. The other six of new columns show the population sizes of each of our patches. Again, we plot our data using R (you can use the included script).
+Run the file (we named it `colonisation1.ini`). Compared to the simulation_stats.txt file of the previous section, we see seven new columns. One new column shows the average number of emigrants per patch. The other six of new columns show the population sizes of each of our patches. Again, we plot our data using R (you can use the included script).
  
  
 ```{r}
@@ -198,7 +198,7 @@ In our previous example populations could grow without problems or risks. Howeve
 
 We will stay in the same scenario as before, studying the colonization of the Hawaiian Islands. However, to add a level of complexity, we will not study actively migrating humans, but instead think about a passive disperser, such as a small insect. It is dependent on the prevailing winds and ocean currents (going east-west around Hawaii) for its migration.   
 
-For our current scenario we would therefore need a sort of asymmetrical stepping-stone dispersal model, allowing migration in mainly one direction (west). qN does not provide such a ready-made scenario. However, it does allow us to define a different dispersal rate from each patch to each other patch. Instead of a single dispersal rate value, we will provide qN with a matrix of values, containing the specific dispersal rate from each patch to each patch. Have a look at the setup file below.    
+For our current scenario we would therefore need a sort of asymmetrical stepping-stone dispersal model, allowing migration in mainly one direction (west). qN does not provide such a ready-made scenario. However, it does allow us to define a different dispersal rate from each patch to each other patch. Instead of a single dispersal rate value, we will provide qN with a matrix of values, containing the specific dispersal rate from each patch to each patch. Have a look at the setup file below (`colonisation2.ini`).    
 
 > \# Finding a colonization-extinction equilibrium    
 > generations 1000    

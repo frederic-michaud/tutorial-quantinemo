@@ -73,7 +73,7 @@ It will now save for each generation the genotype of each individual. However, w
 
 (N.B. A similar parameter exists for the general statistics output, named stat_log_time.)   
 
-Now we are ready to go: make two different setup files, one with the KAM mutation model and one with SSM. Add all the other parameters mentioned above - do not forget to specify patch_capacity 10000 - and let them both run with generations 4000.   
+Now we are ready to go: make two different setup files, one with the KAM mutation model and one with SSM. Add all the other parameters mentioned above - do not forget to specify patch_capacity 10000 - and let them both run with generations 4000. We called the two files `mutationKAM.ini` and `mutationSSM.ini`. 
 
 As usual a results folder will have been created when you started the simulation. Opening it you will find that, besides the usual five simulation text files, four new.dat files have been made: one for each 1000 generations. 
 
@@ -187,7 +187,7 @@ Now we need to start specifying our genetic architecture. We wanted a single loc
 > ntrl_all 10   
 > ntrl_allelic_file "inifreq.txt"
 
-You will notice that here we only specified the two loci with each ten alleles, but we have not specified the initial allele frequencies of these two loci. In fact, it is impossible to specify a specific initial allelic distribution within the setup file. For that you will need to create a separate file with this information. The name of that file is specified by the last argument. The file is shown below. 
+You will notice that here we only specified the two loci with each ten alleles, but we have not specified the initial allele frequencies of these two loci. In fact, it is impossible to specify a specific initial allelic distribution within the setup file. For that you will need to create a separate file with this information. The name of that file is specified by the last argument. The file`inifreq.txt` is shown below. 
 
 >  [FILE_INFO]{   
 >	 col_locus 1   
@@ -253,7 +253,7 @@ For our experiment, choosing the right output we want from our model is just as 
 
 > stat {n.adlt.nbAllele n.adlt.Fst n.adlt.Fst_l}
 
-The architecture of our simulation is now complete. Run it for 1000 generations. On the screen it will say "1. of 5 batch simulations" and your simulation will therefore be run five times, each time exactly the same setup file, except for the varying dispersal rate. In your qN folder you will therefore also see five new folders appear as if you had run 5 independent simulations. Each folder contains the by now familiar simulation files. However, you will see that the file names in each folder do not start with 'simulation' but instead carry the same name as that of the setup file, followed by an index. This number indicates from which simulation it originates. To analyse our results, lets plot for each simulation the mean number of alleles over time, and the three FST values (again, you may do it yourself or use the online r-script). What we got was the following:
+The architecture of our simulation is now complete. We saved it under `neutral_migration.ini`. Run it for 1000 generations. On the screen it will say "1. of 5 batch simulations" and your simulation will therefore be run five times, each time exactly the same setup file, except for the varying dispersal rate. In your qN folder you will therefore also see five new folders appear as if you had run 5 independent simulations. Each folder contains the by now familiar simulation files. However, you will see that the file names in each folder do not start with 'simulation' but instead carry the same name as that of the setup file, followed by an index. This number indicates from which simulation it originates. To analyse our results, lets plot for each simulation the mean number of alleles over time, and the three FST values (again, you may do it yourself or use the online r-script). What we got was the following:
 
 ```{r}
 	# specify the correct file for each simulation
@@ -352,8 +352,10 @@ As for output, we chose to only keep track of the number of adult individuals (t
 > ntrl_save_genotype 1   
 > ntrl_genot_logtime (1 1, 2 100, 101 102)   
 
-Linkage disequilibrium does not exist as a summary statistic in qN. Instead we will have to calculate it ourselves. Therefore, we ask qN to output the raw genotype data as well. However, we do not need the genotype output for each generation, or at a regular interval. The most interesting points are at the beginning of our simulation (generation 1), just before the population crash (generation 100), and just after the population crash (generation 102). We therefore needed ntrl_genot_logtime to be a temporal parameter as well. Here we see that we command qN to, from generation 1, sample each generation; from generation 2 sample each hundredth generations; and from generation 101 sample each hundred-second generations. This effectively tells qN to sample at generations 1, 100 and 102.
-Now our simulation is ready to go. Run it for 102 generations.
+Linkage disequilibrium does not exist as a summary statistic in qN. Instead we will have to calculate it ourselves. Therefore, we ask qN to output the raw genotype data as well. However, we do not need the genotype output for each generation, or at a regular interval. The most interesting points are at the beginning of our simulation (generation 1), just before the population crash (generation 100), and just after the population crash (generation 102). We therefore needed ntrl_genot_logtime to be a temporal parameter as well. Here we see that we command qN to, from generation 1, sample each generation; from generation 2 sample each hundredth generations; and from generation 101 sample each hundred-second generations. This effectively tells qN to sample at generations 1, 100 and 102.   
+
+We saved all the parameters in the file `linkage.ini` .Now our simulation is ready to go. Run it for 102 generations. 
+
 In the simulation_stats.txt file in the results folder, first quickly confirm that the population indeed dropped to 10 individuals at generation 101. Moreover, you should see that none of the 6 loci got fixed for one of the SNPs. So all alleles are still in there.
 
 **Question**: We told qN to have carrying capacity at generation 100 set at 10. Why are there still 10'000 adults at generation 100 and do we only see 10 adults in generation 101, when carrying capacity should again be 10'000? HINT: Have a look at the life cycle process of qN at the start of chapter 3!

@@ -31,7 +31,7 @@ if (window.hljs) {
 
 
 
-<link rel="stylesheet" href="files/style.css" type="text/css" />
+<link rel="stylesheet" href="files/style.css" />
 
 </head>
 
@@ -96,16 +96,15 @@ if (window.hljs) {
 
 
 
-</div>
-<!--closing h1_wrapper-->
-<div id="selection" class="section level2">
+</div><!--closing h1_wrapper-->
+<section id="selection" class="level2">
 <h2>3 Selection</h2>
-<div id="some-first-notes" class="section level3">
+<section id="some-first-notes" class="level3">
 <h3>Some first notes</h3>
 <p>This chapter assumes that you have completed the first two tutorials: Demographics and Neutral markers.</p>
 <p>In this section we will look at the basics of selection in quantiNEMO. Selection can only act on phenotypic traits, this chapter will therefore also introduce quantitative traits. We will start with examples from single loci.</p>
-</div>
-<div id="the-basic-selection-process" class="section level3">
+</section>
+<section id="the-basic-selection-process" class="level3">
 <h3>3.1 The basic selection process</h3>
 <p>How does selection work in qN? The genetic architecture of a non-neutral (i.e. selected) quantitative trait is very similar to that of the neutral genetics.</p>
 <blockquote>
@@ -129,10 +128,7 @@ quanti_stab_sel_optima 0 # the optimal phenotype (default 0)</p>
 <p><strong>NB.</strong> Several other selection models exists in qN, like directional selection, fitness landscapes or (the default) no selection, see section 8.5 ‘Selection models’ <tobechecked> of the manual for more information.</p>
 <p>Stabilising selection requires an ‘optimal phenotype’. For our current simulation, we will set the optimal phenotype to the initial average phenotype of the population, being zero. The more an individual’s phenotypic value approaches this ‘optimal phenotype’, the more offspring it will produce. Conversely, the more an individual’s phenotype deviates from this optimum, the less successful it will be.</p>
 <p>How much less successful it will be, is determined by the strength of selection. Does 1 unit deviation from the optimum mean no offspring at all, or just 10% less than the optimal phenotype? This is determined by patch_stab_sel_intensity. Though the parameter is called ‘stabilising selection intensity’, it is better thought of as ‘stabilising selection leniency’: the higher the value, the more lenient (and thus the less intense) selection acts. Together, <code>quanti_stab_sel_optima</code> and <code>quanti_stab_sel_intensity</code> define the bell-shaped curve that determines the relationship between phenotype and fitness:</p>
-<div class="figure">
-<img src="images/stab_tuto.png" />
-
-</div>
+<p><img src="images/stab_tuto.png" /></p>
 <p>(in this figure, the optimal phenotype <span class="math inline">\(Z_{opt} = 0\)</span> and the selection intensity <span class="math inline">\(\omega = 2\)</span>)<br />
 You can see that the larger the selection intensity gets, the wider the curve and therefore a wider range of phenotypes will have a high fitness. But how wide the range of initial phenotypes is, was determined by <code>quanti_allelic_var</code>. It is therefore these three parameters, <code>quanti_stab_sel_optima</code>, <code>quanti_stab_sel_intensity</code> and <code>quanti_allelic_var</code> that determine the simulation’s process of ‘natural’ selection. The relation between these three values (and the initial average phenotype of 0) give ‘meaning’ to the values used in your simulation and should be carefully considered whenever you want to reconstruct a natural system. In our current exercise we will demonstrate the effect of <code>patch_stab_sel_intensity</code> on selection and therefore choose two different values:</p>
 <blockquote>
@@ -151,10 +147,10 @@ quanti_save_geno_value 1</p>
 <p>Combine all the code in a single file and run the simulation. Because we entered two values for the selection intensity, we created a batch file with two simulations: one where the patch_stab_sel_intensity 5 and on where patch_stab_sel_intensity 20. qN should produce files for each of those settings. Besides the log, legend, mean, stat and var-files, and the .dat-files of each generation containing the genotypes, you will now also find .gen-files in the output folder. These files are very similar to the .dat-files, except that they contain the genotypic trait value for each individual instead of their genotype. However, we will start our analysis through a big lens by looking at the general statistics. Read the xxx_stats.txt file for each simulation and plot the number of alleles, the heterozygosity and the mean genotypic value over time.</p>
 <pre class="r"><code>    # a) high selection intensity (low omega)
     omegaA&lt;-1
-    stat_A&lt;-read.table(myfileA&lt;-&quot;selection/intensity1_stats.txt&quot;,h=T)
+    stat_A&lt;-read.table(myfileA&lt;-&quot;selection/i1/selection1_stats.txt&quot;,h=T)
     # b) low selection intenstiy (high omega)
     omegaB&lt;-20
-    stat_B&lt;-read.table(myfileB&lt;-&quot;selection/intensity20_stats.txt&quot;,h=T)
+    stat_B&lt;-read.table(myfileB&lt;-&quot;selection/i20/selection1_stats.txt&quot;,h=T)
     
     # Plotting number of alleles and heterozygosity over time
     par(mfrow=c(2,3))
@@ -257,8 +253,8 @@ quanti_save_geno_value 1</p>
 <p>These plots are the same as those from tutorial 2.1, just with more alleles. Each plot shows the frequency (y-axis) of each of the 255 alleles (x-axis, ordered from 1 to 255; note that, as alleles disappear during the simulation, they also disappear from the plot). The left most graphs show the identical starting situations for each simulation with each allele having a similar frequency (both within and between simulations). Each individual has two alleles which added effects form the phenotype of the individual. In qN by default selection does not act on survival chances, but on reproduction. So those individuals with the better trait values more often passed on their alleles. When selection pressure is high, the effect of this is already clearly visible at generation 3 (top graph). However, also with low selection intensity, the signs of selection are obvious at generation 9, in contrast with at the level of the genotypic trait.</p>
 <p><strong>Question</strong>: How will the allele frequency graph and the trait distribution look for the two scenarios after millions of generations? Which natural processes are currently left out of the simulations which could prevent this from happening?</p>
 <p><strong>Question</strong>: The allele frequency graph forms a nice curve with a peak in the middle (around allele 130). What does this tell us about how qN assigns effects to each allele? (Hint, you can rerun your analysis with quanti_output 1 and look at the produced allelic_values.txt file.)</p>
-</div>
-<div id="the-selection-mutation-drift-equilibrium" class="section level3">
+</section>
+<section id="the-selection-mutation-drift-equilibrium" class="level3">
 <h3>3.2 The selection-mutation-drift equilibrium</h3>
 <p>If you would have run the simulation from the previous section long enough, only one or two alleles would have been left; selection would have selected the best allele to remain if drift had not earlier perchance already got rid of all diversity. However, our simulation did not include any sources of new genetic material. Mutation should set the system in a selection-mutation-drift equilibrium with non-zero diversity. We will demonstrate this precarious selection-mutation-drift balance in this short, second section on selection. Moreover, we will inspect how much of the equilibrium diversity is owing to selection, and how much can be assigned to drift solely.</p>
 <p>As a starting point of this simulation, we will use the same setup file as in the section above and make some adaptations to suit our needs. For example, we introduce mutation in our model with a slightly high rate of 10-4.</p>
@@ -289,10 +285,10 @@ replicates 10</p>
 <pre class="r"><code>    # Read the files into R
     
     # Select the xxx_mean.txt file from the simulation with selection (the corresponding variance file will be automatically read as well)
-    sel.mean&lt;-read.table( spath&lt;-&quot;selection/mutation_with_selection_mean.txt&quot;,h=T); sel.var&lt;-read.table(paste(substr(spath,1,nchar(spath)-9),&quot;_var.txt&quot;,sep=&quot;&quot;),h=T)
+    sel.mean&lt;-read.table( spath&lt;-&quot;selection/mutation_with_selection/selection2_mean.txt&quot;,h=T); sel.var&lt;-read.table(paste(substr(spath,1,nchar(spath)-9),&quot;_var.txt&quot;,sep=&quot;&quot;),h=T)
     
     # Select the xxx_mean.txt file from the simulation withOUT selection (the corresponding variance file will be automatically read as well)
-    drft.mean&lt;-read.table( dpath&lt;-&quot;selection/mutation_without_selection_mean.txt&quot;,h=T); drft.var&lt;-read.table(paste(substr(dpath,1,nchar(dpath)-9),&quot;_var.txt&quot;,sep=&quot;&quot;),h=T)
+    drft.mean&lt;-read.table( dpath&lt;-&quot;selection/mutation_without_selection/selection2_mean.txt&quot;,h=T); drft.var&lt;-read.table(paste(substr(dpath,1,nchar(dpath)-9),&quot;_var.txt&quot;,sep=&quot;&quot;),h=T)
     
     ### Allelic variance
     
@@ -357,14 +353,11 @@ replicates 10</p>
 </blockquote>
 <p>If you know the heritability of your trait, you may define the broad or narrow-sense heritability in qN instead the environmental variance directly (see section 8.1.5 Environment of the manual <tobechecked>).</p>
 <p><strong>Question</strong>: How would including environmental variance change the stabilizing selection process of the scenario above? Rewrite your setup file: remove the no-selection scenario and include an environmental variance of 0 or 1 (use a sequential parameter). Recreate the above plots with one line corresponding to the scenario with environmental variance and the other line to the scenario without environmental variance. Additionally make two new plots: one of the phenotypic mean and one of the phenotypic variance (do not forget to add them to your output statistics!).</p>
-</div>
-<div id="mendelian-mice" class="section level3">
+</section>
+<section id="mendelian-mice" class="level3">
 <h3>3.3 Mendelian mice</h3>
 <p>Mammalian fur colour is a famous example of epistatis. The three pelt colours are dependent on two loci: B/b determines whether the colouring will be black (B, dominant) or brown (b, recessive); C/c determines whether any colour will actually be deposited in the fur (C, dominant) or not, resulting in a white mouse (c, recessive).</p>
-<div class="figure">
-<img src="images/epistasis.jpg" />
-
-</div>
+<p><img src="images/epistasis.jpg" /></p>
 <p>As a last exercise will consist of two parts. First we will try to copy this genetic system and the crossing schedule shown above into qN, starting with as single pair of fully heterozygote mice. Do we get a similar ratio of mice colour in the offspring?</p>
 <p>Once we have our genetic system working, we will continue with the second part of the exercise where we will test the following scenario: Suppose these mice lived on a chessboard landscape on which only the (camouflaged) black and white mice survive to breeding age (i.e. brown mice make no offspring), how long would it take for the b-allele to disappear from the population? For our exercise, let the black phenotype be represented by a phenotypic value of 1, brown by 0.5 and white by 0. First our crossing schedule: We want to make a single crossing only, so we only need two generations</p>
 <blockquote>
@@ -474,8 +467,8 @@ patch_capacity 16000</p>
 <p><img src="selection_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 <!--closing main_content-->
-</div>
-</div>
+</section>
+</section>
 
 
 

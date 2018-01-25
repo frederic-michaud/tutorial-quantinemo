@@ -4,7 +4,7 @@
 #       Commit N° : b1787ad-dirty           #
 #                                           #
 #              Simulation log               #
-# simulation started on 24-01-2018 17:37:00 #
+# simulation started on 25-01-2018 09:14:10 #
 #              (log as input)               #
 #############################################
 
@@ -14,7 +14,7 @@ _settings_file fur2.ini
 filename fur2
 folder fur
 replicates 50
-seed {1516811820 1907}
+seed {1516868050 2891}
 
 ## metapop
 generations 200
@@ -30,6 +30,7 @@ quanti_fitness_landscape {1 0 1}
 quanti_ini_genotypes fur_ini_geno.txt
 quanti_loci 2
 quanti_phenotype_landscape {0 0.5 1}
+quanti_save_genotype 2
 quanti_selection_model 3
 
 ## breed
@@ -46,7 +47,7 @@ regulation_model_offspring 1
 
 
 #############################################
-#  simulation ended on 24-01-2018 17:37:26  #
+#  simulation ended on 25-01-2018 09:14:56  #
 #                                           #
-#  duration of the simulation was 00:00:26  #
+#  duration of the simulation was 00:00:46  #
 #############################################
