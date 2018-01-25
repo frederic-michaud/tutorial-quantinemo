@@ -1,0 +1,36 @@
+#############################################
+#           q u a n t i N E M O 2           #
+#   version 2.0.0 [Jan 18 2018; 11:19:38]   #
+#                                           #
+#              Simulation log               #
+# simulation started on 23-01-2018 15:18:11 #
+#              (log as input)               #
+#############################################
+
+
+## simulation
+_settings_file plot/my_simulation.ini
+folder plot/my_simulation
+replicates 25
+seed {1516717091 2026}
+
+## metapop
+generations 2000
+patch_capacity 200
+
+## quanti
+quanti_all 3
+quanti_loci 1
+quanti_selection_model 1
+quanti_stab_sel_intensity 20
+quanti_stab_sel_optima 0.75
+
+## save_stats
+stat {q.adlt.a.freq}
+
+
+#############################################
+#  simulation ended on 23-01-2018 15:18:16  #
+#                                           #
+#  duration of the simulation was 00:00:05  #
+#############################################

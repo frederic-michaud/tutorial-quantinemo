@@ -31,7 +31,7 @@ if (window.hljs) {
 
 
 
-<link rel="stylesheet" href="files/style.css" type="text/css" />
+<link rel="stylesheet" href="files/style.css" />
 
 </head>
 
@@ -96,12 +96,11 @@ if (window.hljs) {
 
 
 
-</div>
-<!--closing h1_wrapper-->
-<div id="demographics" class="section level2">
+</div><!--closing h1_wrapper-->
+<section id="demographics" class="level2">
 <h2>1 Demographics</h2>
 <p>This first tutorial/vignette will show the basic population dynamics as they happen in quantiNEMO (qN).</p>
-<div id="a-first-simulation-of-a-growing-population" class="section level3">
+<section id="a-first-simulation-of-a-growing-population" class="level3">
 <h3>1.1 A first simulation of a growing population</h3>
 <p>Let’s start with a basic setup file. Open notepad (or your personal favourite plain text editor) and type the text below into it (copying it directly can often give silly errors):</p>
 <blockquote>
@@ -217,8 +216,8 @@ Please enter the settings file name (or ‘exit’ to terminate quantiNEMO):</p>
 <p>From generation 15 onwards we see that the population stops growing exponentially and stays at 1000 individuals. This is exactly the carrying capacity we specified in our setup file. However, if we had not told qN to regulate the population size, qN would have ignored this and the population would have continued growing to approximately 1.7 billion individuals (!) making this simulation extremely memory-demanding.</p>
 <p><strong>Question</strong>: What parameter did we use to prevent our population to grow to 1.7 billion individuals?</p>
 <p><strong>Question</strong>: Would there be another way of obtaining the same results as above in qN without using this parameter? (Have a look in the manual at the <code>mating_nb_offspring_model</code> options.)</p>
-</div>
-<div id="a-second-growth-model" class="section level3">
+</section>
+<section id="a-second-growth-model" class="level3">
 <h3>1.2 A second growth model</h3>
 <p>Instead of specifying a fixed fecundity for females, we could have also made the number of offspring negatively dependent on the current population density, making it grow logistically. In the Demo1.ini file, change <code>mating_nb_offspring_model</code> to 4, logistic regulation. Instead of the mean fecundity, we now need to specify growth_rate (we’ll set this as well to 1.5). Because logistically growing populations will grow asymptotically towards carrying capacity, we can set regulation_model_adults to 0, or leave it out of our setup file altogether, since qN has by default no population size trimming.</p>
 <p>Lastly, we can ask qN to also save the average fecundity of females as a statistic. Under a regime of density dependency, fecundity will change over time; it might be interesting to follow this. To do this, add fem.meanFec between the {} behind adlt.nbInd (separate the terms with a space, not comma). In fact, qN can create and save hundreds of different statistics for you. The list of available keywords for each statistic can be found in the ‘Summary statistics’ section. The statistics used in Tutorial 1 all come from the Summary statistics about Metapopulation.</p>
@@ -254,8 +253,8 @@ stat {adlt.nbInd fem.meanFec} folder demography/logistic</p>
            title=&quot;mating_nb_offspring_model&quot;)</code></pre>
 <p><img src="demography_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p><strong>Question:</strong> Above we plotted the number of individuals over time. How would the fecundity over time look for the two different scenarios? Produce this plot.</p>
-</div>
-<div id="colonisation" class="section level3">
+</section>
+<section id="colonisation" class="level3">
 <h3>1.3 Colonisation</h3>
 <p>Of course most populations are not isolated. When a site is getting full, individuals will start migrating to other populations which are not yet at carrying capacity. Or they might colonize new sites. Here we will simulate such a scenario. As an example, we will take the linear colonization of the Hawaii Island chain by humans.</p>
 <p>As a basis for our new simulation, we will use the Demo2.ini file. We will have to add a new parameter stating that we want more than one patch (i.e. island). By default <code>patch_number</code> is set to 1, so we did not need to mention it specifically in our setup file up until now. However, now that we want to have 6 patches, we need to tell qN to use this parameter.</p>
@@ -313,8 +312,8 @@ stat {adlt.nbInd emigrants fem.meanFec adlt.nbInd_p}</p>
 <p><img src="demography_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>A single patch grows in size following the same curve as in section 1.2, which was expected. But before patch 1 has reached carrying capacity (the ’1’s in the plot), patch 2 has been colonized and the population there starts growing (the ’2’s). This is because the population on patch 1 already starts producing emigrants after a few generations as can be seen by the continuous line. The number of emigrants per inhabited patch levels around 2.5, exactly the value we would expect based on our parameter settings. This makes the colonization quite a regular process, even with only half a percent of emigrants each generation the whole archipelago will be fully populated after around 120 generations.</p>
 <p>However, your simulation might not look exactly the same as shown in the graph above. The exact time point at which each island is being colonized is not fixed, but dependent on random events. Migration rate determines the probability that an individual will leave its current patch. Since it is a probability, the actual number of migrants is subject to chance. Moreover, for a successful colonisation to take place, we need both a male and a female coloniser to reach the same island at the same time! Therefore, when running the simulation multiple times, the timing of events would not be same between replicates. The next section will look more into these stochastic processes of quantiNemo.</p>
-</div>
-<div id="colonization-extinction-equilibrium" class="section level3">
+</section>
+<section id="colonization-extinction-equilibrium" class="level3">
 <h3>1.4 Colonization-Extinction equilibrium</h3>
 <p>In our previous example populations could grow without problems or risks. However, often disaster can strike, wiping out a complete populations. If no lasting damage was done to the habitat, nearby populations could afterwards recolonize the empty patch. But migration needs to be frequent enough for the metapopulation to persist. In this section we will look at the interplay between extinction and recolonization by migration. Understanding what level of disturbance a species can still tolerate without going extinct is very important for successful conservation strategies.</p>
 <p>We will stay in the same scenario as before, studying the colonization of the Hawaiian Islands. However, to add a level of complexity, we will not study actively migrating humans, but instead think about a passive disperser, such as a small insect. It is dependent on the prevailing winds and ocean currents (going east-west around Hawaii) for its migration.</p>
@@ -418,8 +417,8 @@ folder demography/colonisation2</p>
 <p><strong>Question</strong>: Rerun the extinction.ini setup file with a different value for seed and reproduce the graphs above. Do they look very different from the ones above? Which ones have changed less with the changing of the seed and which ones more? Why? What if you would run your setup file twice with different seeds, but with a 1000 replicates. Which graphs do you expect to be very similar and which ones still very different between the two runs?</p>
 </div>
 <!--closing main_content-->
-</div>
-</div>
+</section>
+</section>
 
 
 
