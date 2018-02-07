@@ -3,13 +3,13 @@ title: "Demography"
 date: "20 novembre 2017"
 --- 
 
+        
+## Some first notes    
+Welcome to the quantiNemo tutorial series. QuantiNemo is a software that allows you to simulate structured populations of individuals with genotypes, phenotypes, migration, selection and much more. It is an incredibly exhaustive software that allows the simulation of an extreme diverse range of biological scenarios, both forwards and backwards in time (see the different vignettes on this website for some examples). However, the basics of quantiNemo are very simple. The following four tutorials will demonstrate some of the functionalities of quantiNemo, giving you the basic skills that will allow you to later build your own more complex scenarios.    
 
-##Some first notes
-Welcome to the quantiNEMO tutorial series. quantiNEMO is a software that allows you to simulate populations of individuals with genotypes, phenotypes, migration, selection and much more. It is an incredibly exhaustive software that allows the simulation of an extreme diverse array of biological scenarios, both forwards and backwards in time (see the different vignettes on this website for some examples). However, the basics of quantiNEMO are very simple. The following four tutorials will demonstrate the some of the functionality of quantiNEMO, giving you the basic skills that will allow you to later build your own more complex scenarios.    
+Though the manual provides all information you would need to successfully use quantiNemo, you will not need to read it yet. These tutorials will give you a head start. You will see that throughout these tutorials we do refer so specific sections in the manual if you would like to know more about certain functionality of the quantiNemo software. During the tutorial, quantiNemo will often be abbreviated as 'qN'. 
 
-Though the manual provides all information you would need to successfully use quantiNEMO, you will not need to read it yet. These tutorials will give you a head start. You will see that throughout these tutorials we do refer so specific sections in the manual if you would like to know more about certain functionality of the quantiNEMO software. During the tutorial, quantiNEMO will often be abbreviated as 'qN'. 
-
-This tutorial was written to work with quantiNEMO version 2.0. Though most of the tutorial should work fine under other versions, it might differ in some, important, details such as parameter encoding.   
+This tutorial was written to work with quantiNemo version 2.0. Though most of the tutorial should work fine under other versions, it might differ in some, important, details such as parameter encoding.   
 
 We recommend you not to copy-past sample code from this tutorial into a setup file, since this can often introduce 'hidden' errors, but instead retype the text (the mastering of any art starts by copying it). However, all setup files (files ending with .ini) described and used during these tutorials can be downloaded from this website directly <INSERT LINK>. Furthermore, many of the visualisations and analyses after the simulations have been performed in the statistical software package R. Though some of the first plotting exercises can be performed in Excel, data manipulations later in this tutorial require the aid of the more flexible environment of R.   
 
