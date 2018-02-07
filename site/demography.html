@@ -47,12 +47,15 @@ if (window.hljs) {
 <div id="menu">
   <h3>Information</h3>
   <ul>
-    <li><a href = "index.html#about">About</a></li>
-    <li><a href = "index.html#developer">Developer</a></li>
-    <li><a href = "index.html#citing">Citing</a></li>
-    <li><a href = "index.html#download">Download</a></li>
-    <li><a href = "index.html#help">Help</a></li>
-    <li><a href = "index.html#source">Source</a></li>
+    <li><a href = "index.html">About</a>
+    <ul>
+      <li><a href = "index.html#citing">Citing</a></li>
+      <li><a href = "index.html#download">Download</a></li>
+      <li><a href = "index.html#developer">Developer</a></li>
+      <li><a href = "index.html#help">Help</a></li>
+      <li><a href = "index.html#source">Source</a></li>
+    </ul>
+    </li>
   </ul>
   <h3>Tutorials</h3>
   <ul>
@@ -121,9 +124,9 @@ folder demography/exponential</p>
 <p><code>mating_nb_offspring_model</code> allows us to choose how we would like the population to grow. Several options exist in qN (see Section 3. 1 ‘Breeding’ in the manual <tobechecked>), but here we choose option 2, which means that for each generation qN lets each female have on average x offspring, where x is defined by the parameter <code>mean_fecundity</code>.</p>
 <p>Generations are non-overlapping in qN, this fecundity therefore specifies the lifetime reproductive success of each female in the population. Since by default each individual is hermaphrodite (and therefore also female), a fecundity of 1.5 will mean our population multiplies by 1.5 each generation, and therefore grows exponentially. If we do not want our population to grow beyond the carrying capacity of the site, we have to tell qN to ‘trim’ any excess individuals from the population over the carrying capacity, which we do by setting <code>regulation_model_adults</code> to 1. Lastly, behind stat we define the output we would like qN to save from this simulation; in this case we are only asking it to save the number of adults in each generation.</p>
 <p>Finally, the parameter <code>folder</code> tells qN in which repository the result of the simulation will be saved. If you don’t specify it, quantiNemo will automatically create a folder with the name of the input script and the date and time of the simulation.</p>
-<p>Now we will save this file as ‘Demo1.ini’, put it in the same folder as the quantiNemo executable and run the executable. The programme will ask you:<br />
+<p>Now we will save this file as <code>Demo1.ini</code>, put it in the same folder as the quantiNemo executable and run the executable. The programme will ask you:<br />
 Please enter the settings file name (or ‘exit’ to terminate quantiNEMO):</p>
-<p>Type Demo1.ini (or the name you gave your setup-file, including any extensions) and press enter. The simulation will run now and should take less than a second. N.B. Make sure your file is not saved as ‘Demo1.ini.txt’; some text editors will automatically add the ‘.txt’ extension if not told otherwise.</p>
+<p>Type Demo1.ini (or the name you gave your setup-file, including any extensions) and press enter. The simulation will run now and should take less than a second. N.B. Make sure your file is not saved as <code>Demo1.ini.txt</code>; some text editors will automatically add the ‘.txt’ extension if not told otherwise.</p>
 <p>N.B. If qN does not ask you to enter the settings file name, but immediately starts the simulation, it is because you still have a file in your qN folder named ‘quantiNemo.ini’, which qN automatically runs. To prevent this from happening, rename this file.</p>
 <p>At the end of the simulation a new folder should have appeared in the folder containing qN called “exponential” . In this folder you will find five files. Open simulation_stats.txt and ignore the other files for the moment. The top of the file will look like this:</p>
 <table>
@@ -231,7 +234,7 @@ mating_nb_offspring_model 6 # 6 = logistic regulation<br />
 growth_rate 1.5<br />
 stat {adlt.nbInd fem.meanFec} folder demography/logistic</p>
 </blockquote>
-<p>Resave this file as Demo2.ini and run it in qN. Again a new ’Demo2_<date>_<time>‘folder appears. The simulation_stats.txt file within contains a fourth column which specifies the female fecundity. Each statistic you add in the {} behind stat will appear as a column in the simulation_stat.txt file (do not use commas to separate these terms!). Unlike our previous simulation, where we fixed the female fecundity, here the fecundity is dependent on the population size. So in the beginning, when the population is small, we see very high fecundity. In the end fecundity drops to 2, just enough to keep the population at level. (Each hermaphrodite ’female’ gives birth to 1 offspring, but each of them also fathers a second offspring with one of the other hermaphrodite ‘females’, therefore total fecundity of each ‘female’ equals two!).</p>
+<p>Resave this file as <code>Demo2.ini</code> and run it in qN. Again a new ’Demo2_<date>_<time>‘folder appears. The simulation_stats.txt file within contains a fourth column which specifies the female fecundity. Each statistic you add in the {} behind stat will appear as a column in the simulation_stat.txt file (do not use commas to separate these terms!). Unlike our previous simulation, where we fixed the female fecundity, here the fecundity is dependent on the population size. So in the beginning, when the population is small, we see very high fecundity. In the end fecundity drops to 2, just enough to keep the population at level. (Each hermaphrodite ’female’ gives birth to 1 offspring, but each of them also fathers a second offspring with one of the other hermaphrodite ‘females’, therefore total fecundity of each ‘female’ equals two!).</p>
 <p>Using software like R we can visualize the growth curves from section 1.1 and 1.2. (The needed r-script is included, but you can also use Excel for this particular exercise.)</p>
 <p>Here we clearly see the difference in behaviour between mating_nb_offspring_model at what time carrying capacity is reached: when growth is determined by female fecundity (as in section 1.1), growth is exponential until it is ruthlessly cut-off once it reaches 1000 individuals. When growth is determined by logistic regulation (this section), the population shows density dependent growth: fast when few individuals are around, but gently slowing down as it approaches carrying capacity.</p>
 <pre class="r"><code>    # Load simulation_stats.txt file from the fecundity simulation
@@ -280,7 +283,7 @@ regulation_model_adults 1 # 1 = yes<br />
 folder demography/colonisation2<br />
 stat {adlt.nbInd emigrants fem.meanFec adlt.nbInd_p}</p>
 </blockquote>
-<p>Run the file (we named it colonisation.ini). Compared to the simulation_stats.txt file of the previous section, we see seven new columns. One new column shows the average number of emigrants per patch. The other six of new columns show the population sizes of each of our patches. Again, we plot our data using R (you can use the included script).</p>
+<p>Run the file (we named it <code>colonisation1.ini</code>). Compared to the simulation_stats.txt file of the previous section, we see seven new columns. One new column shows the average number of emigrants per patch. The other six of new columns show the population sizes of each of our patches. Again, we plot our data using R (you can use the included script).</p>
 <pre class="r"><code>    # Loadin statistics
     colony&lt;-read.table(&quot;demography/colonisation1/simulation_stats.txt&quot;,
                        header=T)
@@ -317,7 +320,7 @@ stat {adlt.nbInd emigrants fem.meanFec adlt.nbInd_p}</p>
 <h3>1.4 Colonization-Extinction equilibrium</h3>
 <p>In our previous example populations could grow without problems or risks. However, often disaster can strike, wiping out a complete populations. If no lasting damage was done to the habitat, nearby populations could afterwards recolonize the empty patch. But migration needs to be frequent enough for the metapopulation to persist. In this section we will look at the interplay between extinction and recolonization by migration. Understanding what level of disturbance a species can still tolerate without going extinct is very important for successful conservation strategies.</p>
 <p>We will stay in the same scenario as before, studying the colonization of the Hawaiian Islands. However, to add a level of complexity, we will not study actively migrating humans, but instead think about a passive disperser, such as a small insect. It is dependent on the prevailing winds and ocean currents (going east-west around Hawaii) for its migration.</p>
-<p>For our current scenario we would therefore need a sort of asymmetrical stepping-stone dispersal model, allowing migration in mainly one direction (west). qN does not provide such a ready-made scenario. However, it does allow us to define a different dispersal rate from each patch to each other patch. Instead of a single dispersal rate value, we will provide qN with a matrix of values, containing the specific dispersal rate from each patch to each patch. Have a look at the setup file below.</p>
+<p>For our current scenario we would therefore need a sort of asymmetrical stepping-stone dispersal model, allowing migration in mainly one direction (west). qN does not provide such a ready-made scenario. However, it does allow us to define a different dispersal rate from each patch to each other patch. Instead of a single dispersal rate value, we will provide qN with a matrix of values, containing the specific dispersal rate from each patch to each patch. Have a look at the setup file below (<code>colonisation2.ini</code>).</p>
 <blockquote>
 <p># Finding a colonization-extinction equilibrium<br />
 generations 1000<br />

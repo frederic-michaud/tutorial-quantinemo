@@ -1,9 +1,0 @@
-Legend of the used statistics
-*****************************
-
-Statistic             Legend
---------------------------------------------------------------
-alive.rpl           : Nb alive replicates
-q.adlt.a.freq_a1    : Local allele frequency of allele 1 (adult, quanti)
-q.adlt.a.freq_a2    : Local allele frequency of allele 2 (adult, quanti)
-q.adlt.a.freq_a3    : Local allele frequency of allele 3 (adult, quanti)

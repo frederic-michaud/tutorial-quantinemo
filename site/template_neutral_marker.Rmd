@@ -1,5 +1,5 @@
 ---
-title: "neutral markers"
+title: "Neutral markers"
 output: 
   html_document:
     includes:     

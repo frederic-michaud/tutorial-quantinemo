@@ -10,6 +10,6 @@ output:
 
 </div><!--closing h1_wrapper-->
 
-```{r child = './index.Rmd'}
+```{r child = '../selection.Rmd'}
 ```
 </div>  <!--closing main_content-->

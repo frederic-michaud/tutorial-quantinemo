@@ -12,7 +12,7 @@
 
 
 
-<title>neutral markers</title>
+<title>Neutral markers</title>
 
 <link href="neutral_marker_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="neutral_marker_files/highlightjs-9.12.0/highlight.js"></script>
@@ -47,12 +47,15 @@ if (window.hljs) {
 <div id="menu">
   <h3>Information</h3>
   <ul>
-    <li><a href = "index.html#about">About</a></li>
-    <li><a href = "index.html#developer">Developer</a></li>
-    <li><a href = "index.html#citing">Citing</a></li>
-    <li><a href = "index.html#download">Download</a></li>
-    <li><a href = "index.html#help">Help</a></li>
-    <li><a href = "index.html#source">Source</a></li>
+    <li><a href = "index.html">About</a>
+    <ul>
+      <li><a href = "index.html#citing">Citing</a></li>
+      <li><a href = "index.html#download">Download</a></li>
+      <li><a href = "index.html#developer">Developer</a></li>
+      <li><a href = "index.html#help">Help</a></li>
+      <li><a href = "index.html#source">Source</a></li>
+    </ul>
+    </li>
   </ul>
   <h3>Tutorials</h3>
   <ul>
@@ -92,12 +95,13 @@ if (window.hljs) {
 <div id='h1_wrapper'> <!--closed in generate:tuto.Rmd-->
 
 
-<h1 class="title toc-ignore">neutral markers</h1>
+<h1 class="title toc-ignore">Neutral markers</h1>
 
 
 
 </div><!--closing h1_wrapper-->
-<p>##2 Neutral genetics</p>
+<section id="neutral-markers" class="level2">
+<h2>2 Neutral markers</h2>
 <section id="some-first-notes" class="level4">
 <h4>Some first notes</h4>
 <p>In our first tutorial, we only looked demographics, how population sizes change over time and space. However, in biology we are often interested in how several populations relate to each other. Are they completely isolated from each other or, in fact, a single population? To find this out, biologists have turned to genetics, using neutral genetic variation of e.g. microsatellites or AFLPs among populations to answer their questions of population connectivity. QuantiNemo (qN) allows you to model the genetic makeup of your individuals and follow the population genetics.</p>
@@ -150,7 +154,7 @@ if (window.hljs) {
 <p>ntrl_genot_logtime 1000</p>
 </blockquote>
 <p>(N.B. A similar parameter exists for the general statistics output, named stat_log_time.)</p>
-<p>Now we are ready to go: make two different setup files, one with the KAM mutation model and one with SSM. Add all the other parameters mentioned above - do not forget to specify patch_capacity 10000 - and let them both run with generations 4000.</p>
+<p>Now we are ready to go: make two different setup files, one with the KAM mutation model and one with SSM. Add all the other parameters mentioned above - do not forget to specify patch_capacity 10000 - and let them both run with generations 4000. We called the two files <code>mutationKAM.ini</code> and <code>mutationSSM.ini</code>.</p>
 <p>As usual a results folder will have been created when you started the simulation. Opening it you will find that, besides the usual five simulation text files, four new.dat files have been made: one for each 1000 generations.</p>
 <blockquote>
 <p>1 1 11 2<br />
@@ -243,7 +247,7 @@ for(rep in reps){
 ntrl_all 10<br />
 ntrl_allelic_file “inifreq.txt”</p>
 </blockquote>
-<p>You will notice that here we only specified the two loci with each ten alleles, but we have not specified the initial allele frequencies of these two loci. In fact, it is impossible to specify a specific initial allelic distribution within the setup file. For that you will need to create a separate file with this information. The name of that file is specified by the last argument. The file is shown below.</p>
+<p>You will notice that here we only specified the two loci with each ten alleles, but we have not specified the initial allele frequencies of these two loci. In fact, it is impossible to specify a specific initial allelic distribution within the setup file. For that you will need to create a separate file with this information. The name of that file is specified by the last argument. The file<code>inifreq.txt</code> is shown below.</p>
 <blockquote>
 <p>[FILE_INFO]{<br />
 col_locus 1<br />
@@ -301,7 +305,7 @@ all_combinations 0</p>
 <blockquote>
 <p>stat {n.adlt.nbAllele n.adlt.Fst n.adlt.Fst_l}</p>
 </blockquote>
-<p>The architecture of our simulation is now complete. Run it for 1000 generations. On the screen it will say “1. of 5 batch simulations” and your simulation will therefore be run five times, each time exactly the same setup file, except for the varying dispersal rate. In your qN folder you will therefore also see five new folders appear as if you had run 5 independent simulations. Each folder contains the by now familiar simulation files. However, you will see that the file names in each folder do not start with ‘simulation’ but instead carry the same name as that of the setup file, followed by an index. This number indicates from which simulation it originates. To analyse our results, lets plot for each simulation the mean number of alleles over time, and the three FST values (again, you may do it yourself or use the online r-script). What we got was the following:</p>
+<p>The architecture of our simulation is now complete. We saved it under <code>neutral_migration.ini</code>. Run it for 1000 generations. On the screen it will say “1. of 5 batch simulations” and your simulation will therefore be run five times, each time exactly the same setup file, except for the varying dispersal rate. In your qN folder you will therefore also see five new folders appear as if you had run 5 independent simulations. Each folder contains the by now familiar simulation files. However, you will see that the file names in each folder do not start with ‘simulation’ but instead carry the same name as that of the setup file, followed by an index. This number indicates from which simulation it originates. To analyse our results, lets plot for each simulation the mean number of alleles over time, and the three FST values (again, you may do it yourself or use the online r-script). What we got was the following:</p>
 <pre class="r"><code>    # specify the correct file for each simulation
     df.m.1&lt;-read.table(&quot;neutral_genetic/migration_neutral_0.1/neutral_migration_mean.txt&quot;,
                        header=TRUE) # ...dispersal_rate 0.1 (index 1)
@@ -381,67 +385,160 @@ With the above parameters, we have created our linked loci, which should eventua
 ntrl_save_genotype 1<br />
 ntrl_genot_logtime (1 1, 2 100, 101 102)</p>
 </blockquote>
-<p>Linkage disequilibrium does not exist as a summary statistic in qN. Instead we will have to calculate it ourselves. Therefore, we ask qN to output the raw genotype data as well. However, we do not need the genotype output for each generation, or at a regular interval. The most interesting points are at the beginning of our simulation (generation 1), just before the population crash (generation 100), and just after the population crash (generation 102). We therefore needed ntrl_genot_logtime to be a temporal parameter as well. Here we see that we command qN to, from generation 1, sample each generation; from generation 2 sample each hundredth generations; and from generation 101 sample each hundred-second generations. This effectively tells qN to sample at generations 1, 100 and 102. Now our simulation is ready to go. Run it for 102 generations. In the simulation_stats.txt file in the results folder, first quickly confirm that the population indeed dropped to 10 individuals at generation 101. Moreover, you should see that none of the 6 loci got fixed for one of the SNPs. So all alleles are still in there.</p>
+<p>Linkage disequilibrium does not exist as a summary statistic in qN. Instead we will have to calculate it ourselves. Therefore, we ask qN to output the raw genotype data as well. However, we do not need the genotype output for each generation, or at a regular interval. The most interesting points are at the beginning of our simulation (generation 1), just before the population crash (generation 100), and just after the population crash (generation 102). We therefore needed ntrl_genot_logtime to be a temporal parameter as well. Here we see that we command qN to, from generation 1, sample each generation; from generation 2 sample each hundredth generations; and from generation 101 sample each hundred-second generations. This effectively tells qN to sample at generations 1, 100 and 102.</p>
+<p>For conveniency reason and make the discussion more simple, we add a seed:</p>
+<blockquote>
+<p>seed 22</p>
+</blockquote>
+<p>We saved all the parameters in the file <code>linkage.ini</code>. Now our simulation is ready to go. Run it for 102 generations.</p>
+<p>In the simulation_stats.txt file in the results folder, first quickly confirm that the population indeed dropped to 10 individuals at generation 101. Moreover, you should see that none of the 6 loci got fixed for one of the SNPs. So all alleles are still in there.</p>
 <p><strong>Question</strong>: We told qN to have carrying capacity at generation 100 set at 10. Why are there still 10’000 adults at generation 100 and do we only see 10 adults in generation 101, when carrying capacity should again be 10’000? HINT: Have a look at the life cycle process of qN at the start of chapter 3!</p>
-<p>Now let’s check the linkage between the different alleles. As said before, qN cannot test this for you, you should calculate it yourself or use other software. Luckily the genotype output is by default in the FSTAT format (*.dat files; see the parameter <code>ntrl_genot_format</code>). This means we could use it immediately to import into pegas, a R package that allow, amoung other thing, to compute linkage disequilibrium</p>
-<p>We see the results of the test for genotypic disequilibrium. Because this test is based on randomization, the exact p-values may differ (though, if you used the same seed in qN, the r2 values should be the same!). However, all p-values should be higher than the threshold p-value &gt; 0.00333 (which is adjusted for multiple testing). These results confirm that at the first generation, no signs linkage disequilibrium can be found. <strong>Question</strong>:We told qN that three of our loci should be linked on the same chromosome; why do we not see this in generation 1? What parameter of the settings-file is responsible for this?</p>
-<pre class="r"><code>library(pegas)
-compute.linkage &lt;- function(file.name){
-invisible(capture.output(all &lt;- read.fstat(file.name)))  #reading the Qn file
-locis &lt;- alleles2loci(all$tab,phased = TRUE)
-p.values &lt;- matrix(nrow = 6,ncol = 6)
-for (i in 1:5){
- for (j in (i+1):6){
-  invisible(capture.output(ld &lt;- LD(locis, locus = c(i,j),details = F)))
-  p.values[i,j] &lt;- ld[[&quot;P-val&quot;]]
-  p.values[j,i] &lt;- ld[[&quot;P-val&quot;]]
+<p>Now let’s check the linkage between the different alleles. As said before, qN cannot test this for you, you should calculate it yourself or use other software. Various packages allows to do such computation in R, but since we have phased loci with only two alleles, it’s easier to compute everything ourself with R.</p>
+<p>In the following table, we show the value that we found for the genotypic disequilibrium. We always show the normalized value of <span class="math inline">\(D = p_{11}\cdot p_{22}-p_{12}\cdot p_{21}\)</span> given by <span class="math inline">\(D&#39;=D/(min(p_1\cdot q_2,q_1\cdot p_2))\)</span> if <span class="math inline">\(D&gt;0\)</span> or <span class="math inline">\(D&#39;=-D/(min(p_1\cdot q_1,p_2\cdot q_2))\)</span> if <span class="math inline">\(D&lt;0\)</span>. We also compute the pearson coefficient <span class="math inline">\(r =D/(p_1\cdot p_2\cdot q_1 \cdot q_2)^{1/2}\)</span> and check whether it’s significant or not. All p-values should be higher than the threshold p-value: 0.0033 = 0.05/15 (which is adjusted for multiple testing). As we can see, no loci shows sign of linkage at generation 1.</p>
+<pre class="r"><code>#get the value of the locus of all the population
+get.locus &lt;- function(genome,locus.number = 1,homolog.number = 1 ){
+  if(homolog.number == 1) return(round(genome[,locus.number+1]/10-1))
+  if(homolog.number == 2) return(round(genome[,locus.number+1]%%10-1))
 }
+#get the value of the locus of all the population, both chromosome at the same time
+get.locus.double &lt;- function(genome,chromosome.number = 1){
+  return(c(round(genome[,chromosome.number+1]/10-1),round(genome[,chromosome.number+1]%%10-1)))
 }
-return(p.values)
+#Compute the value of the linkage between two loci, i.e. between two vectors with 0 or 1 representing allele 1 or 2
+compute.linkage &lt;- function(l1,l2)
+{
+  p1 &lt;- sum(l1)/length(l1)
+  p2 &lt;- sum(l2)/length(l2)
+  p11 &lt;- sum(l1*l2)/length(l1)
+  p12 &lt;- sum(l1*(1-l2))/length(l1)
+  p21 &lt;- sum((1-l1)*l2)/length(l1)
+  p22 &lt;- sum((1-l1)*(1-l2))/length(l1)
+  D &lt;- (p22*p11-p12*p21)
+  Dp &lt;- (D &gt; 0)*D/min(p1*(1-p2),(1-p1)*p2) - (D &lt; 0)*D/min(p1*(1-p1),p2*(1-p2))
+  r &lt;- (p22*p11-p12*p21)/sqrt(p1*p2*(1-p1)*(1-p2))
+  chi2 &lt;- r^2*length(l1)
+  p.value &lt;- 1-pchisq(chi2,1)
+  return(list(Dp = Dp, r = r, p.value = p.value))
 }
-compute.linkage(&quot;neutral_genetic/linkage/simulation_g001.dat&quot;)</code></pre>
-<pre><code>##            [,1]       [,2]      [,3]       [,4]       [,5]      [,6]
-## [1,]         NA 0.01647101 0.9572173 0.06147632 0.04594527 0.9916678
-## [2,] 0.01647101         NA 0.1659906 0.88262451 0.02562857 0.7681598
-## [3,] 0.95721732 0.16599055        NA 0.99644524 0.99999990 0.1284192
-## [4,] 0.06147632 0.88262451 0.9964452         NA 0.51220178 0.8591100
-## [5,] 0.04594527 0.02562857 0.9999999 0.51220178         NA 0.3724979
-## [6,] 0.99166781 0.76815980 0.1284192 0.85911001 0.37249794        NA</code></pre>
-<p>Now, let’s repeat this analysis for generation 100. Most r2 values are still within the initial range of 0-0.00039. Only three values are higher, those of the locus 1 x locus 3 pair (r2=0.00212), the locus 3 x locus 5 pair (r2=0.01462) and, a bit less impressive, the locus 1 x locus 5 pair (r2=0.00053). From the test results from the .out-file we also see that the former two pairs have significant levels of linkage (p=0.00333), the latter pair almost, and all other pairs clearly not. Here we therefore see the effect of the loci 1, 3 and 5 being on the same chromosome in their linked inheritance! Question: Why do the pairs locus 1 x locus 3 and locus 3 x locus 5 have tighter linkage than the pair locus 1 x locus 5? Question: Normally, recombination is expected to breakdown linkage over time. Why do we now see an increase in linkage from generation 1 to generation 100?</p>
-<pre class="r"><code>compute.linkage(&quot;neutral_genetic/linkage/simulation_g100.dat&quot;)</code></pre>
-<pre><code>##              [,1]         [,2]         [,3]        [,4]       [,5]
-## [1,]           NA 4.868584e-02 0.0000743923 0.703438386 0.00311661
-## [2,] 0.0486858359           NA 0.0288809869 0.504208924 0.21277935
-## [3,] 0.0000743923 2.888099e-02           NA 0.005457808 0.98613922
-## [4,] 0.7034383862 5.042089e-01 0.0054578075          NA 0.20080616
-## [5,] 0.0031166097 2.127793e-01 0.9861392240 0.200806164         NA
-## [6,] 0.0013269701 3.781641e-07 0.0023886899 0.535843115 0.96928981
-##              [,6]
-## [1,] 1.326970e-03
-## [2,] 3.781641e-07
-## [3,] 2.388690e-03
-## [4,] 5.358431e-01
-## [5,] 9.692898e-01
-## [6,]           NA</code></pre>
-<pre class="r"><code>compute.linkage(&quot;neutral_genetic/linkage/simulation_g102.dat&quot;)</code></pre>
-<pre><code>##              [,1]          [,2]          [,3]         [,4]         [,5]
-## [1,]           NA  2.812038e-05  0.000000e+00 7.361376e-02 4.962160e-02
-## [2,] 2.812038e-05            NA 6.199231e-208 3.945243e-50 9.995459e-01
-## [3,] 0.000000e+00 6.199231e-208            NA 1.503576e-58 1.971813e-26
-## [4,] 7.361376e-02  3.945243e-50  1.503576e-58           NA 3.494357e-32
-## [5,] 4.962160e-02  9.995459e-01  1.971813e-26 3.494357e-32           NA
-## [6,] 4.720773e-04 1.002544e-268 3.158364e-248 4.944114e-76 7.485981e-08
-##               [,6]
-## [1,]  4.720773e-04
-## [2,] 1.002544e-268
-## [3,] 3.158364e-248
-## [4,]  4.944114e-76
-## [5,]  7.485981e-08
-## [6,]            NA</code></pre>
-<p>However, linkage disequilibrium of loci does not always imply actually physical approximation of the loci in question, which is demonstrated if we analyse the genotypes of generation 102. When we inspect the linkage disequilibrium results of FSTAT for generation 102, we see that (almost) all pairs are significantly linked! (r2 range: 0.0021-0.18856, excluding pair locus 3 x locus 4). Question: How can demographics be responsible for linkage disequilibrium? What happened exactly to the genotypes in generation 101 and 102? Question: What would happen to the r2-values of each locus pair in generation 103, keeping carrying capacity at 10’000? And what in generation 200? Question: How would all our results change if we altered the values in ntrl_genome? This section had demonstrated how linkage disequilibrium can be an emergent property of quantiNEMO. Of course, linked loci only become truly interesting when selection acts on one of them. Tutorial 3 will look at selection and quantitative traits.</p>
-<p>Question: What is the difference between: patch_capacity 10 20 30 40 / patch_capacity(10 20, 30 40) / patch_capacity {10 20 30 40} ? What type of simulations and results would you get if you would use each of these parameters separately in the following setup file? &gt; generations 100 &gt; patch_number 4 &gt; stats {adlt.nbInd_p}</p>
+#Compute linkage between all loci
+compute.all.linkage &lt;- function(geno){
+  r &lt;- matrix(0,nrow = 6,ncol = 6)
+  p &lt;- matrix(0,nrow = 6,ncol = 6)
+  Dp &lt;- matrix(0,nrow = 6,ncol = 6)
+    for (i in 1:6){
+      for (j in 1:6){
+        l1 &lt;- get.locus.double(geno,i)
+        l2 &lt;- get.locus.double(geno,j)
+        linkage &lt;- compute.linkage(l1,l2)
+        r[i,j] &lt;- linkage$r
+        p[i,j] &lt;- linkage$p.value
+        Dp[i,j] &lt;- linkage$Dp
+      }
+    }
+  return(list(Dp = Dp,r = r, p = p))
+}</code></pre>
+<pre class="r"><code>geno &lt;- read.table(&quot;neutral_genetic/linkage/simulation_g001.dat&quot;,skip = 7)
+linkage &lt;- compute.all.linkage(geno)</code></pre>
+<p><strong>Generation 1: Normalized D (D’)</strong></p>
+<pre class="r"><code>print.table(linkage$Dp,digits = 3)</code></pre>
+<pre><code>##      [,1]     [,2]     [,3]     [,4]     [,5]     [,6]    
+## [1,] 1.000000 0.015280 0.000816 0.006880 0.006916 0.006032
+## [2,] 0.015280 1.000000 0.000290 0.001937 0.009204 0.001271
+## [3,] 0.000816 0.000290 1.000000 0.002796 0.004843 0.003446
+## [4,] 0.006880 0.001937 0.002796 1.000000 0.003979 0.000433
+## [5,] 0.006916 0.009204 0.004843 0.003979 1.000000 0.005672
+## [6,] 0.006032 0.001271 0.003446 0.000433 0.005672 1.000000</code></pre>
+<p><strong>Generation 1: P-value and significance</strong></p>
+<pre class="r"><code>print.table(linkage$p,digit=3)</code></pre>
+<pre><code>##      [,1]   [,2]   [,3]   [,4]   [,5]   [,6]  
+## [1,] 0.0000 0.0307 0.9088 0.3348 0.3281 0.3937
+## [2,] 0.0307 0.0000 0.9673 0.7860 0.2036 0.8577
+## [3,] 0.9088 0.9673 0.0000 0.6931 0.4935 0.6291
+## [4,] 0.3348 0.7860 0.6931 0.0000 0.5792 0.9517
+## [5,] 0.3281 0.2036 0.4935 0.5792 0.0000 0.4343
+## [6,] 0.3937 0.8577 0.6291 0.9517 0.4343 0.0000</code></pre>
+<pre class="r"><code>print.table(linkage$p&lt;0.05/15,digit=3)</code></pre>
+<pre><code>##      [,1]  [,2]  [,3]  [,4]  [,5]  [,6] 
+## [1,]  TRUE FALSE FALSE FALSE FALSE FALSE
+## [2,] FALSE  TRUE FALSE FALSE FALSE FALSE
+## [3,] FALSE FALSE  TRUE FALSE FALSE FALSE
+## [4,] FALSE FALSE FALSE  TRUE FALSE FALSE
+## [5,] FALSE FALSE FALSE FALSE  TRUE FALSE
+## [6,] FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
+<p><strong>Question</strong>:We told qN that three of our loci should be linked on the same chromosome; why do we not see this in generation 1? What parameter of the settings-file is responsible for this?</p>
+<p>Now, let’s repeat this analysis for generation 100. Most values are still not significant. Only three values are significant, those of the locus 1 x locus 3 pair, the locus 3 x locus 5 pair and the locus 1 x locus 5 pair, all other pairs are clearly not significant. Here we therefore see the effect of the loci 1, 3 and 5 being on the same chromosome in their linked inheritance!</p>
+<pre class="r"><code>geno &lt;- read.table(&quot;neutral_genetic/linkage/simulation_g100.dat&quot;,skip = 7)
+linkage &lt;- compute.all.linkage(geno)</code></pre>
+<p><strong>Generation 100: Normalized D (D’)</strong></p>
+<pre class="r"><code>print.table(linkage$Dp,digits = 3)</code></pre>
+<pre><code>##      [,1]     [,2]     [,3]     [,4]     [,5]     [,6]    
+## [1,] 1.000000 0.005701 0.066446 0.004466 0.024968 0.007008
+## [2,] 0.005701 1.000000 0.013160 0.004172 0.006168 0.010667
+## [3,] 0.066446 0.013160 1.000000 0.002989 0.124599 0.003321
+## [4,] 0.004466 0.004172 0.002989 1.000000 0.003625 0.009770
+## [5,] 0.024968 0.006168 0.124599 0.003625 1.000000 0.000266
+## [6,] 0.007008 0.010667 0.003321 0.009770 0.000266 1.000000</code></pre>
+<p><strong>Generation 100: P-value and significance</strong></p>
+<pre class="r"><code>print.table(linkage$p,digit=3)</code></pre>
+<pre><code>##      [,1]     [,2]     [,3]     [,4]     [,5]     [,6]    
+## [1,] 0.000000 0.440141 0.000000 0.542452 0.000417 0.321667
+## [2,] 0.440141 0.000000 0.062766 0.555272 0.416250 0.140445
+## [3,] 0.000000 0.062766 0.000000 0.673155 0.000000 0.638744
+## [4,] 0.542452 0.555272 0.673155 0.000000 0.630377 0.173891
+## [5,] 0.000417 0.416250 0.000000 0.630377 0.000000 0.971379
+## [6,] 0.321667 0.140445 0.638744 0.173891 0.971379 0.000000</code></pre>
+<pre class="r"><code>print.table(linkage$p&lt;0.05/15,digit=3)</code></pre>
+<pre><code>##      [,1]  [,2]  [,3]  [,4]  [,5]  [,6] 
+## [1,]  TRUE FALSE  TRUE FALSE  TRUE FALSE
+## [2,] FALSE  TRUE FALSE FALSE FALSE FALSE
+## [3,]  TRUE FALSE  TRUE FALSE  TRUE FALSE
+## [4,] FALSE FALSE FALSE  TRUE FALSE FALSE
+## [5,]  TRUE FALSE  TRUE FALSE  TRUE FALSE
+## [6,] FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
+<p><strong>Question</strong>: Why do the pairs locus 1 x locus 3 and locus 3 x locus 5 have tighter linkage than the pair locus 1 x locus 5?<br />
+<strong>Question</strong>: Normally, recombination is expected to breakdown linkage over time. Why do we now see an increase in linkage from generation 1 to generation 100?</p>
+<p>However, linkage disequilibrium of loci does not always imply actually physical approximation of the loci in question, which is demonstrated if we analyse the genotypes of generation 102. When we inspect the linkage disequilibrium results for generation 102, we see that (almost) all pairs are significantly linked!</p>
+<pre class="r"><code>geno &lt;- read.table(&quot;neutral_genetic/linkage/simulation_g102.dat&quot;,skip = 7)
+linkage &lt;- compute.all.linkage(geno)</code></pre>
+<p><strong>Generation 102: Normalized D (D’)</strong></p>
+<pre class="r"><code>print.table(linkage$Dp,digits = 3)</code></pre>
+<pre><code>##      [,1]    [,2]    [,3]    [,4]    [,5]    [,6]   
+## [1,] 1.00000 0.08513 0.00688 0.15091 0.13178 0.31570
+## [2,] 0.08513 1.00000 0.02524 0.18849 0.05743 0.03975
+## [3,] 0.00688 0.02524 1.00000 0.06230 0.16308 0.09222
+## [4,] 0.15091 0.18849 0.06230 1.00000 0.45347 0.14755
+## [5,] 0.13178 0.05743 0.16308 0.45347 1.00000 0.27861
+## [6,] 0.31570 0.03975 0.09222 0.14755 0.27861 1.00000</code></pre>
+<p><strong>Generation 102: P-value and significance</strong></p>
+<pre class="r"><code>print.table(linkage$p,digit=3)</code></pre>
+<pre><code>##      [,1]     [,2]     [,3]     [,4]     [,5]     [,6]    
+## [1,] 0.00e+00 0.00e+00 4.26e-01 0.00e+00 0.00e+00 0.00e+00
+## [2,] 0.00e+00 0.00e+00 4.36e-04 0.00e+00 4.44e-16 2.06e-08
+## [3,] 4.26e-01 4.36e-04 0.00e+00 4.44e-16 0.00e+00 0.00e+00
+## [4,] 0.00e+00 0.00e+00 4.44e-16 0.00e+00 0.00e+00 0.00e+00
+## [5,] 0.00e+00 4.44e-16 0.00e+00 0.00e+00 0.00e+00 0.00e+00
+## [6,] 0.00e+00 2.06e-08 0.00e+00 0.00e+00 0.00e+00 0.00e+00</code></pre>
+<pre class="r"><code>print.table(linkage$p&lt;0.05/15,digit=3)</code></pre>
+<pre><code>##      [,1]  [,2]  [,3]  [,4]  [,5]  [,6] 
+## [1,]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+## [2,]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [3,] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [4,]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [5,]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [6,]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<p><strong>Question</strong>: How can demographics be responsible for linkage disequilibrium? What happened exactly to the genotypes in generation 101 and 102?</p>
+<p><strong>Question</strong>: What would happen to the D’-values of each locus pair in generation 103, keeping carrying capacity at 10’000? And what in generation 200?</p>
+<p><strong>Question</strong>: How would all our results change if we altered the values in ntrl_genome?</p>
+<p>This section had demonstrated how linkage disequilibrium can be an emergent property of quantiNEMO. Of course, linked loci only become truly interesting when selection acts on one of them. Tutorial 3 will look at selection and quantitative traits.</p>
+<p><strong>Question</strong>: What is the difference between: patch_capacity 10 20 30 40 / patch_capacity(10 20, 30 40) / patch_capacity {10 20 30 40} ? What type of simulations and results would you get if you would use each of these parameters separately in the following setup file?</p>
+<blockquote>
+<p>generations 100<br />
+patch_number 4<br />
+stats {adlt.nbInd_p}</p>
+</blockquote>
 </div>
 <!--closing main_content-->
+</section>
 </section>
 
 
