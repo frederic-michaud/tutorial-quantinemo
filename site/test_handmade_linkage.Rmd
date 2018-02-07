@@ -1,0 +1,36 @@
+---
+title: "Test Linkage"
+output: html_notebook
+---
+
+```{r}
+sumu=c()
+for(i in 1:1000)
+{
+length <- 10000
+p1 <- 0.1
+p2 <- 0.7
+l1 <- 1*(runif(length,min=0,max=1)<p1)
+l2 <- 1*(runif(length,min=0,max=1)-0.1*l1<p2)
+p1 <- sum(l1)/length
+p2 <- sum(l2)/length
+p11 <- sum(l1*l2)/length
+p12 <- sum(l1*(1-l2))/length
+p21 <- sum((1-l1)*l2)/length
+p22 <- sum((1-l1)*(1-l2))/length
+p11+p12+p21+p22
+r <- (p22*p11-p12*p21)/sqrt(p1*p2*(1-p1)*(1-p2))
+chi2 <- r^2*length
+sumu <- c(sumu,chi2)
+}
+qchisq(0.95,1)
+pchisq(chi2,1)
+```
+
+```{r}
+p1 <- hist(sumu)                     # centered at 4
+p2 <- hist(rchisq(10000,1))                     # centered at 6
+plot( p1, col=rgb(0,0,1,1/2), xlim=c(0,20))  # first histogram
+plot( p2, col=rgb(1,0,0,1/4), xlim=c(0,20), add=T)  # second
+```
+
