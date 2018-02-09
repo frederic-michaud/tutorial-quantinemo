@@ -1,0 +1,168 @@
+---
+title: "Isolation by distance using coalescence"
+output: html_notebook
+---
+```{r}
+devtools::load_all("./RQuantiNemo")
+
+```
+
+## Some first note
+In the first three tutorial, we limited ourself to forward in time simulation. Since this algorithm is individual based, it save the genotype of each individual at each generation. This is very useful to perform selection, since the fitness of all individual is always known, and allows to track the genetic state of the population at each generation. However, simulating the genotype of each individual is costly in terms of CPU time and memory. 
+
+Another approach is to only simulate the meta-population as a whole, saving only the number of individual at each generation. This method is called population-based simulation. However, this give us no information about the genetics diversity in the population. To rebuild this information, QuantiNemo use coalescence. Coalescence is a backward in time algorithm, starting from the current generation and drawing back the lineage of each individual. The adavantage of this approach is that only the gene which are present in the final generation should be track. 
+
+This mode is therefore much faster. However, it comes at an expensive cost. First, it only allows to simulate neutral genetic. Secondly, only the genome at the last generation is available. This two downside are tighly binded to the algorithm and cannot be overcome (at least in a standard way). For practical reason, quantiNemo also forbid the simulation of linked loci. This is something specific to quantiNemo and other coalescence programs allow to simulate such situation. 
+
+Despite these limitations, coalescence algorithms are still very useful for the following reason. Let's imagine that we sequence several individual from a population and get various markers, like microsatellite. First of all, we notice that in general, most of the markers are neutral, and for most species, markers under selection are not known. So in general, the fact that selection cannot be simulated is not a problem when we want to compare the genetic diversity to a known species. Secondly, we only have the current genetic diversity, so the fact that coalescence can only simulate that it also not a problem. So coalescence is a really good tool to compare an observed diversity in some species to what is expected. For example, it's possible to test hypothesis about demographical scenarios. 
+
+## Isolation by distance    
+
+Here, since we don't have any genetic datas, we will rather explore what is called isolation by distance. To make things a bit more interesting, we will try to see if we can guess how a colonizing scenario from the genetic data, and check from some output if our guess was correct or not. 
+
+ In isolation by distance, the genetic distance between two population is generated through a physical distance and a small migration rate. In the scenario that we will simulate, we will imagine that a new species appear or migrate close to a big lake, or a see. The species will migrate arround the lake, following a 1-D steping stone model. After all the border of the see is colonized, the question is where did the population migrating clockwise arround the sea met the population migrating counter-clockwise. 
+
+First, we will setup the demographical scenario. We will set 24 patches arround the see. At the beggining of the simulation, individual will only be situated on one patch. We expect the population in one patch to grow following a logistic model. Alltogheterh, our file look like this:
+
+> generations 1250   
+> patch_number 24   
+> patch_capacity 1000    
+> patch_ini_size{1000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}    
+> dispersal_model 2 # 1-D stepping-stone model    
+> dispersal_rate 0.00005 #on average, we have one migrant every 20 generation from a fully colonized patch    
+> growth_rate 0.5 #
+
+**Question** Which of these parameters tell us that we will colonize all patches in a round-about way. Which parameter is omited because it's default value is already correct for such a scenario?
+
+Then we have to set the genetic part of the simualtion. We don't need anything fancy here and will just specified 200 loci. Note that having 200 loci instead of just a few allows to have average value for some genetic quantity without doing various replicate. If we want to see some diversity, we have to set some mutation. Here, we will set it to a - not very realistic - high value to have a high diversity. 
+
+> ntrl_loci 1000   
+> ntrl_mutation_rate 1e-5
+
+**Question** Why didn't we set the initial genotype of the population? What will quantiNemo do? Hint: it will not use the parameter ``ntrl_ini_allele_model``
+
+Now, we turn to what we want to observe. One of the measure of the genetic distance between population are the F-statistic. QuantiNemo can compute them directly. Since we eventually want to check if we can find at which patch individual met, we should also save the population sizes. Note that, despite the fact that most statistic can not be computed at every generation, the demography can still be saved since it is generated in a forward-in-time manner:   
+
+> stat {n.adlt.fst_pair}   
+> coalescence_save_pop_sizes 1
+
+More importantly, we want to use the coalescence mode. In quantiNemo, this is done by just setting one parameter to one:
+
+> coalescence 1    
+
+Finally, to have the same result as us and to be able to use our script, we define some more general information:   
+
+> folder coalescence
+> seed 127
+
+You can now save this input file and run the simulation with quantiNemo. 
+
+**Question** How much longer is it to simulate the same thing but not using coalescence? Set the parameter coalescence to 0 and try it yourself.   
+
+```{r}
+parameters = list("generations" = 1250,
+                  "patch_number" = 24,
+                  "patch_capacity" = 1000,
+                  "patch_ini_size" = "{1000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}",
+                  "dispersal_rate" = 0.00005,
+                  "dispersal_model" = 2,
+                  "coalescence_save_pop_sizes" = 1,
+			"seed" = 127,
+			"mating_nb_offspring_model" = 8,
+			"growth_rate" = 0.5,
+			"stat" = "{n.adlt.fst_pair}",
+			"coalescence" = 1,
+			"ntrl_loci" = 200,
+			"ntrl_mutation_rate" ="1e-5"
+			)
+my_sim = new("simulation", parameters = parameters,sim.dir = "coalescence/")
+run(my_sim,verbose = T)
+```
+
+
+To make a guess about at which patch did the population meet again, we will plot the F-statistic of the neighbor patch. In most cases, we expect that the F-stat will be rather low. However, in the patch where the two population meet, we expect them to be very different and so to see a pick in the F-statistic. To have a clearer idea, we will not only plot the first neighbor, but also the second and the third neighbor. Notice that in this case, we cross twice or three time the barrer, so we expect to have not only one high point but two, resp. 3. 
+
+```{r}
+#first, we load the statistic 
+stat = loadStat(my_sim) 
+#We introduce in the matrix Fst all the 
+# F-stat between patch i and j
+Fst <- matrix(0,nrow = 24, ncol = 24)
+for(i in 1:23){
+  for(j in (i+1):24){
+    Fst[i,j] = head(stat[[paste("n.adlt.fst_p",formatC(i,width = 2,flag="0"),".",formatC(j,width = 2,flag="0"),sep = "")]],1)
+    Fst[j,i] = head(stat[[paste("n.adlt.fst_p",formatC(i,width = 2,flag="0"),".",formatC(j,width = 2,flag="0"),sep = "")]],1)
+  }
+}
+#d1 contain the genetic distance between patch i and patch i+1 for all i
+#d2 contain the genetic distance between patch i and patch i+2
+d1 <- vector("numeric",24)
+d2 <- d1
+d3 <- d1
+for(patch in 1:24){
+  d1[patch] <- Fst[patch,patch%%24+1]
+  d2[patch] <- Fst[patch,(patch+1)%%24+1]
+  d3[patch] <- Fst[patch,(patch+2)%%24+1]
+}
+plot(1:24,d1,col="red",type = "l",ylim = c(0,1),ylab = "F-stat",xlab = "patch_number")
+lines(1:24,d2,col="blue")
+lines(1:24,d3,col="green")
+legend("topleft", c("first neighbor", "second neighbor", "third neighbor"),lty = c(1,1,1),col=c("red","blue","green"))
+```
+
+From this plot, it seems pretty obvious that the two population meet between patch 14 and 15. To further test this hypothesis, we can plot the F-statistic as a function of the physical distance, making the hypothesis that individual cannot cross the fronteer between patch 14 and 15 , so that they are at a distance of 23 patches. 
+
+
+```{r}
+compute.coordinate <- function(split.position,coordinate){#compute the coordinate on the "adapted map"
+  if(coordinate <= split.position) coordinate <- coordinate + 24 #split is between split.position and split.position +1
+  return(coordinate)
+}
+compute.all.distance <- function(split.position){
+  Dxy <- matrix(0,nrow = 24,ncol = 24)
+  for(i in 1:23){
+    for(j in (i+1):24){
+      Dxy[i,j] <- abs(compute.coordinate(split.position ,i)-compute.coordinate(split.position ,j))
+      Dxy[j,i] <- abs(compute.coordinate(split.position ,i)-compute.coordinate(split.position ,j))
+    }
+  }
+  return(Dxy)
+}
+split.position=14
+Dxy <- compute.all.distance(split.position = split.position)
+plot(Dxy,Fst,xlab = "geographical distance", ylab = "F-stat",main = paste("scenario where patch",split.position," and ", (split.position)%%24+1,"are recolonize from different side" ))
+```
+We clearly see that the phyiscal distance is correlated to the genetic distance.  If now we plot it with a different hypothesis, for example that individual did not cross the fronteer between patch 13 and 14, what do we get?
+
+```{r}
+split.position=13
+Dxy <- compute.all.distance(split.position = split.position)
+plot(Dxy,Fst,xlab = "geographical distance", ylab = "F-stat",main = paste("scenario where patch",split.position," and ", (split.position)%%24+1,"are recolonize from different side" ))
+```
+We see that with this hypothesis, some points are clearly not in the correct position. This confirm what we already saw.
+
+In general, it is possible to verify if the correlation between geographical distance and genetic distance  is significant thanks to a Mantel test. 
+
+```{r}
+Dxy <- compute.all.distance(split.position = 12)
+library(ade4)
+mantel.randtest(as.dist(Dxy),as.dist(Fst),nrepet = 1000)
+```
+Ok, now that we are confident about where the two population met, we can check from the simulation output if our guess was correct. Here, we just show at what time each patch was colonize (i.e. has more than 100 individual).
+
+```{r}
+pop <- read.table("coalescence/my_simulation/simulation.txt",header = T)
+colonization.time = vector("numeric",24)
+names(colonization.time) <- 1:24
+for(i in 1:24){
+  colonization.time[i] = min(which(pop[,i+1]>100))
+}
+colonization.time
+```
+
+We see that the last patch which is colonized is the patch 14 (at generation 1221). It is likely that it was colonized through patch 13, since patch 14 was just colonized 10 generations before, and so it's likely that it didn't have a large enough population to send imigrant. 
+
+**Question** How does the F-statistic evolve with time from here? Try to set the number of generation to 10'000, and check if the result is very different.   
+
+**Question** Doing a simulation for 10'000 simulation is not really longer than for 1000 generation. Why is that? Would it be the same in forward in time simulation?   
+

@@ -1,0 +1,15 @@
+---
+title: "Coalescence"
+output: 
+  html_document:
+    includes:     
+      in_header: "header.html"
+---
+
+
+
+</div><!--closing h1_wrapper-->
+
+```{r child = '../coalescence.Rmd'}
+```
+</div>  <!--closing main_content-->

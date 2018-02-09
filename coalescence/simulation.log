@@ -1,0 +1,47 @@
+#############################################
+#                quantiNemo 2               #
+#   version 2.0.0 [Feb  1 2018; 09:05:19]   #
+#       Commit N° : 21d68fe-dirty           #
+#                                           #
+#              Simulation log               #
+# simulation started on 09-02-2018 12:54:57 #
+#              (log as input)               #
+#############################################
+
+
+## simulation
+_settings_file coalescence.ini
+folder coalescence
+seed {127}
+
+## metapop
+coalescence 1
+generations 1250
+patch_capacity 1000
+patch_ini_size {1000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}
+patch_number 24
+
+## ntrl
+ntrl_loci 200
+ntrl_mutation_rate 1e-5
+
+## breed
+growth_rate 0.5
+mating_nb_offspring_model 8
+
+## dispersal
+dispersal_model 2
+dispersal_rate 5e-05
+
+## coalesce
+coalescence_save_pop_sizes 1
+
+## save_stats
+stat {n.adlt.fst_pair}
+
+
+#############################################
+#  simulation ended on 09-02-2018 12:55:29  #
+#                                           #
+#  duration of the simulation was 00:00:32  #
+#############################################

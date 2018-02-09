@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Coalescence</title>
+
+<link href="coalescence_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="coalescence_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<link rel="stylesheet" href="files/style.css" />
+
+</head>
+
+<body>
+
+
+
+
+<div id="header">
+  <p class="name"> Department of Ecology &amp; Evolution</p>
+  <p> University of Lausanne | Switzerland</p>
+</div>
+<div id="menu">
+  <h3>Information</h3>
+  <ul>
+    <li><a href = "index.html">About</a>
+    <ul>
+      <li><a href = "index.html#citing">Citing</a></li>
+      <li><a href = "index.html#download">Download</a></li>
+      <li><a href = "index.html#developer">Developer</a></li>
+      <li><a href = "index.html#help">Help</a></li>
+      <li><a href = "index.html#source">Source</a></li>
+    </ul>
+    </li>
+  </ul>
+  <h3>Tutorials</h3>
+  <ul>
+    <li><a href = "getting_started.html">Introduction</a>
+    <ul>
+      <li><a href="getting_started.html#basic-usage-on-a-windows-machine">Windows</a></li>
+      <li><a href="getting_started.html#basic-usage-on-a-mac">Mac OS</a></li>
+      <li><a href="getting_started.html#basic-usage-in-linux">Linux</a></li>
+    </ul>    
+    </li>
+    <li><a href = "demography.html">Demography</a>
+    <ul>
+      <li><a href="demography.html#a-first-simulation-of-a-growing-population">Growing pop. I</a></li>
+      <li><a href="demography.html#a-second-growth-model">Growing pop. II</a></li>
+      <li><a href="demography.html#colonisation">Colonisation</a></li>
+      <li><a href="demography.html#colonization-extinction-equilibrium">Extinction</a></li>
+    </ul>
+  </li>
+    <li><a href = "neutral_marker.html">Neutral marker</a>
+    <ul>
+      <li><a href="neutral_marker.html#mutation-models">Mutation models</a></li>
+      <li><a href="neutral_marker.html#an-example-of-breakdown-of-differentiation-through-migration.">Migration</a></li>
+      <li><a href="neutral_marker.html#two-forms-of-linkage-disequilibrium-creating-a-genetic-map">Genetic map</a></li>
+    </ul>
+  </li>
+  <li><a href = "selection.html">Selection</a>
+      <ul>
+      <li><a href="selection.html#the-basic-selection-process">Basic selection</a></li>
+      <li><a href="selection.html#the-selection-mutation-drift-equilibrium">selection-mutation-drift equilibrium</a></li>
+      <li><a href="selection.html#mendelian-mice">Mendelian mice</a></li>
+    </ul>
+  </li>
+  </ul>
+</div>
+
+<div id="main_content">   <!--closed in generate:tuto.Rmd-->
+<div id='h1_wrapper'> <!--closed in generate:tuto.Rmd-->
+
+
+<h1 class="title toc-ignore">Coalescence</h1>
+
+
+
+</div><!--closing h1_wrapper-->
+<section id="some-first-note" class="level2">
+<h2>Some first note</h2>
+<p>In the first three tutorials, we limited ourself to forward-in-time simulations. Since this type of simulation is individual-based, it generates the genotype of each individual at each generation. This is very useful to perform selection, since the fitness of all individuals is always known, and allows to track the genetic state of the population at any time. However, simulating the genotype of each individual is very costly in terms of CPU time and memory and not necessary in some cases.</p>
+<p>Another approach is to only simulate the meta-population as a whole, saving only the number of individuals at each generation. This method is called population-based simulation. However, this gives no information about the genetic diversity in the population. To rebuild this information, QuantiNemo uses coalescence. Coalescence is a backward-in-time algorithm, starting from the current generation and randomly building back the lineage of each gene. The advantage of this approach is that only the genes which are present in the final generation should be tracked, living after a few generations only a few lineages to follow. In conclusion, what quantiNemo does if we use the coalescence mode is to first build a demographical scenario using population-based, forward-in-time simulation and then to build the genetic diversity using a backward-in-time simulation using a coalescence approach.</p>
+<p>This method is therefore much faster. However, it comes at an expensive cost. First, it only allows to simulate neutral genetic. Secondly, only the genome of the last generation is generated. These two drawbacks are tightly bound to the algorithm and cannot be overcome (at least in standard coalescence simulation). For practical reason, quantiNemo also forbid the simulation of linked loci. This is something specific to quantiNemo and other coalescence software allow to simulate linkage.</p>
+<p>Despite these limitations, coalescence algorithms are very useful in one common situation, that is when we observed a genetic diversity in a living species, and we want to learn something from this diversity. Indeed, most of the markers that we would get by sequencing the genome of a species are neutral, and for most species, markers under selection are anyways not known. So in this situation, the fact that selection cannot be simulated is not a problem. Secondly, we only have the current genetic diversity of our population, so the fact that coalescence can only give us the genotype of the last generation is not a problem neither. In conclusion, coalescence is the tool of choice to compare an observed genetic diversity in some species to what we should expect from theoretical model. Using various types of statistical tools, it’s for example possible to test hypotheses about the demographical scenario.</p>
+</section>
+<section id="isolation-by-distance" class="level2">
+<h2>Isolation by distance</h2>
+<p>Here, since we don’t have any genetic data, we will rather explore what is called isolation by distance. In isolation by distance, the genetic distance between two populations increases as the geographical distance increase. To make things a bit more interesting, we will try to see if we can guess how a colonizing scenario went just looking at the genetic data, and check from some output if our guess was correct or not.</p>
+<p>In isolation by distance, a genetic distance between two populations is generated through a physical distance. In the scenario that we will simulate, we will imagine that a new species appears or migrate close to a big lake, a sea or any obstacle. The species will migrate around the obstacle, following a 1-D stepping stone model. Since the migration on both sides depends on stochastic events, the meta-population will not colonize both sides at the same pace. If we wait long enough, the two populations will eventually reach each other. The question that will be of interest in this tutorial is can we guess where the population migrating clockwise around the obstacle met the population migrating counter-clockwise. In the following picture, we show a graphical representation of the situation:</p>
+<p><img src="images/migration_scenario.png" /></p>
+<p>First, we will setup the demographical scenario. We will set 24 patches arround the obstacle. At the beggining, individuals will only be present on one patch. Moreover, we expect the population to grow following a logistic model, with a maximum fertility of <span class="math inline">\(1.5\)</span> per individual (we simulate hermaphrodite). Alltogheterh, our file look like this:</p>
+<blockquote>
+<p>generations 1250<br />
+patch_number 24<br />
+patch_capacity 1000<br />
+patch_ini_size{1000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}<br />
+mating_nb_offspring_model 8 #logisitc growth growth_rate 0.5 dispersal_model 2 # 1-D stepping-stone model<br />
+dispersal_rate 0.00005 #on average, we have one migrant every 20 generation from a fully colonized patch</p>
+</blockquote>
+<p><strong>Question</strong> Which of these parameters tell us that we will colonize all patches in a round-about way. Which parameter about the migration model is omitted since its default value is already what we want?</p>
+<p>Then we have to set the genetic part of the simulation. We don’t need anything fancy here and will just specify 200 neutral loci. Note that having 200 loci instead of just one allows to obtain distribution and average for all the quantity related to the genotype of the individual without performing various replicate. If we want to see diversity, we have to set some mutation. Here, we will set it to a - not very realistic - high value to have a high diversity.</p>
+<blockquote>
+<p>ntrl_loci 1000<br />
+ntrl_mutation_rate 1e-5</p>
+</blockquote>
+<p><strong>Question</strong> Why didn’t we set the initial genotype of the population? What will quantiNemo do? Hint: it will not use the parameter <code>ntrl_ini_allele_model</code></p>
+<p>Now, we turn to what we want to observe. One of the measures of the genetic distance between population is the F-statistic. QuantiNemo can compute them directly. Since we eventually want to check if guess correctly at which patch individuals met, we should also save the population sizes. Note that, despite the fact that most statistic cannot be computed at every generation in the coalescence mode, the demography can still be saved since it is generated in a forward-in-time manner:</p>
+<blockquote>
+<p>stat {n.adlt.fst_pair}<br />
+coalescence_save_pop_sizes 1</p>
+</blockquote>
+<p>More importantly, we want to use the coalescence mode. In quantiNemo, this is done by just setting one parameter to one:</p>
+<blockquote>
+<p>coalescence 1</p>
+</blockquote>
+<p>Finally, to have the same result as we do and to be able to use our script, we define some general information:</p>
+<blockquote>
+<p>folder coalescence seed 127</p>
+</blockquote>
+<p>You can now save this input file and run the simulation with quantiNemo.</p>
+<p><strong>Question</strong> How much longer is it to simulate the same scenario but not using coalescence? Set the parameter coalescence to 0 and try it for yourself.</p>
+<p>To make a guess about the patch at which the population met again, we will plot the F-statistic of neighbor patches. In most cases, we expect that the F-stat will be rather low. However, in the patch where the two population meet, we expect them to be very different and so to see a pick in the F-statistic. To have a clearer idea, we will not only plot the first neighbor but also the second and the third neighbor. Notice that in this case, we cross twice or three times the barrier, so we expect to have not only one high point but two, resp. three.</p>
+<pre class="r"><code>#first, we load the statistic 
+stat = read.table(&quot;coalescence/simulation_stats.txt&quot;,header = T)
+#We introduce in the matrix Fst all the 
+# F-stat between patch i and j
+Fst &lt;- matrix(0,nrow = 24, ncol = 24)
+for(i in 1:23){
+  for(j in (i+1):24){
+    Fst[i,j] = head(stat[[paste(&quot;n.adlt.fst_p&quot;,formatC(i,width = 2,flag=&quot;0&quot;),&quot;.&quot;,formatC(j,width = 2,flag=&quot;0&quot;),sep = &quot;&quot;)]],1)
+    Fst[j,i] = head(stat[[paste(&quot;n.adlt.fst_p&quot;,formatC(i,width = 2,flag=&quot;0&quot;),&quot;.&quot;,formatC(j,width = 2,flag=&quot;0&quot;),sep = &quot;&quot;)]],1)
+  }
+}
+#d1 contain the genetic distance between patch i and patch i+1 for all i
+#d2 contain the genetic distance between patch i and patch i+2
+d1 &lt;- vector(&quot;numeric&quot;,24)
+d2 &lt;- d1
+d3 &lt;- d1
+for(patch in 1:24){
+  d1[patch] &lt;- Fst[patch,patch%%24+1]
+  d2[patch] &lt;- Fst[patch,(patch+1)%%24+1]
+  d3[patch] &lt;- Fst[patch,(patch+2)%%24+1]
+}
+plot(1:24,d1,col=&quot;red&quot;,type = &quot;l&quot;,ylim = c(0,1),ylab = &quot;F-stat&quot;,xlab = &quot;patch_number&quot;)
+lines(1:24,d2,col=&quot;blue&quot;)
+lines(1:24,d3,col=&quot;green&quot;)
+legend(&quot;topleft&quot;, c(&quot;first neighbor&quot;, &quot;second neighbor&quot;, &quot;third neighbor&quot;),lty = c(1,1,1),col=c(&quot;red&quot;,&quot;blue&quot;,&quot;green&quot;))</code></pre>
+<p><img src="coalescence_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>From this plot, it seems pretty obvious that the two population meet between patch 14 and 15. To further test this hypothesis, we can plot the F-statistic as a function of the physical distance, making the hypothesis that individual cannot cross the frontier between patch 14 and 15 so that they are at a distance of 23 patches.</p>
+<pre class="r"><code>compute.coordinate &lt;- function(split.position,coordinate){#compute the coordinate on the &quot;adapted map&quot;
+  if(coordinate &lt;= split.position) coordinate &lt;- coordinate + 24 #split is between split.position and split.position +1
+  return(coordinate)
+}
+compute.all.distance &lt;- function(split.position){
+  Dxy &lt;- matrix(0,nrow = 24,ncol = 24)
+  for(i in 1:23){
+    for(j in (i+1):24){
+      Dxy[i,j] &lt;- abs(compute.coordinate(split.position ,i)-compute.coordinate(split.position ,j))
+      Dxy[j,i] &lt;- abs(compute.coordinate(split.position ,i)-compute.coordinate(split.position ,j))
+    }
+  }
+  return(Dxy)
+}
+split.position=14
+Dxy &lt;- compute.all.distance(split.position = split.position)
+plot(Dxy,Fst,xlab = &quot;geographical distance&quot;, ylab = &quot;F-stat&quot;,main = paste(&quot;scenario where patch&quot;,split.position,&quot; and &quot;, (split.position)%%24+1,&quot;are recolonize from different side&quot; ))</code></pre>
+<p><img src="coalescence_files/figure-html/unnamed-chunk-4-1.png" width="672" /> We clearly see that the physical distance is correlated to the genetic distance. If now we plot it with a different hypothesis, for example that individual did not cross the fronteer between patch 13 and 14, what do we get?</p>
+<pre class="r"><code>split.position=13
+Dxy &lt;- compute.all.distance(split.position = split.position)
+plot(Dxy,Fst,xlab = &quot;geographical distance&quot;, ylab = &quot;F-stat&quot;,main = paste(&quot;scenario where patch&quot;,split.position,&quot; and &quot;, (split.position)%%24+1,&quot;are recolonize from different side&quot; ))</code></pre>
+<p><img src="coalescence_files/figure-html/unnamed-chunk-5-1.png" width="672" /> We see that with this hypothesis, some points are clearly not in the correct position. This confirm what we already saw.</p>
+<p>In general, it is possible to verify if the correlation between geographical distance and genetic distance is significant thanks to a Mantel test. Here, we use the package ade4 to perform such a test, and we see that the p-value is highly significant, meaning that we do observe isolation by distance.</p>
+<pre class="r"><code>Dxy &lt;- compute.all.distance(split.position = 14)
+library(ade4)
+mantel.randtest(as.dist(Dxy),as.dist(Fst),nrepet = 1000)</code></pre>
+<pre><code>## Monte-Carlo test
+## Call: mantel.randtest(m1 = as.dist(Dxy), m2 = as.dist(Fst), nrepet = 1000)
+## 
+## Observation: 0.8898093 
+## 
+## Based on 1000 replicates
+## Simulated p-value: 0.000999001 
+## Alternative hypothesis: greater 
+## 
+##      Std.Obs  Expectation     Variance 
+## 11.999639713  0.004825053  0.005439196</code></pre>
+<p>Now that we are confident about where the two population met, we can check from the simulation output if our guess was correct. Here, we just show at what time each patch was colonized (i.e. has more than 100 individual).</p>
+<pre class="r"><code>pop &lt;- read.table(&quot;coalescence/simulation.txt&quot;,header = T)
+colonization.time = vector(&quot;numeric&quot;,24)
+names(colonization.time) &lt;- 1:24
+for(i in 1:24){
+  colonization.time[i] = min(which(pop[,i+1]&gt;100))
+}
+colonization.time</code></pre>
+<pre><code>##    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15 
+##    1  121  155  313  397  446  557  715  756  827  937 1059 1143 1221 1211 
+##   16   17   18   19   20   21   22   23   24 
+## 1012  909  717  388  302  181  144  112   74</code></pre>
+<p>We see that the last patch which is colonized is the patch 14 (at generation 1221). It is likely that it was colonized through patch 13 since patch 14 was just colonized 10 generations before(1211), and so it’s likely that it didn’t have a large enough population to send immigrant. In conclusion, we were able to correctly guess an important fact about our demographical scenario just by looking at the current genetic information of the meta-population.</p>
+<p><strong>Question</strong> How does the F-statistic evolve with time from here? Try to set the number of generation to 10’000, and check if the result is very different.</p>
+<p><strong>Question</strong> Doing a simulation for 10’000 simulation is not really longer than for 1000 generation. Why is that? Would it be the same in forward in time simulation?</p>
+</div>
+<!--closing main_content-->
+</section>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
