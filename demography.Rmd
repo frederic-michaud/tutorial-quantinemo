@@ -31,7 +31,7 @@ These parameters function like switches. If our qN simulation is like a machine,
 
 Instead of starting our simulation with a population at its maximum size (the carrying capacity), we will tell qN using `patch_ini_size how many individuals our population consists of at the start of our simulation (4 in this case).   
 
-`mating_nb_offspring_model` allows us to choose how we would like the population to grow. Several options exist in qN (see Section 3. 1  'Breeding' in the manual <tobechecked>), but here we choose option 2, which means that for each generation qN lets each female have on average x offspring, where x is defined by the parameter `mean_fecundity`.   
+`mating_nb_offspring_model` allows us to choose how we would like the population to grow. Several options exist in qN (see Section 6.3  'Population growth' in the manual), but here we choose option 2, which means that for each generation qN lets each female have on average x offspring, where x is defined by the parameter `mean_fecundity`.   
 
 Generations are non-overlapping in qN, this fecundity therefore specifies the lifetime reproductive success of each female in the population. Since by default each individual is hermaphrodite (and therefore also female), a fecundity of 1.5 will mean our population multiplies by 1.5 each generation, and therefore grows exponentially. If we do not want our population to grow beyond the carrying capacity of the site, we have to tell qN to 'trim' any excess individuals from the population over the carrying capacity, which we do by setting `regulation_model_adults` to 1. Lastly, behind stat we define the output we would like qN to save from this simulation; in this case we are only asking it to save the number of adults in each generation.   
 
@@ -130,7 +130,7 @@ For our current scenario, we will decide that all Hawaiian Islands are equal i.e
 By contrast, `patch_ini_size` should be different for the different patches. If we would leave it like this, all of our uninhabited patches would start with 4 individuals already present! Luckily, we can tell qN that we want different values for our different patches by putting our required values in {} separated by spaces (no commas!). This is called a 'vector':`patch_ini_size {4 0 0 0 0 0}`. Here we tell qN that the initial population size of our first patch is 4, and that our patches 2 ' 6 all have an initial size of 0.   
 
 Instead of repeating the '0' five times, we can use a shorthand, rep: `patch_ini_size {4 rep(0, 5) }`
-The above line means exactly the same to qN as the previous line with all the zeros. We just told it to repeat the '0' five times and thus could potentially save us some typing. (See the manual section <tobechecked> 2.4 'Macros' for more examples.)   
+The above line means exactly the same to qN as the previous line with all the zeros. We just told it to repeat the '0' five times and thus could potentially save us some typing. (See the manual section 3.9 'Macros' for more examples.)   
 
 For migration to occur, we need to give a migration rate. We will set dispersal_rate to 0.005, meaning that on average 0.5% of a patch's population will emigrate. (N.B. If you provide dispersal_rate with a value larger than 1, qN will interpret it as the absolute number of migrants!) Now we are almost finished. But since we said we were modelling the colonization by humans, we will change our hermaphrodites into dioecious creatures by setting `mating_system` to 3, and reduce their growth_rate to 0.5   
 

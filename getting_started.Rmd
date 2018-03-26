@@ -1,5 +1,5 @@
 ---
-title: "Demography"
+title: "Getting started"
 date: "20 novembre 2017"
 --- 
 
@@ -11,7 +11,7 @@ Though the manual provides all information you would need to successfully use qu
 
 This tutorial was written to work with quantiNemo version 2.0. Though most of the tutorial should work fine under other versions, it might differ in some, important, details such as parameter encoding.   
 
-We recommend you not to copy-past sample code from this tutorial into a setup file, since this can often introduce 'hidden' errors, but instead retype the text (the mastering of any art starts by copying it). However, all setup files (files ending with .ini) described and used during these tutorials can be downloaded from this website directly <INSERT LINK>. Furthermore, many of the visualisations and analyses after the simulations have been performed in the statistical software package R. Though some of the first plotting exercises can be performed in Excel, data manipulations later in this tutorial require the aid of the more flexible environment of R.   
+We recommend you not to copy-past sample code from this tutorial into a setup file, since this can often introduce 'hidden' errors, but instead retype the text (the mastering of any art starts by copying it). However, all setup files (files ending with .ini) described and used during these tutorials can be downloaded from this website directly [here](https://www2.unil.ch/popgen/softwares/quantinemo/). Furthermore, many of the visualisations and analyses after the simulations have been performed in the statistical software package R. Though some of the first plotting exercises can be performed in Excel, data manipulations later in this tutorial require the aid of the more flexible environment of R.   
 
 Because the scope here is not to explain the workings of R (there are excellent online tutorials for those), we do go into too much detail and instead provide readymade R-scripts. However, we recommend those who do know R to first try reading and analysing the data yourself.
 
