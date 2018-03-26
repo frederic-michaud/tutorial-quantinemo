@@ -67,7 +67,7 @@ QuantiNemo is a software developed by:
 The developper and maintener of QuantiNemo encourage user to take contact with them if they need help of any sort. If you encounter problems while using the software, or if you have any question concerning some specific simulation setup or about the documentation we would appreciate to ear from you. We are always seeking to improve the program, adding key feature or solving bug, and to have a clear documentation so any feedback is welcome. 
 </p>
 <p>
-You can either send us an email using of the address above, or post a bug report in the following github repository: <a href = "https://github.com/jgx65/qnemo_dev">here</a>
+You can either send us an email using of the address above, or post a bug report in the following github repository: <a href = "https://github.com/jgx65/quantinemo">here</a>
 </p>
     
 <h2 id="source">Source code and bug report</h2>   
@@ -76,9 +76,9 @@ You can either send us an email using of the address above, or post a bug report
 QuantiNemo is a scientific software. It is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 </p>
  <p>
- Users are welcome and encouraged to report bugs in order to improve quantiNemo. The development of quantiNemo is done on  <a href = "https://github.com/jgx65/qnemo_dev">Github</a>, and preferably, bugs should be submitted there. Alternatively, email can be sent to one of the authors.
+ Users are welcome and encouraged to report bugs in order to improve quantiNemo. The development of quantiNemo is done on  <a href = "https://github.com/jgx65/quantinemo">Github</a>, and preferably, bugs should be submitted there. Alternatively, email can be sent to one of the authors.
 </p>
  <p>
-  The source code is available in the  <a href = "https://github.com/jgx65/qnemo_dev">github repository</a>
+  The source code is available in the  <a href = "https://github.com/jgx65/quantinemo">github repository</a>
 </p>
 </div>
