@@ -16,6 +16,7 @@
 
 <link href="neutral_marker_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="neutral_marker_files/highlightjs-9.12.0/highlight.js"></script>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
 
 <style type="text/css">code{white-space: pre;}</style>
 <script type="text/javascript">
@@ -31,7 +32,7 @@ if (window.hljs) {
 
 
 
-<link rel="stylesheet" href="files/style.css" />
+<link rel="stylesheet" href="files/style.css" type="text/css" />
 
 </head>
 
@@ -88,6 +89,9 @@ if (window.hljs) {
       <li><a href="selection.html#mendelian-mice">Mendelian mice</a></li>
     </ul>
   </li>
+  </li>
+    <li><a href = "coalescence.html">Coalescence</a>
+  </li>
   </ul>
 </div>
 
@@ -100,14 +104,14 @@ if (window.hljs) {
 
 
 </div><!--closing h1_wrapper-->
-<section id="neutral-markers" class="level2">
+<div id="neutral-markers" class="section level2">
 <h2>2 Neutral markers</h2>
-<section id="some-first-notes" class="level4">
+<div id="some-first-notes" class="section level4">
 <h4>Some first notes</h4>
 <p>In our first tutorial, we only looked demographics, how population sizes change over time and space. However, in biology we are often interested in how several populations relate to each other. Are they completely isolated from each other or, in fact, a single population? To find this out, biologists have turned to genetics, using neutral genetic variation of e.g. microsatellites or AFLPs among populations to answer their questions of population connectivity. QuantiNemo (qN) allows you to model the genetic makeup of your individuals and follow the population genetics.</p>
 <p>This tutorial will demonstrate how to create a genetic architecture, load genetic information into quantiNemo (qN) and how to retrieve the proper statistics.</p>
-</section>
-<section id="mutation-models" class="level3">
+</div>
+<div id="mutation-models" class="section level3">
 <h3>2.1 Mutation models</h3>
 <p>Population genetic analyses are dependent on the presence of genetic variation in the population at a certain locus. This variation can arise either through mutation or migration. To start we will visualise and compare two different process of mutation in qN and look at the accumulation of alleles of a neutral locus over time in a single, isolated population consisting of 10’000 randomly mating hermaphrodites.</p>
 <p>Since qN default settings assumes a single, isolated population of randomly mating hermaphrodites, we do not need to specify any of those parameters. However, if we want to introduce a single neutral locus to our population, we will have to tell it to qN by introducing the follwing in the input file:</p>
@@ -130,7 +134,7 @@ if (window.hljs) {
 <blockquote>
 <p>ntrl_mutation_rate 1e-3 # or 0.001; qN recognizes both notations</p>
 </blockquote>
-<p>We will have to decide what actually happens when a mutation occurs. qN offers two options: 1) if an allele mutates it will mutate to any other allele with equal probability (the K-Allele Model); or 2) if an allele mutates it can only mutate one allele higher or one allele lower (the Single Step Mutation model). This last option corresponds to how microsatellites are expected to mutate; a microsatellite of 4 repeats will only mutate to 3 repeats of 5 repeats. See the section <tobechecked> 9.2 ‘Mutation’ for more information. In this section we would like to demonstrate the difference between these two options, so we will run our simulation twice. Once</p>
+<p>We will have to decide what actually happens when a mutation occurs. qN offers two options: 1) if an allele mutates it will mutate to any other allele with equal probability (the K-Allele Model); or 2) if an allele mutates it can only mutate one allele higher or one allele lower (the Single Step Mutation model). This last option corresponds to how microsatellites are expected to mutate; a microsatellite of 4 repeats will only mutate to 3 repeats of 5 repeats. See the section 7.4 ‘Mutation’ for more information. In this section we would like to demonstrate the difference between these two options, so we will run our simulation twice. Once</p>
 <blockquote>
 <p>ntrl_mutation_model 0 # = KAM</p>
 </blockquote>
@@ -140,7 +144,7 @@ if (window.hljs) {
 </blockquote>
 <p>Lastly, we will have to think about output. We could, as in the previous chapter, save output such as the size of the population. But since our population will start at its carrying capacity and is not undergoing any selection, migration or extinction, demographic parameters are not going to be very interesting.</p>
 <p><strong>Question</strong>: Based on the default options we are using for breeding in our current scenario, how do you expect the demography to behave in our simulation?</p>
-<p>Instead we could have a look at section <tobechecked> 9.5 ‘Summary statistics’ of the manual to see statistics potentially more interesting for our current simulation. Because we are currently interested in the accumulation of new alleles over time, we will pick three statistics commonly used to reflect allelic diversity: the number of alleles present, observed heterozygosity (HO) and expected heterozygosity (HS).</p>
+<p>Instead we could have a look at section 10.3 ‘Summary statistics’ of the manual to see statistics potentially more interesting for our current simulation. Because we are currently interested in the accumulation of new alleles over time, we will pick three statistics commonly used to reflect allelic diversity: the number of alleles present, observed heterozygosity (HO) and expected heterozygosity (HS).</p>
 <p><strong>Question</strong>: Often studies report allelic richness instead of the absolute number of alleles. qN can report the allelic richness, but why does this make little sense to call this in our current scenario?</p>
 <blockquote>
 <p>stat { n.adlt.nbAll n.adlt.ho n.adlt.hs }</p>
@@ -166,7 +170,7 @@ n1_l1<br />
 1 1006</p>
 </blockquote>
 <p>etc…</p>
-<p>The first line of this file contains four numbers, see the manual, <tobechecked> section 9.4 ‘Genotype output’ for their meaning. Below are the names of all the loci, in our case only one, with the default name n(eutral trait)1_l(ocus)1.</p>
+<p>The first line of this file contains four numbers, see the manual, section 10.4 ‘Raw data’ for their meaning. Below are the names of all the loci, in our case only one, with the default name n(eutral trait)1_l(ocus)1.</p>
 <p>Below it we see two columns. Each line represents an individual from our simulation. The first number of each line is the patch number (in this case always ‘1’ since we have only one patch), the second number is the genotype. The genotype consists always of four digits, the first two digits representing the first allele, the last two representing the second allele (e.g. genotype 0807 is a heterozygote, with one allele 08 and one allele 07).</p>
 <p>The goal of the current section was to demonstrate the differences between the two mutation processes, one of the main sources of variation in qN. Let’s first look at the accumulation of alleles and heterozygosity (a summary statistic often used for allelic diversity in population genetics) over time. We can use R to read the data from our simulation_stats.txt file as in the previous tutorial and plot the number of alleles and heterozygosity against time.</p>
 <p><strong>Question</strong>: Why do the observed and expected heterozygosity produce practically the same figure?</p>
@@ -192,7 +196,7 @@ for(rep in reps){
 }</code></pre>
 <p><img src="neutral_marker_files/figure-html/unnamed-chunk-2-1.png" width="672" /><img src="neutral_marker_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
 <p>Though the curves of the two HO graphs are similar, the KAM figure plateaus out a bit higher than the SSM figure. Why this is, we can see in the left figures: the KAM simulation has all of the possible alleles present in the simulation, whereas the SSM simulation fluctuates between 8 and 10 alleles present, maximal heterozygosity will therefore be lower.</p>
-<p>A more stunning difference between the two mutation models is that all alleles have come into existence after 2(!) generations of the KAM simulation, whereas the SSM simulation shows a much slower accumulation of alleles over time and almost never has all alleles present at the same time. This might seem a bit surprising, since both simulations had the same mutation rate. We would expect the accumulation over time of mutations, and therefore alleles, to be equal in both simulations. We will use the genotype files to illustrate what is different between the two mutation processes. We can read the files in R (make sure to skip the first line), split the genotypes into two alleles and create allele frequency plots (see the included tutorial2.r script for example code). What you get are the allele-frequency charts below.</p>
+<p>A more stunning difference between the two mutation models is that all alleles have come into existence after 2(!) generations of the KAM simulation, whereas the SSM simulation shows a much slower accumulation of alleles over time and almost never has all alleles present at the same time. This might seem a bit surprising, since both simulations had the same mutation rate. We would expect the accumulation over time of mutations, and therefore alleles, to be equal in both simulations. We will use the genotype files to illustrate what is different between the two mutation processes. We can read the files in R (make sure to skip the first line), split the genotypes into two alleles and create allele frequency plots (see the included ‘neutral_genetic.Rmd’ script for example code). What you get are the allele-frequency charts below.</p>
 <pre class="r"><code>reps = c(&quot;neutral_genetic/mutationKAM/&quot;,
          &quot;neutral_genetic/mutationSSM/&quot;)
 for(rep in reps){
@@ -231,15 +235,16 @@ for(rep in reps){
 <p>Remember both simulations had the same starting conditions: all individuals were homozygous for the ‘middle allele’, in this case allele 6. The chance for these alleles to mutate is equal in both simulations. However, how these alleles mutate is different. In the K-Allele Model, an allele has the same probability to mutate into any other allele (with 10 other alleles, the probability for each allele is therefore 1/10th). The result is that all alleles have the same likelihood to come into being, and indeed after a 1000 generations all alleles are present in more-or-less similar proportions. After 4000 generations, allele 6 is not even the most prevalent anymore; a more-or-less uniform distribution of alleles has arisen.</p>
 <p>In the Single Step Mutation model, when an allele mutates, it can only mutate one up, or one down. The chance for a new allele to appear is therefore not equal for all alleles! In the first generation, only alleles 5 and 7 could possibly come into being, all other alleles have a probability of null to appear. It will take at least five generations for allele 1 to even be possible to appear. Moreover, alleles 1 and 11 have ‘edge effects’. They can only mutate back to alleles 2 and 10 respectively. This makes that the middle allele will always be one of the more frequent alleles in the simulation.</p>
 <p>The two different mutation models create some clear differences in the accumulation of gene diversity. None of the two is ‘better’ or ‘more realistic’. What mutation model to choose, really depends on the question one wants to answer, if at all relevant.</p>
-<p><strong>Question</strong>: what will happen to the allele distributions if we let these simulations run even longer? And what is we let our simulations start with everybody’s initial genotype being 0101?</p>
-</section>
-<section id="an-example-of-breakdown-of-differentiation-through-migration." class="level3">
+<p><strong>Question</strong>: what will happen to the allele distributions if we let these simulations run even longer? And what if we let our simulations start with everybody’s initial genotype being 0101?</p>
+</div>
+<div id="an-example-of-breakdown-of-differentiation-through-migration." class="section level3">
 <h3>2.2 An example of breakdown of differentiation through migration.</h3>
 <p>In section 2.1 we looked at mutation in qN as a source of genetic variation in a population. A different source of new alleles for most wild populations is migration.</p>
 <p>In this section we will look at the interaction between migration and genetic diversity. We will create a scenario of ten separated populations, each fixed for a different allele at the same neutral locus, where migration has suddenly become possible. We will then study how long it takes for migration to break down the differentiation between populations.</p>
 <p>First some basics. We need ten populations each consisting of 1000 of our default randomly-mating hermaphrodites. The sites will be connected according to the so called migrant-pool island model. For this migration model each site is assumed to be connected equally strong to each other site, effectively eliminating any influence of geography. (Though this might sound as very artificial, it is a model very often used in population genetics and is indeed the default in qN.) Since we do not have to mention any of our default parameters, the first part of our model will contain only this this:</p>
 <blockquote>
-<p>patch_capacity 1000 patch_number 10</p>
+<p>patch_capacity 1000<br />
+patch_number 10</p>
 </blockquote>
 <p>Now we need to start specifying our genetic architecture. We wanted a single locus, with ten different alleles, each fixed in a different population. But for comparison’s sake, we will also introduce a second locus with a shared allele distribution among populations:</p>
 <blockquote>
@@ -247,7 +252,7 @@ for(rep in reps){
 ntrl_all 10<br />
 ntrl_allelic_file “inifreq.txt”</p>
 </blockquote>
-<p>You will notice that here we only specified the two loci with each ten alleles, but we have not specified the initial allele frequencies of these two loci. In fact, it is impossible to specify a specific initial allelic distribution within the setup file. For that you will need to create a separate file with this information. The name of that file is specified by the last argument. The file<code>inifreq.txt</code> is shown below.</p>
+<p>You will notice that here we only specified the two loci with each ten alleles, but we have not specified the initial allele frequencies of these two loci. In fact, it is impossible to specify a specific initial allelic distribution within the setup file. For that you will need to create a separate file with this information. The name of that file is specified by the last argument. The file <code>inifreq.txt</code> is shown below.</p>
 <blockquote>
 <p>[FILE_INFO]{<br />
 col_locus 1<br />
@@ -285,14 +290,14 @@ col_ini_freq 3<br />
 <p>{0.06 0.06 0.06 0.06 0.06 0.06 0.06 0.06 0.06 0.06}</p>
 </blockquote>
 <p>But giving the value just once has the same effect. Note how the initial allele frequencies of locus 2 also add up to 1.</p>
-<p>N.B. In this scenario we use this inifreq.txt file just to specify the initial frequencies, but you could also use it to specify, for example, a different mutation rate for each allele (see section <tobechecked> 9.1 ‘Architecture’ of the manual for other possibilities).</p>
+<p>N.B. In this scenario we use this inifreq.txt file just to specify the initial frequencies, but you could also use it to specify, for example, a different mutation rate for each allele (see section Defining loci 7.2 of the manual for other possibilities).</p>
 <p>We will save this separate file in the same folder as our setup file and the qN executable under the name of ‘inifreq.txt’, so the simulation will be able to find and read it.</p>
 <p>Great, our simulation now has its populations defined and a genetic architecture, now we just need to define our migration rate. As said before, we wanted to see how migration influences the breakdown of population differentiation. So we should actually perform multiple simulations, each with a different migration rate. This would mean creating multiple setup files, each with a different value for dispersal_rate (as we did in section 2.1). Luckily, qN has a trick that will save us that effort.</p>
 <blockquote>
 <p>dispersal_rate 0.1 0.05 0.01 0.005 0.001</p>
 </blockquote>
-<p>These are so called sequential parameters (see section <tobechecked> 2.8.2 in the manual). Unlike vectors, these values are not surrounded by the {}. Like this, qN realizes that these values are not to be used during the same simulation for different patches, but instead should be used to create a so called ‘batch’ of different simulations, each with a different value for dispersal_rate.</p>
-<p>Since we want them to be saved in different and easly to recognise folder, we will add another sequential parameter containing the name of the folder in which we can save the result. We will also tell quantiNemo to associate the sequential parameter one by one, and not to run every possible scenario (see section <tobechecked> of the manual). Notice also that for readability reason, the first argument was extended over 5 lines (thanks to the \ sign, c.f <tobechecked>), but this should really be understood as a single argument.</p>
+<p>These are so called sequential parameters (see section 3.10.2 in the manual). Unlike vectors, these values are not surrounded by the {}. Like this, qN realizes that these values are not to be used during the same simulation for different patches, but instead should be used to create a so called ‘batch’ of different simulations, each with a different value for dispersal_rate.</p>
+<p>Since we want them to be saved in different and easly to recognise folder, we will add another sequential parameter containing the name of the folder in which we can save the result. We will also tell quantiNemo to associate the sequential parameter one by one, and not to run every possible scenario (see chapter 4, parameter <code>all_combinations</code> of the manual). Notice also that for readability reason, the first argument was extended over 5 lines (thanks to the \ sign, c.f section 3.3 of the manual), but this should really be understood as a single argument.</p>
 <blockquote>
 <p>folder neutral_genetic/migration_neutral_0.1 \<br />
 neutral_genetic/migration_neutral_0.05 \<br />
@@ -350,10 +355,10 @@ all_combinations 0</p>
 <p>Only when dispersal events are very rare, as with dispersal_rate = 0.001, we see that patches never manage to accumulate all alleles. The bottom row of graphs shows the development of the FST in the population. The thick line represents the FST averaged across loci. As expected, the FST decreases over time.</p>
 <p>However, it is more interesting the contrast the FST’s calculated separately for our completely divergent locus 1 (FST1) and the panmictic locus 2 (FST2). These two FSTs start at the opposite ends of the FST spectrum and grow towards each other over time. FST1 therefore, naturally, decreases over time. But, perhaps more counterintuitively, locus 2 increases its differentiation under the process of migration. How much the differentiation of the gene increases, depends on the rate of migration. The FSTs of the two loci meet at equilibrium, with the notable exception of the last simulation. In this least mobile scenario, the two FSTs seem to even out at different levels, a result of the loci’s different pasts. The migration is in this case not strong enough to distribute the alleles equally across all patches.</p>
 <p><strong>Question</strong>: which other genetic force works against migration and causes the FST to not go to zero?</p>
-</section>
-<section id="two-forms-of-linkage-disequilibrium-creating-a-genetic-map" class="level3">
+</div>
+<div id="two-forms-of-linkage-disequilibrium-creating-a-genetic-map" class="section level3">
 <h3>2.3 Two forms of linkage disequilibrium: Creating a genetic map</h3>
-<p>One of the powers of quantiNEMO is that it allows realistic genetic architecture. Chromosomal maps can be created with multiple loci on them, causing linkage disequilibrium as an emergent property. In the last example of this tutorial we will demonstrate the emergence of linkage disequilibrium, either through physically linking the loci, or through demographic events. Because qN cannot calculate linkage itself, we will export the genotype files into FSTAT version2.9.4, a stand-alone software <link here> <tobechecked>.</p>
+<p>One of the powers of quantiNemo is that it allows realistic genetic architecture. Chromosomal maps can be created with multiple loci on them, causing linkage disequilibrium as an emergent property. In the last example of this tutorial we will demonstrate the emergence of linkage disequilibrium, either through physically linking the loci, or through demographic events.</p>
 <p>But first our simulation. We will once again use a single, randomly mating, hermaphrodite population (all default values) of 10’000 individuals as in the first section of this tutorial, running for 100 generations. However, our genetic architecture will be quite different. In our current scenario we will look at six SNPs.</p>
 <blockquote>
 <p>ntrl_loci 6<br />
@@ -372,10 +377,35 @@ ntrl_mutation_rate 1e-5</p>
 ntrl_locus_index {1 4 2 5 3 6}</p>
 </blockquote>
 <p>The matrix of <code>ntrl_genome</code> represents our genome. Each set of curly brackets within represents a chromosome, and the values within these brackets are the positions of the loci on those chromosomes, expressed in centimorgans from the start of the chromosome. In this case we have four chromosomes, one with three positions, and three with only one position. However, these positions on the chromosomes are still ‘empty’; no actual locus/marker has been assigned to any of them yet.</p>
-<p>We use the <code>ntrl_locus_index</code> to assign our different markers (i.e. ntrl_loci) to the different positions in the genome. The index-values refer to the positions in the genome, with ‘1’ being the first site on the first chromosome and the highest value the last position on the last chromosome. In our case, the first marker goes to position 1, meaning 0.5cM from the start of chromosome 1. Our second marker goes to position 4, which corresponds to the first (and only) position on chromosome 2 at 0.2cM from the start. As you can see, we have linked all our odd loci, and put the even loci on separate chromosomes.</p>
+<p>We use the <code>ntrl_locus_index</code> to assign our different markers (i.e. <code>ntrl_loci</code>) to the different positions in the genome. The index-values (i.e. the position in the vector) refer to the positions in the genome, with ‘1’ being the first site on the first chromosome and the highest value the last position on the last chromosome. Here is a table showing how it works:</p>
+<table>
+<thead>
+<tr class="header">
+<th>index</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>pos.</td>
+<td>1</td>
+<td>4</td>
+<td>2</td>
+<td>5</td>
+<td>3</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that the line pos. is the line given by the parameter <code>ntrl_locus_index</code>. In our case, the first marker (index = 1) goes to position 1 (pos. = 1), meaning 0.5cM from the start of chromosome 1. Our second marker (index = 2) goes to position 4 (pos. 4), which corresponds to the first (and only) position on chromosome 2 at 0.2cM from the start. Following the same logic, locus 3 goes to position 2, locus 4 goes to position 5, etc. As you can see,we put loci 1, 3 and 5 on the first chromosome, so they are linked, and put the other loci on separate chromosomes.</p>
 <p>N.B. Since all our markers are equal (same number of alleles, same mutation rate etc.) the order of placement on the genome does not actually matter much. A shorter version would have been to create only a single chromosome and only assigning the first three loci to this chromosome. The remaining three loci, since left unassigned, would automatically be unlinked. However, for the sake of explanation, we used the more expansive method.<br />
 With the above parameters, we have created our linked loci, which should eventually result in linkage disequilibrium.</p>
-<p>However, linkage disequilibrium does not need arise only through physical proximity of loci. Simple demographic events can just as well be responsible. (As can epistatic effects, explored in tutorial 3.) For our current scenario, we will create a bottleneck in our population’s history. For this we will need to revisit the patch_capacity. Currently it is at a stable 10’000 individuals. We would like it to change over time. At generation 100, the population should crash severely to a mere 10 individuals, from which the population recovers instantly, in a single generation. What we need is something that allows us to specify at certain time points in the simulation a different value for a parameter. These are called temporal parameters (see the manual <tobechecked> section 2.5.3 ‘Temporal parameters’). You can change a parameter in a temporal parameter by adding normal brackets (), after the parameter name. Within the brackets you can specify for each generation at which the parameter changes, first the generation and then the value to which the parameter changes. In our case it will look like this.</p>
+<p>However, linkage disequilibrium does not need arise only through physical proximity of loci. Simple demographic events can just as well be responsible. (As can epistatic effects, explored in tutorial 3.) For our current scenario, we will create a bottleneck in our population’s history. For this we will need to revisit the patch_capacity. Currently it is at a stable 10’000 individuals. We would like it to change over time. At generation 100, the population should crash severely to a mere 10 individuals, from which the population recovers instantly, in a single generation. What we need is something that allows us to specify at certain time points in the simulation a different value for a parameter. These are called temporal parameters (see the manual section 3.5 ‘Temporal parameters’). You can change a parameter in a temporal parameter by adding normal brackets (), after the parameter name. Within the brackets you can specify for each generation at which the parameter changes, first the generation and then the value to which the parameter changes. In our case it will look like this.</p>
 <blockquote>
 <p>patch_capacity (1 10000, 100 10, 101 10000)</p>
 </blockquote>
@@ -529,7 +559,7 @@ linkage &lt;- compute.all.linkage(geno)</code></pre>
 <p><strong>Question</strong>: How can demographics be responsible for linkage disequilibrium? What happened exactly to the genotypes in generation 101 and 102?</p>
 <p><strong>Question</strong>: What would happen to the D’-values of each locus pair in generation 103, keeping carrying capacity at 10’000? And what in generation 200?</p>
 <p><strong>Question</strong>: How would all our results change if we altered the values in ntrl_genome?</p>
-<p>This section had demonstrated how linkage disequilibrium can be an emergent property of quantiNEMO. Of course, linked loci only become truly interesting when selection acts on one of them. Tutorial 3 will look at selection and quantitative traits.</p>
+<p>This section had demonstrated how linkage disequilibrium can be an emergent property of quantiNemo. Of course, linked loci only become truly interesting when selection acts on one of them. Tutorial 3 will look at selection and quantitative traits.</p>
 <p><strong>Question</strong>: What is the difference between: patch_capacity 10 20 30 40 / patch_capacity(10 20, 30 40) / patch_capacity {10 20 30 40} ? What type of simulations and results would you get if you would use each of these parameters separately in the following setup file?</p>
 <blockquote>
 <p>generations 100<br />
@@ -538,8 +568,8 @@ stats {adlt.nbInd_p}</p>
 </blockquote>
 </div>
 <!--closing main_content-->
-</section>
-</section>
+</div>
+</div>
 
 
 

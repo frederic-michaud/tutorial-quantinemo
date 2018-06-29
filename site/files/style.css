@@ -210,3 +210,15 @@ pre.r
 {
   display:none;
 }
+
+@media (max-width: 1000px)  {
+#menu
+	{
+  float:none;
+  position:static;
+    margin-left:20px;
+  }
+  #main_content{
+  margin-left:20px;
+  }
+}

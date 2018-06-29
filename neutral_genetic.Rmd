@@ -121,7 +121,7 @@ for(rep in reps){
 Though the curves of the two HO graphs are similar, the KAM figure plateaus out a bit higher than the SSM figure. Why this is, we can see in the left figures: the KAM simulation has all of the possible alleles present in the simulation, whereas the SSM simulation fluctuates between 8 and 10 alleles present, maximal heterozygosity will therefore be lower.    
 
 A more stunning difference between the two mutation models is that all alleles have come into existence after 2(!) generations of the KAM simulation, whereas the SSM simulation shows a much slower accumulation of alleles over time and almost never has all alleles present at the same time. 
-This might seem a bit surprising, since both simulations had the same mutation rate. We would expect the accumulation over time of mutations, and therefore alleles, to be equal in both simulations. We will use the genotype files to illustrate what is different between the two mutation processes. We can read the files in R (make sure to skip the first line), split the genotypes into two alleles and create allele frequency plots (see the included tutorial2.r script for example code). What you get are the allele-frequency charts below.   
+This might seem a bit surprising, since both simulations had the same mutation rate. We would expect the accumulation over time of mutations, and therefore alleles, to be equal in both simulations. We will use the genotype files to illustrate what is different between the two mutation processes. We can read the files in R (make sure to skip the first line), split the genotypes into two alleles and create allele frequency plots (see the included 'neutral_genetic.Rmd' script for example code). What you get are the allele-frequency charts below.   
 
 ```{r}
 reps = c("neutral_genetic/mutationKAM/",
@@ -166,7 +166,7 @@ In the Single Step Mutation model, when an allele mutates, it can only mutate on
 
 The two different mutation models create some clear differences in the accumulation of gene diversity. None of the two is 'better' or 'more realistic'. What mutation model to choose, really depends on the question one wants to answer, if at all relevant.   
 
-**Question**:  what will happen to the allele distributions if we let these simulations run even longer? And what is we let our simulations start with everybody's initial genotype being 0101?
+**Question**:  what will happen to the allele distributions if we let these simulations run even longer? And what if we let our simulations start with everybody's initial genotype being 0101?
 
 
 
@@ -178,7 +178,7 @@ In this section we will look at the interaction between migration and genetic di
 
 First some basics. We need ten populations each consisting of 1000 of our default randomly-mating hermaphrodites. The sites will be connected according to the so called migrant-pool island model. For this migration model each site is assumed to be connected equally strong to each other site, effectively eliminating any influence of geography. (Though this might sound as very artificial, it is a model very often used in population genetics and is indeed the default in qN.) Since we do not have to mention any of our default parameters, the first part of our model will contain only this this:   
 
-> patch_capacity 1000
+> patch_capacity 1000    
 > patch_number 10
 
 Now we need to start specifying our genetic architecture. We wanted a single locus, with ten different alleles, each fixed in a different population. But for comparison's sake, we will also introduce a second locus with a shared allele distribution among populations:   
@@ -187,7 +187,7 @@ Now we need to start specifying our genetic architecture. We wanted a single loc
 > ntrl_all 10   
 > ntrl_allelic_file "inifreq.txt"
 
-You will notice that here we only specified the two loci with each ten alleles, but we have not specified the initial allele frequencies of these two loci. In fact, it is impossible to specify a specific initial allelic distribution within the setup file. For that you will need to create a separate file with this information. The name of that file is specified by the last argument. The file`inifreq.txt` is shown below. 
+You will notice that here we only specified the two loci with each ten alleles, but we have not specified the initial allele frequencies of these two loci. In fact, it is impossible to specify a specific initial allelic distribution within the setup file. For that you will need to create a separate file with this information. The name of that file is specified by the last argument. The file `inifreq.txt` is shown below. 
 
 >  [FILE_INFO]{   
 >	 col_locus 1   
@@ -230,7 +230,7 @@ For the second locus, we do not see ten initial frequencies for each allele. Her
 
 But giving the value just once has the same effect. Note how the initial allele frequencies of locus 2 also add up to 1.    
 
-N.B. In this scenario we use this inifreq.txt file just to specify the initial frequencies, but you could also use it to specify, for example, a different mutation rate for each allele (see section Defining loci 7.2 'Architecture' of the manual for other possibilities).   
+N.B. In this scenario we use this inifreq.txt file just to specify the initial frequencies, but you could also use it to specify, for example, a different mutation rate for each allele (see section Defining loci 7.2 of the manual for other possibilities).   
 
 We will save this separate file in the same folder as our setup file and the qN executable under the name of 'inifreq.txt', so the simulation will be able to find and read it.    
 
@@ -312,7 +312,7 @@ However, it is more interesting the contrast the FST's calculated separately for
 
 
 ### 2.3 Two forms of linkage disequilibrium: Creating a genetic map 
-One of the powers of quantiNEMO is that it allows realistic genetic architecture. Chromosomal maps can be created with multiple loci on them, causing linkage disequilibrium as an emergent property. In the last example of this tutorial we will demonstrate the emergence of linkage disequilibrium, either through physically linking the loci, or through demographic events.
+One of the powers of quantiNemo is that it allows realistic genetic architecture. Chromosomal maps can be created with multiple loci on them, causing linkage disequilibrium as an emergent property. In the last example of this tutorial we will demonstrate the emergence of linkage disequilibrium, either through physically linking the loci, or through demographic events.
 
 But first our simulation. We will once again use a single, randomly mating, hermaphrodite population (all default values) of 10'000 individuals as in the first section of this tutorial, running for 100 generations. However, our genetic architecture will be quite different. In our current scenario we will look at six SNPs.   
 
@@ -336,7 +336,15 @@ To be able to see the effect of reduced recombination on linkage we would like f
 
 The matrix of `ntrl_genome` represents our genome. Each set of curly brackets within represents a chromosome, and the values within these brackets are the positions of the loci on those chromosomes, expressed in centimorgans from the start of the chromosome. In this case we have four chromosomes, one with three positions, and three with only one position. However, these positions on the chromosomes are still 'empty'; no actual locus/marker has been assigned to any of them yet.    
 
-We use the `ntrl_locus_index` to assign our different markers (i.e. ntrl_loci) to the different positions in the genome. The index-values refer to the positions in the genome, with '1' being the first site on the first chromosome and the highest value the last position on the last chromosome. In our case, the first marker goes to position 1, meaning 0.5cM from the start of chromosome 1. Our second marker goes to position 4, which corresponds to the first (and only) position on chromosome 2 at 0.2cM from the start. As you can see, we have linked all our odd loci, and put the even loci on separate chromosomes.    
+We use the `ntrl_locus_index` to assign our different markers (i.e. `ntrl_loci`) to the different positions in the genome. The index-values (i.e. the position in the vector) refer to the positions in the genome, with '1' being the first site on the first chromosome and the highest value the last position on the last chromosome. Here is a table showing how it works: 
+
+index    |  1  |   2  |   3  |   4  |   5  |  6
+---------|-----|------|------|------|------|---
+pos.     |   1 |  4   |   2  |   5 |  3   | 6  
+
+Notice that the line pos. is the line given by the parameter `ntrl_locus_index`. In our case, the first marker (index = 1) goes to position 1 (pos. = 1), meaning 0.5cM from the start of chromosome 1. Our second marker (index = 2) goes to position 4 (pos. 4), which corresponds to the first (and only) position on chromosome 2 at 0.2cM from the start. Following the same logic, locus 3 goes to position 2, locus 4 goes to position 5, etc. As you can see,we put loci 1, 3 and 5 on the first chromosome, so they are linked, and put the other loci on separate chromosomes.  
+  
+
 
 N.B. Since all our markers are equal (same number of alleles, same mutation rate etc.) the order of placement on the genome does not actually matter much. A shorter version would have been to create only a single chromosome and only assigning the first three loci to this chromosome. The remaining three loci, since left unassigned, would automatically be unlinked. However, for the sake of explanation, we used the more expansive method.  
 With the above parameters, we have created our linked loci, which should eventually result in linkage disequilibrium.   
@@ -470,7 +478,7 @@ print.table(linkage$p<0.05/15,digit=3)
 
 **Question**: How would all our results change if we altered the values in ntrl_genome?
 
-This section had demonstrated how linkage disequilibrium can be an emergent property of quantiNEMO. Of course, linked loci only become truly interesting when selection acts on one of them. Tutorial 3 will look at selection and quantitative traits. 
+This section had demonstrated how linkage disequilibrium can be an emergent property of quantiNemo. Of course, linked loci only become truly interesting when selection acts on one of them. Tutorial 3 will look at selection and quantitative traits. 
 
 **Question**:  What is the difference between: patch_capacity 10 20 30 40 / patch_capacity(10 20, 30 40) / patch_capacity {10 20 30 40} ? What type of simulations and results would you get if you would use each of these parameters separately in the following setup file?
 

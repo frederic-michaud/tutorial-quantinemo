@@ -21,7 +21,7 @@ Given this idea, the structure is the following:
 ../*.Rmd contain the actual tutorial and all the content which is different from one page to another. 
 ./template_index.Rmd contains the actual content of the first page
 ./header.html contains some html that has to be put before the actual content, including the menu on the left. 
-./generate_plit_design.Rmd allows to regenerate the plot that is on plot of each pages. 
+./generate_plot_design.Rmd allows to regenerate the plot that is on plot of each pages. 
 ./files/ and ./images/ contain useful files and images for the website. 
 
 

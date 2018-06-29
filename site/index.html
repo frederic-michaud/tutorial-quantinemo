@@ -16,6 +16,7 @@
 
 <link href="index_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="index_files/highlightjs-9.12.0/highlight.js"></script>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
 
 <style type="text/css">code{white-space: pre;}</style>
 <script type="text/javascript">
@@ -31,7 +32,7 @@ if (window.hljs) {
 
 
 
-<link rel="stylesheet" href="files/style.css" />
+<link rel="stylesheet" href="files/style.css" type="text/css" />
 
 </head>
 
@@ -88,6 +89,9 @@ if (window.hljs) {
       <li><a href="selection.html#mendelian-mice">Mendelian mice</a></li>
     </ul>
   </li>
+  </li>
+    <li><a href = "coalescence.html">Coalescence</a>
+  </li>
   </ul>
 </div>
 
@@ -107,7 +111,7 @@ An individual-based program for the analysis of quantitative traits with explici
 What is quantiNemo
 </h2>
 <p>
-QuantiNemo is an individual-based, genetically explicit stochastic simulation program. It was developed to investigate the effects of selection, mutation, recombination, and drift on quantitative traits with varying architectures in structured populations connected by migration and located in a heterogeneous habitat. quantiNemo is highly flexible at various levels: population, selection, trait(s) architecture, genetic map for QTL and/or markers, environment, demography, mating system, etc.
+QuantiNemo is an individual-based, genetically explicit stochastic simulation program. It was developed to investigate the effects of selection, mutation, recombination, and drift on quantitative traits with varying architectures in structured populations connected by migration and located in a heterogeneous habitat. QuantiNemo is highly flexible at various levels: population, selection, trait(s) architecture, genetic map for QTL and/or markers, environment, demography, mating system, etc.
 </p>
 <p>
 QuantiNemo is a console program, and is coded in standard C++ using an object oriented approach, runs on any computer platform, and is distributed under an open source license.
@@ -124,7 +128,7 @@ Available downloads
 <ul>
 <li>
 <p class="link_download">
-<a href="">Executable for Windows</a>
+<a href="files/quantinemo_pc.zip">Executable for Windows</a>
 </p>
 <p>
 This compressed folder (quantinemo_pc.zip) contains all files needed to launch a simulation on a Windows computer. It consists of the executable for Windows (quantiNemo.exe), an example settings file (quantiNemo.ini), and the user manual (quantiNemo.pdf).
@@ -132,15 +136,15 @@ This compressed folder (quantinemo_pc.zip) contains all files needed to launch a
 </li>
 <li>
 <p class="link_download">
-<a href="">Executable for Unix/Linux</a>
+<a href="files/quantinemo_linux.zip">Executable for Unix/Linux</a>
 </p>
 <p>
-This compressed folder (quantinemo_linux.tar.gz) contains all files needed to launch a simulation on an Unix/Linux computer: It consists of the executable for Unix/Linux (quantinemo), an example settings file (quantiNemo.ini), and the user manual (quantiNemo.pdf).
+This compressed folder (quantinemo_linux.zip) contains all files needed to launch a simulation on an Unix/Linux computer: It consists of the executable for Unix/Linux (quantinemo), an example settings file (quantiNemo.ini), and the user manual (quantiNemo.pdf).
 </p>
 </li>
 <li>
 <p class="link_download">
-<a href=""> Executable for Macintosh (OS X)</a>
+<a href="files/quantinemo_mac.zip"> Executable for Macintosh (OS X)</a>
 </p>
 <p>
 This compressed folder (quantinemo_mac.zip) contains all files needed to launch a simulation on a Macintosh computer with OS X: It consists of the executable for Mac OS X (quantiNemo), an example settings file (quantiNemo.ini), and the user manual (quantiNemo.pdf).
@@ -148,10 +152,26 @@ This compressed folder (quantinemo_mac.zip) contains all files needed to launch 
 </li>
 <li>
 <p class="link_download">
-<a href="">Manual</a>
+<a href="files/quantinemo.pdf">Manual</a>
 </p>
 <p>
 This is the user manual as a pdf file (quantiNemo.pdf). The user manual describes quantiNemo in all its aspects, explains parameters, and shows which outputs can be generated.
+</p>
+</li>
+<li>
+<p class="link_download">
+<a href="files/inputfile.zip">Tutorials</a>
+</p>
+<p>
+This is a zip file containing all the tutorials (in a R markdown format) including R script to generate the plots from the tutorial. It also contains all the input files of the quantiNemo simulation.
+</p>
+</li>
+<li>
+<p class="link_download">
+<a href="quantinemo1">Old website</a> &amp; <a href="files/changelog.pdf">change log of input file</a>
+</p>
+<p>
+This is a link to the old version of the site where you can still download quantiNemo 1. Everybody is encouraged to switch to the new version, since there is almost no software regression. We also provide a document which very briefly documents how to adapt your quantiNemo 1 input files into quantiNemo 2 input files.
 </p>
 </li>
 </ul>
@@ -174,10 +194,10 @@ QuantiNemo is a software developed by:
 Getting help
 </h2>
 <p>
-The developper and maintener of QuantiNemo encourage user to take contact with them if they need help of any sort. If you encounter problems while using the software, or if you have any question concerning some specific simulation setup or about the documentation we would appreciate to ear from you. We are always seeking to improve the program, adding key feature or solving bug, and to have a clear documentation so any feedback is welcome.
+The developper and maintener of QuantiNemo encourage users to take contact with them if they need help of any sort. If you encounter problems while using the software, or if you have any question concerning some specific simulation setup or about the documentation we would appreciate to hear from you. We are always seeking to improve the program, adding key features or solving bugs, and to have a clear documentation so any feedback is welcome.
 </p>
 <p>
-You can either send us an email using of the address above, or post a bug report in the following github repository: <a href = "https://github.com/jgx65/qnemo_dev">here</a>
+You can either send us an email using of the address above, or post a bug report in the following github repository: <a href = "https://github.com/jgx65/quantinemo">here</a>
 </p>
 <h2 id="source">
 Source code and bug report
@@ -186,10 +206,10 @@ Source code and bug report
 QuantiNemo is a scientific software. It is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 </p>
 <p>
-Users are welcome and encouraged to report bugs in order to improve quantiNemo. The development of quantiNemo is done on <a href = "https://github.com/jgx65/qnemo_dev">Github</a>, and preferably, bugs should be submitted there. Alternatively, email can be sent to one of the authors.
+Users are welcome and encouraged to report bugs in order to improve quantiNemo. The development of quantiNemo is done on <a href = "https://github.com/jgx65/quantinemo">Github</a>, and preferably, bugs should be submitted there. Alternatively, email can be sent to one of the authors.
 </p>
 <p>
-The source code is available in the <a href = "https://github.com/jgx65/qnemo_dev">github repository</a>
+The source code is available in the <a href = "https://github.com/jgx65/quantinemo">github repository</a>
 </p>
 </div>
 

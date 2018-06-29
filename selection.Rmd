@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Some first notes    
 This chapter assumes that you have completed the first two tutorials: Demographics and Neutral markers.   
 
-In this section we will look at the basics of selection in quantiNEMO. Selection can only act on phenotypic traits, this chapter will therefore also introduce quantitative traits. We will start with examples from single loci.    
+In this tutorial we will look at the basics of selection in quantiNemo. Selection can only act on phenotypic traits, this chapter will therefore also introduce quantitative traits. We will start with examples from single loci.    
 
 ### 3.1 The basic selection process
 How does selection work in qN? The genetic architecture of a non-neutral (i.e. selected) quantitative trait is very similar to that of the neutral genetics.   
@@ -34,7 +34,7 @@ The phenotypic value, as determined by the alleles, therefore represents the dev
 
 As you just saw in the previous example, individuals are diploid in qN. Moreover, by default, alleles have a purely additive effect (though dominance can be implemented; see sub-section 8.2.2 of the manual), hence the pure addition of the two allelic effects in the previous example resulted in the genotype of the individual. And because by default environment does not influence the phenotype, the genotype and the phenotype will be the same in our current scenario.     
 
-You may specifically set the effect of each allele yourself in a file similar to what we used in section 2.2 and specified with `quanti_allelic_file` (see section 7.2 "Allelic effects" in the manual ). However, to write down the effect of 255 alleles requires quite some effort; and if your locus codes for some continuous trait (and nothing discrete such as 'eye colour'), you can instead let qN assign an effect to each allele using `quanti_allelic_var 4`.   
+You may specifically set the effect of each allele yourself in a file similar to what we used in tutorial 2.2 and specified with `quanti_allelic_file` (see section 7.2 "defining loci" in the manual ). However, to write down the effect of 255 alleles requires quite some effort; and if your locus codes for some continuous trait (and nothing discrete such as 'eye colour'), you can instead let qN assign an effect to each allele. This is done by specifying a parameter of the normal distribution from which the allelic effect will be drawn, namely setting `quanti_allelic_var 4`.   
 
 This parameter represents the variance of a normal distribution around a mean of 0, defining a distribution from which allelic effects are drawn. So even though all 255 alleles will have another effect, more effects will be relatively small and only a few alleles will have large effects. Because the distribution is around zero, we also know that around 50% of our alleles will have a positive effect, and 50% a negative effect on our trait. Here we chose a variance of 4 which translates into a standard deviation of $\sqrt4=2$, which in turn means that 68% of our alleles will have an effect on the phenotype of something between -2 and +2. Of course, these values only mean something relative to the strength of selection and the influence of the environment (more on those later).   
 
@@ -58,7 +58,7 @@ You can see that the larger the selection intensity gets, the wider the curve an
 
 > patch_stab_sel_intensity 1 20   
 
-To observe and analyse the behaviour of our alleles, we will use a similar approach as in tutorial 2.1. However, because we now work with quantitative traits (as opposed to the neutral traits in the previous tutorial), we would also be interested in the mean genotypic value of the population (q.meanG_p) and of each individual (`quanti_save_geno_value`). instead of just saving the genotype of each individual, we will also save the genotypic value of each individual. Because our current simulation does not allow any influence of the environment on the phenotype, the genotypic and phenotypic value will be the same.   
+To observe and analyse the behaviour of our alleles, we will use a similar approach as in tutorial 2.1. However, because we now work with quantitative traits (as opposed to the neutral traits in the previous tutorial), we would also be interested in the mean genotypic value of the population (q.meanG_p) and of each individual (`quanti_save_geno_value`). instead of just saving the genotype of each individual (i.e all allele of every locus), we will also save the genotypic value of each individualquanti_environmental_model. Because our current simulation does not allow any influence of the environment on the phenotype, the genotypic and phenotypic value will be the same.   
 
 > stat {q.adlt.nbAll q.adlt.ho q.meanG_p}     
 > quanti_save_genotype 1   
@@ -66,7 +66,7 @@ To observe and analyse the behaviour of our alleles, we will use a similar appro
 
 Because process of selection is expected to go much faster than the process of mutation, we will save the genotype each generation (which is default) and run our simulation for only ten generations, but with 10'000 individuals.   
 
-> generations 10
+> generations 10    
 > patch_capacity 10000
 
 Combine all the code in a single file and run the simulation (we called it `selection1.ini`). Because we entered two values for the selection intensity, we created a batch file with two simulations: one where the patch_stab_sel_intensity 5 and on where patch_stab_sel_intensity 20. qN should produce files for each of those settings. Besides the log, legend, mean, stat and var-files, and the .dat-files of each generation containing the genotypes, you will now also find .gen-files in the output folder. These files are very similar to the .dat-files, except that they contain the genotypic trait value for each individual instead of their genotype.
@@ -201,9 +201,9 @@ These plots are the same as those from tutorial 2.1, just with more alleles. Eac
 **Question**: The allele frequency graph forms a nice curve with a peak in the middle (around allele 130). What does this tell us about how qN assigns effects to each allele? (Hint, you can rerun your analysis with quanti_output 1 and look at the produced allelic_values.txt file.)
 
 ### 3.2 The selection-mutation-drift equilibrium
-If you would have run the simulation from the previous section long enough, only one or two alleles would have been left; selection would have selected the best allele to remain if drift had not earlier perchance already got rid of all diversity. However, our simulation did not include any sources of new genetic material. Mutation should set the system in a selection-mutation-drift equilibrium with non-zero diversity. We will demonstrate this precarious selection-mutation-drift balance in this short, second section on selection. Moreover, we will inspect how much of the equilibrium diversity is owing to selection, and how much can be assigned to drift solely.    
+If you would have run the simulation from the previous part of the tutorial long enough, only one or two alleles would have been left; selection would have selected the best allele to remain if drift had not earlier perchance already got rid of all diversity. However, our simulation did not include any sources of new genetic material. Mutation should set the system in a selection-mutation-drift equilibrium with non-zero diversity. We will demonstrate this precarious selection-mutation-drift balance in this short second tutorial on selection. Moreover, we will inspect how much of the equilibrium diversity is owing to selection, and how much can be assigned to drift solely.    
 
-As a starting point of this simulation, we will use the same setup file as in the section above and make some adaptations to suit our needs. For example, we introduce mutation in our model with a slightly high rate of 10-4.   
+As a starting point of this simulation, we will use the same setup file as in the tutorial above and make some adaptations to suit our needs. For example, we introduce mutation in our model with a slightly high rate of 10-4.   
 
 > quanti_mutation_rate 1e-4
 	
@@ -311,7 +311,7 @@ By default a simulation starts with full allelic diversity (quanti_ini_allele_mo
 
 Up until now, we have used 'phenotype' and 'genotype' interchangeably in this section. This because to qN they have been exactly the same. However, we may allow qN to randomly modify our genotypic traits, simulating the effect of the external environment on the development of a trait, resulting in individuals which might have the same genotype, but different phenotypic traits. The extra variance this adds between traits (the environmental variance) can be set directly by:   
 
-> quanti_environmental_model 0	# default: you can set the environmental variance directly
+> quanti_environmental_model 0	# default: you can set the environmental variance directly    
 > quanti_heritability 1		# an environmental variance of 1; default 0
 
 If you know the heritability of your trait, you may define the broad or narrow-sense heritability in qN instead the environmental variance directly (see section 8.3 Environmental effect of the manual). 
@@ -340,7 +340,7 @@ Next we need to determine what each allele 'does'. In previous examples, we alwa
 
 > quanti_allelic_file "fur_alleles.txt"   
 
-Open a new file in your text editor and save this under the name "fur_alleles.txt". The FILE_INFO section you will be able to produce yourself (see section 7.2 'Defining loci'); we need only three columns, one specifying the locus, one specifying the allele and one specifying the effect this allele should have.    
+Open a new file in your text editor and save this under the name "fur_alleles.txt". I you already did the neutral marker tutorial, you should be able to write the FILE_INFO section yourself (see section 7.2 'Defining loci' of the manual); we need only three columns, one specifying the locus, one specifying the allele and one specifying the effect this allele should have.    
 
 The second part of the file is a bit trickier: what effects do each of our alleles have? We know that the genotype BB produces the phenotype 'black' which is represented by the phenotypic value 1. So BB=1, which means B=0.5. Similarly bb='brown'=0.5 gives b=0.25. What about the second locus? We know that when a mouse is 'CC', nothing happens, or, the mouse gets the colour as determined by the first locus. In qN the phenotypic trait value of an individual is the sum of the genotypic trait values of each of its loci. The total phenotypic value of a BB CC individual (which has phenotype 'black') should still be 1. So if BB + CC = 1 and we know that BB = 1, it follows that CC = 0 which gives C=0. Conversely, we know that an individual homozygous cc is white (= phenotypic value 0), independent of locus 1. So BB + cc = 0, BB=1 therefore cc= -1, which gives c= -0.5.
 How do we write this down in our allelic file? Let's define B/b as locus 1 with allele B as 1 and b as 2 (so genotype Bb = 12). This makes locus C/c locus 2 with C allele 1 and c allele 2. Now we can make the table of our file, which should look like this:    
@@ -423,6 +423,7 @@ Which statistics allow you to follow the process the best?
 Below you can see our results(the related input file is called `fur2.ini` :
  
 We plotted the frequency of each allele averaged across the hundred simulation plus-minus 1 standard deviation (the dotted lines in the same colour). You can see that the brown allele b (brown line drops very quickly, though in many simulations never really disappears.   
+
 **Question**: Why does it take so long to remove the brown allele from the population, despite the strong selection against it?   
 
 The colour depositing allele C (blue line) decreases slightly, increasing the chance of the white phenotype, but here the drop is much less significant compared to the brown-black locus.   

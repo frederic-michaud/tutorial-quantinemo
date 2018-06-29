@@ -3,26 +3,29 @@ title: "Generate all html for tutorial"
 ---
 
 
+```{r}
+?markdown::markdownToHTML()
+```
 
 
 ```{r}
 #Index
-rmarkdown::render("template_index.Rmd",output_dir = getwd(),output_file = "index.html",output_format = rmarkdown::html_document(css="files/style.css",includes = rmarkdown::includes(before_body = "header.html"),self_contained = FALSE,theme = NULL),encoding = 'UTF-8')
+rmarkdown::render("template_index.Rmd",output_dir = getwd(),output_file = "index.html",output_format = rmarkdown::html_document(css="files/style.css",includes = rmarkdown::includes(before_body = "header.html",in_header = "favico.html"),self_contained = FALSE,theme = NULL),encoding = 'UTF-8')
 
 #Getting started
-rmarkdown::render("template_getting_started.Rmd",output_dir = getwd(),output_file = "getting_started.html",output_format = rmarkdown::html_document(css="files/style.css",includes = rmarkdown::includes(before_body = "header.html"),self_contained = FALSE,theme = NULL))
+rmarkdown::render("template_getting_started.Rmd",output_dir = getwd(),output_file = "getting_started.html",output_format = rmarkdown::html_document(css="files/style.css",includes = rmarkdown::includes(before_body = "header.html",in_header = "favico.html"),self_contained = FALSE,theme = NULL))
 
 #Demography
-rmarkdown::render("template_demography.Rmd",output_dir = getwd(),output_file = "demography.html",output_format = rmarkdown::html_document(css="files/style.css",includes = rmarkdown::includes(before_body = "header.html"),self_contained = FALSE,theme = NULL))
+rmarkdown::render("template_demography.Rmd",output_dir = getwd(),output_file = "demography.html",output_format = rmarkdown::html_document(css="files/style.css",includes = rmarkdown::includes(before_body = "header.html",in_header = "favico.html"),self_contained = FALSE,theme = NULL))
 
 #Neutral marker
-rmarkdown::render("template_neutral_marker.Rmd",output_dir = getwd(),output_file = "neutral_marker.html",output_format = rmarkdown::html_document(css="files/style.css",includes = rmarkdown::includes(before_body = "header.html"),self_contained = FALSE,theme = NULL))
+rmarkdown::render("template_neutral_marker.Rmd",output_dir = getwd(),output_file = "neutral_marker.html",output_format = rmarkdown::html_document(css="files/style.css",includes = rmarkdown::includes(before_body = "header.html",in_header = "favico.html"),self_contained = FALSE,theme = NULL))
 
 #quantitative genetics
-rmarkdown::render("template_selection.Rmd",output_dir = getwd(),output_file = "selection.html",output_format = rmarkdown::html_document(css="files/style.css",includes = rmarkdown::includes(before_body = "header.html"),self_contained = FALSE,theme = NULL))
+rmarkdown::render("template_selection.Rmd",output_dir = getwd(),output_file = "selection.html",output_format = rmarkdown::html_document(css="files/style.css",includes = rmarkdown::includes(before_body = "header.html",in_header = "favico.html"),self_contained = FALSE,theme = NULL))
 
 #Coalescence
-rmarkdown::render("template_coalescence.Rmd",output_dir = getwd(),output_file = "coalescence.html",output_format = rmarkdown::html_document(css="files/style.css",includes = rmarkdown::includes(before_body = "header.html"),self_contained = FALSE,theme = NULL))
+rmarkdown::render("template_coalescence.Rmd",output_dir = getwd(),output_file = "coalescence.html",output_format = rmarkdown::html_document(css="files/style.css",includes = rmarkdown::includes(before_body = "header.html",in_header = "favico.html"),self_contained = FALSE,theme = NULL))
 ```
 
 
