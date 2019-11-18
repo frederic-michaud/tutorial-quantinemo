@@ -62,7 +62,7 @@ Samuel Neuenschwander, Frédéric Michaud, Jérôme Goudet; quantiNemo 2: a swis
 <h2 id="developer">Main developer</h2> 	
 QuantiNemo is a software developed by:
 <ul>
-<li><a href = "mailto:frederic.michaud@unil.ch ">Frédéric Michaud </a>(current active developer)</li>   
+<li><a href = "mailto:frederic.a.michaud@gmail.com ">Frédéric Michaud </a>(current active developer)</li>   
 <li><a href = "mailto:samuel.neuenschwander@unil.ch ">Samuel Neuenschwander</a> (main contributor of QuantiNemo 1 and 2)</li>    
 <li><a href = "mailto:jerome.goudet@unil.ch ">Jérôme Goudet</a> (supervisor of the development)</li>    
 
